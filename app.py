@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 
-with open('resources_new.json') as f:
+with open('resources_test.json') as f:
     data = json.load(f)
     resources = data['resources']
     df = pd.DataFrame(resources)
@@ -14,3 +14,5 @@ with open('resources_new.json') as f:
     # get all types of architectures
     archs = df[df['architecture'].notnull()]['architecture'].unique()
     print(archs)
+    
+    # print(df[df['architecture'] == 'ARM']['name'])

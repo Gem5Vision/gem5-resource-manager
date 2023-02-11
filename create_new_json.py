@@ -1,7 +1,24 @@
 import json
 
+
+def change_type(resource):
+    if resource['type'] == 'workload':
+        return resource
+    if 'kernel' in resource['name']:
+        resource['type'] = 'kernel'
+    elif 'bootloader' in resource['name']:
+        resource['type'] = 'bootloader'
+    elif 'benchmark' in resource['documentation']:
+        resource['type'] = 'benchmark'
+    elif resource['url'] is not None and '.img.gz' in resource['url']:
+        resource['type'] = 'disk image'
+    elif 'binary' in resource['documentation']:
+        resource['type'] = 'binary'
+    return resource
+
+
 # create new json file
-with open('resources_new.json', 'w') as newf:
+with open('resources_test.json', 'w') as newf:
     with open('resources.json') as f:
         data = json.load(f)
         newf.write('''{
@@ -18,10 +35,12 @@ with open('resources_new.json', 'w') as newf:
             if resource['type'] == 'group':
                 for group in resource['contents']:
                     group['group'] = resource['name']
+                    group = change_type(group)
                     newf.write(json.dumps(group))
                     newf.write(',')
             # write to file
             else:
+                resource = change_type(resource)
                 newf.write(json.dumps(resource))
                 newf.write(',')
     newf.write(']}')
