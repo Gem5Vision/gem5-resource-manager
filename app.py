@@ -17,3 +17,10 @@ with open('resources_test.json') as f:
 
     print(df[df['type'] == 'resource']['name'])
     # print(df[df['architecture'] == 'ARM']['name'])
+
+    # print to json and replace Nan with None
+    df = df.where((pd.notnull(df)), None)
+    resources = df.to_dict('records')
+    data['resources'] = resources
+    with open('resources_test1.json', 'w') as newf:
+        newf.write(json.dumps(data))
