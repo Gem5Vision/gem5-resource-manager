@@ -22,7 +22,7 @@ def change_type(resource):
 
 
 # create new json file
-with open('resources_test.json', 'w') as newf:
+with open('resources_new.json', 'w') as newf:
     with open('resources.json') as f:
         data = json.load(f)
         new_resources = []
