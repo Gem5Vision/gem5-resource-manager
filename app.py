@@ -14,5 +14,6 @@ with open('resources_test.json') as f:
     # get all types of architectures
     archs = df[df['architecture'].notnull()]['architecture'].unique()
     print(archs)
-    
+
+    print(df[df['type'] == 'resource']['name'])
     # print(df[df['architecture'] == 'ARM']['name'])

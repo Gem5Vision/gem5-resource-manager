@@ -75,7 +75,7 @@
             }
         },
         {
-            "type": "resource",
+            "type": "simpoint",
             "name": "x86-print-this-1500-simpoints",
             "documentation": "Simpoints for running the 'x86-print-this' resource with the parameters `\"print this\" 15000`. This is encapsulated in the 'x86-print-this-15000-with-simpoints' workload.",
             "architecture": "X86",
@@ -100,7 +100,7 @@
             "url": "{url_base}/misc/gpu/vega-mmio.log"
         },
         {
-            "type": "resource",
+            "type": "checkpoint",
             "name": "riscv-hello-example-checkpoint",
             "documentation": "A checkpoint used in 'configs/example/gem5_library/checkpoints/riscv-hello-restore-checkpoint.py'. This was used for the v22.0 release and should not be used for future releases.",
             "architecture": "RISCV",
@@ -111,7 +111,7 @@
             "url": "{url_base}/checkpoints/riscv-hello-example-checkpoint.tar"
         },
         {
-            "type": "resource",
+            "type": "checkpoint",
             "name": "simpoints-se-checkpoints-v22-1",
             "documentation": "Checkpoints used in 'configs/example/gem5_library/checkpoints/simpoints-se-restore.py'. This is deprecated, 'simpoints-se-checkpits-v22-1-v2' should be used instead. This resource will be removed in future releases of gem5.",
             "architecture": "X86",
@@ -122,7 +122,7 @@
             "url": "{url_base}/checkpoints/simpoints-se-checkpoints-example-20220928.tar.gz"
         },
         {
-            "type": "resource",
+            "type": "checkpoint",
             "name": "simpoints-se-checkpoints-v22-1-v2",
             "documentation": "Checkpoints used in 'configs/example/gem5_library/checkpoints/simpoints-se-restore.py'.",
             "architecture": "X86",
@@ -133,7 +133,7 @@
             "url": "{url_base}/checkpoints/simpoints-se-checkpoints-example-20221014.tar.gz"
         },
         {
-            "type": "resource",
+            "type": "checkpoint",
             "name": "riscv-hello-example-checkpoint-v22-1",
             "documentation": "A checkpoint used in 'configs/example/gem5_library/checkpoints/riscv-hello-restore-checkpoint.py'. Used for v22.1 onwards.",
             "architecture": "RISCV",
