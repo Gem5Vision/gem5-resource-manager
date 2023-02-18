@@ -163,7 +163,7 @@
             "github_url": null
         },
         {
-            "category": "resource",
+            "category": "binary",
             "id": "vega-mmio",
             "description": "Used with the 'x86-gpu-fs-img' disk image.",
             "function": null,
