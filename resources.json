@@ -68,7 +68,7 @@
                 "bootloader": "arm64-bootloader-foundation"
             },
             "additional_params": {},
-            "architecture": "ARM64",
+            "architecture": "ARM",
             "is_zipped": null,
             "md5sum": null,
             "source": null,
