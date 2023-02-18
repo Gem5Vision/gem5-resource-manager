@@ -180,7 +180,8 @@
             "name": "vega mmio",
             "gem5_version": "22.1",
             "author": [
-                "Matthew Poremba"
+                "Matthew Poremba",
+                "SUS from Amogus"
             ],
             "tags": [
                 "x86",
