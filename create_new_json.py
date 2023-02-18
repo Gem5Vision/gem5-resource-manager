@@ -6,7 +6,9 @@ import pandas as pd
 
 def change_type(resource):
     if resource['type'] == 'workload':
-        resource['architecture'] = resource['name'].split('-')[0].upper()
+        # get the architecture from the name and remove 64 from it
+        resource['architecture'] = resource['name'].split(
+            '-')[0].replace('64', '').upper()
         return resource
     if 'kernel' in resource['name']:
         resource['type'] = 'kernel'
@@ -44,7 +46,7 @@ with open('resources.json', 'w') as newf:
         else:
             resource = change_type(resource)
             new_resources.append(resource)
-    
+
     df = pd.DataFrame(new_resources)
     # get all categories
     categories = df['type'].unique()
