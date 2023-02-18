@@ -6,7 +6,7 @@ import pandas as pd
 
 def change_type(resource):
     if resource['type'] == 'workload':
-        resource['architecture'] = resource['name'].split('-')[0]
+        resource['architecture'] = resource['name'].split('-')[0].upper()
         return resource
     if 'kernel' in resource['name']:
         resource['type'] = 'kernel'
