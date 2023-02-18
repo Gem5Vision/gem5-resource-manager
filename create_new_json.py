@@ -14,7 +14,7 @@ def change_type(resource):
     elif 'benchmark' in resource['documentation']:
         resource['type'] = 'benchmark'
     elif resource['url'] is not None and '.img.gz' in resource['url']:
-        resource['type'] = 'disk image'
+        resource['type'] = 'diskimage'
     elif 'binary' in resource['documentation']:
         resource['type'] = 'binary'
     elif 'checkpoint' in resource['documentation']:
