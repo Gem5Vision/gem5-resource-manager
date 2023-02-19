@@ -767,7 +767,7 @@
             "architecture": "X86",
             "is_zipped": true,
             "md5sum": "c9217a88eff20e5547be87368a1499c1",
-            "source": "src/gabps",
+            "source": "src/gapbs",
             "is_tar_archive": null,
             "download_url": "{url_base}/images/x86/ubuntu-18-04/gapbs.img.gz",
             "additional_metadata": {
@@ -778,7 +778,7 @@
             "gem5_version": "22.1",
             "author": null,
             "tags": null,
-            "github_url": "https://github.com/gem5/gem5-resources/tree/develop/src/gabps"
+            "github_url": "https://github.com/gem5/gem5-resources/tree/develop/src/gapbs"
         },
         {
             "category": "benchmark",
