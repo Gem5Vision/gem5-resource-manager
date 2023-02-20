@@ -114,18 +114,21 @@ with open('resources.json', 'r+') as f:
                 # get contnt between --- and ---
                 content = content.split('---')[1]
                 content = content.split('---')[0]
-                tags = content.split('tags:\n')[1]
-                # get all tags till there is no indentation
-                tags = tags.split('\n')
-                for i in range(len(tags)):
-                    if not tags[i].startswith(' '):
-                        tags = tags[:i]
-                        break
-                # trim white spaces
-                tags = [tag.strip().replace('- ', '') for tag in tags]
-                resource['tags'] = tags
+                if(content.startswith('tags:')):
+                    tags = content.split('tags:\n')[1]
+                    # get all tags till there is no indentation
+                    tags = tags.split('\n')
+                    for i in range(len(tags)):
+                        if not tags[i].startswith(' '):
+                            tags = tags[:i]
+                            break
+                    # trim white spaces
+                    tags = [tag.strip().replace('- ', '') for tag in tags]
+                    resource['tags'] = tags
                 # get author
                 author = content.split('author:')[1]
+                if(resource['source'] == 'src/print-this'):
+                    print(author)
                 author = author.split('\n')[0]
                 # covert ["Name1", "Name2"] to a list of strings
                 author = author.replace(
