@@ -70,5 +70,8 @@ def merge_df(dfs):
 dfs = []
 for k, v in ver_map.items():
     df = json_to_pd('resources_'+k+'.json', k, v)
+    df = df.where((pd.notnull(df)), None)
+    print(df.shape)
     dfs.append(df)
+
 merge_df(dfs)
