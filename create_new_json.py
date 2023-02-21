@@ -29,19 +29,22 @@ def change_type(resource):
 
 # fetch file from google source at https://gem5.googlesource.com/public/gem5-resources/+/refs/heads/stable/resources.json
 # and save it as resources.json
-data = requests.get(
+""" data = requests.get(
     'https://gem5.googlesource.com/public/gem5-resources/+/refs/heads/develop/resources.json?format=TEXT').text
-data = base64.b64decode(data).decode('utf-8')
-
+data = base64.b64decode(data).decode('utf-8') """
+# read from test.json
+data = open('test.json', 'r').read()
 
 with open('resources.json', 'w') as newf:
     data = json.loads(data)
+    print(data)
     new_resources = []
-    resources = data['resources']
-    for resource in resources:
+    # resources = data['resources']
+    for resource in data:
         if resource['type'] == 'group':
             for group in resource['contents']:
                 group['group'] = resource['name']
+                group['versions'] = resource['versions']
                 group = change_type(group)
                 new_resources.append(group)
         else:
@@ -96,13 +99,13 @@ with open('resources.json', 'w') as newf:
     # print to json and replace Nan with None
     df = df.where((pd.notnull(df)), None)
     resources = df.to_dict('records')
-    data['resources'] = resources
+    # data['resources'] = resources
     newf.write(json.dumps(data, indent=4))
 
 
 with open('resources.json', 'r+') as f:
     data = json.load(f)
-    for resource in data['resources']:
+    for resource in data:
         if resource['source'] is not None:
             try:
                 print(resource['source'])
