@@ -37,7 +37,6 @@ data = open('test.json', 'r').read()
 
 with open('resources.json', 'w') as newf:
     data = json.loads(data)
-    print(data)
     new_resources = []
     # resources = data['resources']
     for resource in data:
@@ -97,10 +96,12 @@ with open('resources.json', 'w') as newf:
     # add github_url column and initialize it to None
     df['github_url'] = None
     # print to json and replace Nan with None
+    # remove columns contents 
+    df = df.drop(columns=['contents'])
     df = df.where((pd.notnull(df)), None)
     resources = df.to_dict('records')
     # data['resources'] = resources
-    newf.write(json.dumps(data, indent=4))
+    newf.write(json.dumps(resources, indent=4))
 
 
 with open('resources.json', 'r+') as f:
