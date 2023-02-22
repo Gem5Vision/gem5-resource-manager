@@ -3,30 +3,6 @@ import requests
 import base64
 import pandas as pd
 
-
-def change_type(resource):
-    if resource['type'] == 'workload':
-        # get the architecture from the name and remove 64 from it
-        resource['architecture'] = resource['name'].split(
-            '-')[0].replace('64', '').upper()
-        return resource
-    if 'kernel' in resource['name']:
-        resource['type'] = 'kernel'
-    elif 'bootloader' in resource['name']:
-        resource['type'] = 'bootloader'
-    elif 'benchmark' in resource['documentation']:
-        resource['type'] = 'benchmark'
-    elif resource['url'] is not None and '.img.gz' in resource['url']:
-        resource['type'] = 'diskimage'
-    elif 'binary' in resource['documentation']:
-        resource['type'] = 'binary'
-    elif 'checkpoint' in resource['documentation']:
-        resource['type'] = 'checkpoint'
-    elif 'simpoint' in resource['documentation']:
-        resource['type'] = 'simpoint'
-    return resource
-
-
 # fetch file from google source at https://gem5.googlesource.com/public/gem5-resources/+/refs/heads/stable/resources.json
 # and save it as resources.json
 """ data = requests.get(
@@ -37,20 +13,7 @@ data = open('test.json', 'r').read()
 
 with open('resources.json', 'w') as newf:
     data = json.loads(data)
-    new_resources = []
-    # resources = data['resources']
-    for resource in data:
-        if resource['type'] == 'group':
-            for group in resource['contents']:
-                group['group'] = resource['name']
-                group['versions'] = resource['versions']
-                group = change_type(group)
-                new_resources.append(group)
-        else:
-            resource = change_type(resource)
-            new_resources.append(resource)
-
-    df = pd.DataFrame(new_resources)
+    df = pd.DataFrame(data)
     # get all categories
     categories = df['type'].unique()
     print(categories)
@@ -96,8 +59,7 @@ with open('resources.json', 'w') as newf:
     # add github_url column and initialize it to None
     df['github_url'] = None
     # print to json and replace Nan with None
-    # remove columns contents 
-    df = df.drop(columns=['contents'])
+    # remove columns contents
     df = df.where((pd.notnull(df)), None)
     resources = df.to_dict('records')
     # data['resources'] = resources
@@ -131,8 +93,6 @@ with open('resources.json', 'r+') as f:
                     resource['tags'] = tags
                 # get author
                 author = content.split('author:')[1]
-                if(resource['source'] == 'src/print-this'):
-                    print(author)
                 author = author.split('\n')[0]
                 # covert ["Name1", "Name2"] to a list of strings
                 author = author.replace(

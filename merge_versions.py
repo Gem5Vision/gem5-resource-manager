@@ -10,13 +10,46 @@ ver_map = {
 }
 
 
+def change_type(resource):
+    if resource['type'] == 'workload':
+        # get the architecture from the name and remove 64 from it
+        resource['architecture'] = resource['name'].split(
+            '-')[0].replace('64', '').upper()
+        return resource
+    if 'kernel' in resource['name']:
+        resource['type'] = 'kernel'
+    elif 'bootloader' in resource['name']:
+        resource['type'] = 'bootloader'
+    elif 'benchmark' in resource['documentation']:
+        resource['type'] = 'benchmark'
+    elif resource['url'] is not None and '.img.gz' in resource['url']:
+        resource['type'] = 'diskimage'
+    elif 'binary' in resource['documentation']:
+        resource['type'] = 'binary'
+    elif 'checkpoint' in resource['documentation']:
+        resource['type'] = 'checkpoint'
+    elif 'simpoint' in resource['documentation']:
+        resource['type'] = 'simpoint'
+    return resource
+
+
 def json_to_pd(filename, ver, url):
     with open(filename, 'r') as newf:
         data = json.load(newf)
         resources = data['resources']
-        for resource in resources['resources']:
-            resource['versions'] = {ver: url}
-        df = pd.DataFrame(resources)
+        new_resources = []
+        for resource in resources:
+            if resource['type'] == 'group':
+                for group in resource['contents']:
+                    group['group'] = resource['name']
+                    group['versions'] = {ver: url}
+                    group = change_type(group)
+                    new_resources.append(group)
+            else:
+                resource = change_type(resource)
+                resource['versions'] = {ver: url}
+                new_resources.append(resource)
+        df = pd.DataFrame(new_resources)
         return df
 
 
