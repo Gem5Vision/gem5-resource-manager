@@ -16,7 +16,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 11162360
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -35,7 +36,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 972947
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "binary",
@@ -52,7 +54,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 913552
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "benchmark",
@@ -71,7 +74,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 8084838113
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "benchmark",
@@ -90,7 +94,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 1020006144
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "benchmark",
@@ -109,7 +114,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 789786106
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -128,7 +134,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 688119691
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -147,7 +154,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 1611902265
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "binary",
@@ -164,7 +172,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 21849792
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "kernel",
@@ -181,7 +190,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24487616
         },
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": "linux-kernel"
     },
     {
         "type": "kernel",
@@ -198,7 +208,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 26557912
         },
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": "linux-kernel"
     },
     {
         "type": "bootloader",
@@ -215,7 +226,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13813360
         },
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": "linux-kernel"
     },
     {
         "type": "kernel",
@@ -232,7 +244,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10655720
         },
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": "linux-kernel"
     },
     {
         "type": "binary",
@@ -249,7 +262,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 4674040
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -266,7 +280,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 3418504
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -283,7 +298,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 2667300
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -300,7 +316,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 837626
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -317,7 +334,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 644149
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -334,7 +352,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 625955
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -351,7 +370,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 810440
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -368,7 +388,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 727848
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -385,7 +406,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 8640
         },
-        "group": "hello"
+        "group": "hello",
+        "tags": "hello"
     },
     {
         "type": "binary",
@@ -402,7 +424,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 4820160
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "binary",
@@ -419,7 +442,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13656
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -436,7 +460,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13728
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -453,7 +478,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14336
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -470,7 +496,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14008
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -487,7 +514,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13952
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -504,7 +532,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13656
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -521,7 +550,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13680
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -538,7 +568,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -555,7 +586,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -572,7 +604,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -589,7 +622,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13808
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -606,7 +640,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13888
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -623,7 +658,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13720
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -640,7 +676,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13808
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -657,7 +694,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14240
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -674,7 +712,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 17872
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -691,7 +730,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 38408
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -708,7 +748,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13656
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -725,7 +766,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -742,7 +784,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -759,7 +802,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13616
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -776,7 +820,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -793,7 +838,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -810,7 +856,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -827,7 +874,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -844,7 +892,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -861,7 +910,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -878,7 +928,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -895,7 +946,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -912,7 +964,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -929,7 +982,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -946,7 +1000,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -963,7 +1018,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -980,7 +1036,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -997,7 +1054,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1014,7 +1072,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1031,7 +1090,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1048,7 +1108,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1065,7 +1126,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1082,7 +1144,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14936
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1099,7 +1162,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1116,7 +1180,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1133,7 +1198,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1150,7 +1216,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1167,7 +1234,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1184,7 +1252,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1201,7 +1270,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1218,7 +1288,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1235,7 +1306,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1252,7 +1324,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1269,7 +1342,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1286,7 +1360,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1303,7 +1378,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1320,7 +1396,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1337,7 +1414,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1354,7 +1432,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1371,7 +1450,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1388,7 +1468,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9480
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1405,7 +1486,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14664
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1422,7 +1504,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1439,7 +1522,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1456,7 +1540,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1473,7 +1558,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1490,7 +1576,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1507,7 +1594,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1524,7 +1612,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1541,7 +1630,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1558,7 +1648,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1575,7 +1666,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1592,7 +1684,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1609,7 +1702,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1626,7 +1720,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1643,7 +1738,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1660,7 +1756,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1677,7 +1774,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1694,7 +1792,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1711,7 +1810,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1728,7 +1828,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 20160
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1745,7 +1846,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13592
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1762,7 +1864,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1779,7 +1882,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1796,7 +1900,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1813,7 +1918,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1830,7 +1936,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1847,7 +1954,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1864,7 +1972,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13624
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1881,7 +1990,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13640
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1898,7 +2008,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13624
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1915,7 +2026,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 22752
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1932,7 +2044,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 36168
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1949,7 +2062,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14608
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1966,7 +2080,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13928
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -1983,7 +2098,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2000,7 +2116,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14488
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2017,7 +2134,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 17656
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2034,7 +2152,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14408
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2051,7 +2170,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14808
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2068,7 +2188,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15424
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2085,7 +2206,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13832
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2102,7 +2224,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19392
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2119,7 +2242,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14040
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2136,7 +2260,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2153,7 +2278,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14336
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2170,7 +2296,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9536
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2187,7 +2314,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14840
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2204,7 +2332,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14216
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2221,7 +2350,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 17384
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2238,7 +2368,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14136
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2255,7 +2386,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14536
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2272,7 +2404,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15152
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2289,7 +2422,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2306,7 +2440,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10912
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2323,7 +2458,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13768
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2340,7 +2476,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9128
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2357,7 +2494,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19832
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2374,7 +2512,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19152
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2391,7 +2530,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 20336
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2408,7 +2548,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19704
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2425,7 +2566,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 26976
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2442,7 +2584,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19632
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2459,7 +2602,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 20032
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2476,7 +2620,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24744
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2493,7 +2638,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19056
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2510,7 +2656,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24616
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2527,7 +2674,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19264
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2544,7 +2692,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18784
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2561,7 +2710,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14448
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2578,7 +2728,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13928
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2595,7 +2746,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14872
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2612,7 +2764,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14184
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2629,7 +2782,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 16680
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2646,7 +2800,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14192
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2663,7 +2818,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14616
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2680,7 +2836,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15136
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2697,7 +2854,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13736
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2714,7 +2872,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14216
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2731,7 +2890,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13872
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2748,7 +2908,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14176
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2765,7 +2926,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9536
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2782,7 +2944,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2799,7 +2962,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13912
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2816,7 +2980,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 16408
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2833,7 +2998,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13936
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2850,7 +3016,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2867,7 +3034,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14864
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2884,7 +3052,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13464
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2901,7 +3070,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9824
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2918,7 +3088,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2935,7 +3106,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19672
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2952,7 +3124,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19152
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2969,7 +3142,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 20096
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -2986,7 +3160,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19408
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3003,7 +3178,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 26000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3020,7 +3196,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19416
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3037,7 +3214,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19840
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3054,7 +3232,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24456
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3071,7 +3250,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18960
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3088,7 +3268,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19440
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3105,7 +3286,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19088
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3122,7 +3304,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14792
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3139,7 +3322,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3156,7 +3340,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3173,7 +3358,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14792
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3190,7 +3376,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14440
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3207,7 +3394,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14024
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3224,7 +3412,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13680
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3241,7 +3430,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3258,7 +3448,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3275,7 +3466,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3292,7 +3484,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3309,7 +3502,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3326,7 +3520,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3343,7 +3538,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13720
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3360,7 +3556,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13744
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3377,7 +3574,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13936
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3394,7 +3592,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3411,7 +3610,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3428,7 +3628,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14360
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3445,7 +3646,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3462,7 +3664,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3479,7 +3682,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13768
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3496,7 +3700,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3513,7 +3718,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14344
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3530,7 +3736,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14440
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3547,7 +3754,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14024
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3564,7 +3772,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14656
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3581,7 +3790,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14720
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3598,7 +3808,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14672
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3615,7 +3826,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3632,7 +3844,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15048
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3649,7 +3862,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14472
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3666,7 +3880,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3683,7 +3898,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15080
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3700,7 +3916,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14792
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3717,7 +3934,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3734,7 +3952,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3751,7 +3970,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14792
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3768,7 +3988,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14952
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3785,7 +4006,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3802,7 +4024,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14568
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3819,7 +4042,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15080
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3836,7 +4060,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14952
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3853,7 +4078,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3870,7 +4096,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3887,7 +4114,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 15080
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3904,7 +4132,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14760
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3921,7 +4150,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14760
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3938,7 +4168,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3955,7 +4186,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14440
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3972,7 +4204,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14024
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -3989,7 +4222,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4006,7 +4240,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9984
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4023,7 +4258,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9984
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4040,7 +4276,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4057,7 +4294,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10048
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4074,7 +4312,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9632
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4091,7 +4330,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9288
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4108,7 +4348,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9856
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4125,7 +4366,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9952
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4142,7 +4384,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9952
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4159,7 +4402,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9856
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4176,7 +4420,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9856
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4193,7 +4438,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9856
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4210,7 +4456,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13448
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4227,7 +4474,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9352
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4244,7 +4492,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9544
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4261,7 +4510,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14072
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4278,7 +4528,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14072
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4295,7 +4546,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14088
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4312,7 +4564,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14072
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4329,7 +4582,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14072
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4346,7 +4600,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9376
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4363,7 +4618,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14072
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4380,7 +4636,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14072
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4397,7 +4654,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10048
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4414,7 +4672,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9632
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4431,7 +4690,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14384
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4448,7 +4708,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14448
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4465,7 +4726,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4482,7 +4744,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9128
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4499,7 +4762,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10656
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4516,7 +4780,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10080
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4533,7 +4798,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4550,7 +4816,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4567,7 +4834,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4584,7 +4852,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9984
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4601,7 +4870,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9984
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4618,7 +4888,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4635,7 +4906,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4652,7 +4924,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9984
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4669,7 +4942,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10176
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4686,7 +4960,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4703,7 +4978,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4720,7 +4996,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9984
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4737,7 +5014,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4754,7 +5032,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10688
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4771,7 +5050,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10368
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4788,7 +5068,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10368
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4805,7 +5086,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14416
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4822,7 +5104,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10048
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4839,7 +5122,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9632
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4856,7 +5140,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4873,7 +5158,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4890,7 +5176,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4907,7 +5194,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4924,7 +5212,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23760
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4941,7 +5230,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4958,7 +5248,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18904
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4975,7 +5266,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19472
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -4992,7 +5284,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19568
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5009,7 +5302,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23664
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5026,7 +5320,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19472
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5043,7 +5338,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23568
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5060,7 +5356,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19472
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5077,7 +5374,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18928
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5094,7 +5392,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18968
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5111,7 +5410,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19160
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5128,7 +5428,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19552
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5145,7 +5446,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19552
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5162,7 +5464,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23680
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5179,7 +5482,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5196,7 +5500,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19560
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5213,7 +5518,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18992
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5230,7 +5536,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19568
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5247,7 +5554,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19568
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5264,7 +5572,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23760
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5281,7 +5590,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5298,7 +5608,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23968
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5315,7 +5626,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24040
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5332,7 +5644,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23976
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5349,7 +5662,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 18784
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5366,7 +5680,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24368
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5383,7 +5698,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19696
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5400,7 +5716,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19728
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5417,7 +5734,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5434,7 +5752,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5451,7 +5770,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5468,7 +5788,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5485,7 +5806,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5502,7 +5824,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24272
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5519,7 +5842,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5536,7 +5860,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19792
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5553,7 +5878,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5570,7 +5896,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24272
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5587,7 +5914,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19600
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5604,7 +5932,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19728
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5621,7 +5950,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24400
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5638,7 +5968,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24080
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5655,7 +5986,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24080
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5672,7 +6004,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 24000
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5689,7 +6022,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23760
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5706,7 +6040,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19248
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5723,7 +6058,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5740,7 +6076,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5757,7 +6094,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5774,7 +6112,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5791,7 +6130,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14632
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5808,7 +6148,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5825,7 +6166,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5842,7 +6184,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14568
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5859,7 +6202,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 14504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5876,7 +6220,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5893,7 +6238,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5910,7 +6256,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13896
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5927,7 +6274,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 13928
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5944,7 +6292,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5961,7 +6310,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5978,7 +6328,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -5995,7 +6346,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6012,7 +6364,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10240
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6029,7 +6382,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6046,7 +6400,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6063,7 +6418,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10176
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6080,7 +6436,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 10112
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6097,7 +6454,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6114,7 +6472,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6131,7 +6490,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9504
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6148,7 +6508,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 9536
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6165,7 +6526,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6182,7 +6544,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6199,7 +6562,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6216,7 +6580,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6233,7 +6598,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23952
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6250,7 +6616,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23824
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6267,7 +6634,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23824
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6284,7 +6652,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23888
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6301,7 +6670,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 23824
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6318,7 +6688,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6335,7 +6706,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6352,7 +6724,8 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19120
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     },
     {
         "type": "binary",
@@ -6369,6 +6742,7 @@
             "url": "http://dist.gem5.org/dist/v21-2",
             "size": 19152
         },
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": "asmtest"
     }
 ]

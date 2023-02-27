@@ -61,6 +61,7 @@ def json_to_pd(filename, ver, url):
             if resource['type'] == 'group':
                 for group in resource['contents']:
                     group['group'] = resource['name']
+                    group['tags'] = resource['name']
                     # replcae the {url_base} with the url
                     download_url = ""
                     if(group['url'] is not None):
