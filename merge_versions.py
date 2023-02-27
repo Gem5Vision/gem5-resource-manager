@@ -61,7 +61,7 @@ def json_to_pd(filename, ver, url):
             if resource['type'] == 'group':
                 for group in resource['contents']:
                     group['group'] = resource['name']
-                    group['tags'] = resource['name']
+                    group['tags'] = [resource['name']]
                     # replcae the {url_base} with the url
                     download_url = ""
                     if(group['url'] is not None):
@@ -167,9 +167,9 @@ for k, v in ver_map.items():
         json.dump(resources, f, indent=4)
 # print the first row of the first dataframe
 # read the json files
-for k, v in ver_map.items():
+""" for k, v in ver_map.items():
     with open('resources_test_'+k+'.json', 'r') as f:
         data = json.load(f)
         df = pd.DataFrame(data)
-        dfs.append(df)
+        dfs.append(df) """
 test_merge(dfs)

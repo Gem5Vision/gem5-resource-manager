@@ -46,7 +46,6 @@ with open('resources.json', 'w') as newf:
     df['gem5_version'] = '22.1'
     # add author column and initialize it to empty list
     df['author'] = None
-    df['tags'] = None
     # add downloads column and initialize it to 0
     # df['downloads'] = 0
 
@@ -80,17 +79,20 @@ with open('resources.json', 'r+') as f:
                 # get contnt between --- and ---
                 content = content.split('---')[1]
                 content = content.split('---')[0]
-                if(content.startswith('tags:')):
+                if('tags:' in content):
+                    print('tags')
                     tags = content.split('tags:\n')[1]
-                    # get all tags till there is no indentation
-                    tags = tags.split('\n')
-                    for i in range(len(tags)):
-                        if not tags[i].startswith(' '):
-                            tags = tags[:i]
-                            break
-                    # trim white spaces
+                    tags = tags.split(':')[0]
+                    # remove last line
+                    tags = tags.split('\n')[:-1]
                     tags = [tag.strip().replace('- ', '') for tag in tags]
-                    resource['tags'] = tags
+                    print(tags)
+                    if tags == ['']:
+                        tags = None
+                    if resource['tags'] is None:
+                        resource['tags'] = tags
+                    else:
+                        resource['tags'].extend(tags)
                 # get author
                 author = content.split('author:')[1]
                 author = author.split('\n')[0]
