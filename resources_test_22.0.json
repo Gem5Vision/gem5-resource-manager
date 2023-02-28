@@ -15,7 +15,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "checkpoint",
@@ -33,7 +34,8 @@
         },
         "is_tar_archive": true,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -53,7 +55,8 @@
         "additional_metadata": {
             "root_partition": null
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -73,7 +76,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "binary",
@@ -91,7 +95,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "benchmark",
@@ -111,7 +116,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "benchmark",
@@ -131,7 +137,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "benchmark",
@@ -151,7 +158,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -171,7 +179,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -191,7 +200,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -211,7 +221,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -231,7 +242,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "diskimage",
@@ -251,7 +263,8 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "binary",
@@ -269,7 +282,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "bootloader",
@@ -287,7 +301,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "bootloader",
@@ -305,7 +320,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "bootloader",
@@ -323,7 +339,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "bootloader",
@@ -341,7 +358,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "kernel",
@@ -359,7 +377,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -377,7 +398,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -395,7 +419,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -413,7 +440,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -431,7 +461,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -449,7 +482,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -467,7 +503,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -485,7 +524,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -503,7 +545,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -521,7 +566,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -539,7 +587,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -557,7 +608,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -575,7 +629,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -593,7 +650,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "bootloader",
@@ -611,7 +671,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "kernel",
@@ -629,7 +692,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "linux-kernel"
+        "group": "linux-kernel",
+        "tags": [
+            "linux-kernel"
+        ]
     },
     {
         "type": "binary",
@@ -647,7 +713,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -665,7 +734,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -683,7 +755,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -701,7 +776,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -719,7 +797,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -737,7 +818,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -755,7 +839,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -773,7 +860,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -791,7 +881,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "hello"
+        "group": "hello",
+        "tags": [
+            "hello"
+        ]
     },
     {
         "type": "binary",
@@ -809,7 +902,8 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": null
+        "group": null,
+        "tags": null
     },
     {
         "type": "binary",
@@ -827,7 +921,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -845,7 +942,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -863,7 +963,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -881,7 +984,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -899,7 +1005,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -917,7 +1026,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -935,7 +1047,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -953,7 +1068,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -971,7 +1089,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -989,7 +1110,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1007,7 +1131,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1025,7 +1152,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1043,7 +1173,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1061,7 +1194,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1079,7 +1215,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1097,7 +1236,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1115,7 +1257,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1133,7 +1278,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1151,7 +1299,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1169,7 +1320,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1187,7 +1341,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1205,7 +1362,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1223,7 +1383,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1241,7 +1404,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1259,7 +1425,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1277,7 +1446,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1295,7 +1467,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1313,7 +1488,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1331,7 +1509,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1349,7 +1530,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1367,7 +1551,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1385,7 +1572,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1403,7 +1593,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1421,7 +1614,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1439,7 +1635,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1457,7 +1656,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1475,7 +1677,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1493,7 +1698,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1511,7 +1719,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1529,7 +1740,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1547,7 +1761,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1565,7 +1782,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1583,7 +1803,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1601,7 +1824,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1619,7 +1845,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1637,7 +1866,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1655,7 +1887,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1673,7 +1908,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1691,7 +1929,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1709,7 +1950,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1727,7 +1971,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1745,7 +1992,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1763,7 +2013,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1781,7 +2034,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1799,7 +2055,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1817,7 +2076,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1835,7 +2097,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1853,7 +2118,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1871,7 +2139,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1889,7 +2160,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1907,7 +2181,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1925,7 +2202,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1943,7 +2223,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1961,7 +2244,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1979,7 +2265,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -1997,7 +2286,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2015,7 +2307,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2033,7 +2328,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2051,7 +2349,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2069,7 +2370,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2087,7 +2391,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2105,7 +2412,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2123,7 +2433,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2141,7 +2454,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2159,7 +2475,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2177,7 +2496,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2195,7 +2517,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2213,7 +2538,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2231,7 +2559,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2249,7 +2580,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2267,7 +2601,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2285,7 +2622,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2303,7 +2643,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2321,7 +2664,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2339,7 +2685,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2357,7 +2706,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2375,7 +2727,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2393,7 +2748,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2411,7 +2769,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2429,7 +2790,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2447,7 +2811,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2465,7 +2832,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2483,7 +2853,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2501,7 +2874,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2519,7 +2895,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2537,7 +2916,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2555,7 +2937,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2573,7 +2958,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2591,7 +2979,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2609,7 +3000,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2627,7 +3021,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2645,7 +3042,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2663,7 +3063,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2681,7 +3084,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2699,7 +3105,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2717,7 +3126,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2735,7 +3147,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2753,7 +3168,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2771,7 +3189,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2789,7 +3210,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2807,7 +3231,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2825,7 +3252,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2843,7 +3273,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2861,7 +3294,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2879,7 +3315,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2897,7 +3336,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2915,7 +3357,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2933,7 +3378,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2951,7 +3399,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2969,7 +3420,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -2987,7 +3441,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3005,7 +3462,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3023,7 +3483,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3041,7 +3504,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3059,7 +3525,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3077,7 +3546,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3095,7 +3567,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3113,7 +3588,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3131,7 +3609,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3149,7 +3630,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3167,7 +3651,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3185,7 +3672,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3203,7 +3693,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3221,7 +3714,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3239,7 +3735,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3257,7 +3756,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3275,7 +3777,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3293,7 +3798,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3311,7 +3819,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3329,7 +3840,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3347,7 +3861,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3365,7 +3882,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3383,7 +3903,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3401,7 +3924,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3419,7 +3945,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3437,7 +3966,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3455,7 +3987,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3473,7 +4008,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3491,7 +4029,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3509,7 +4050,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3527,7 +4071,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3545,7 +4092,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3563,7 +4113,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3581,7 +4134,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3599,7 +4155,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3617,7 +4176,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3635,7 +4197,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3653,7 +4218,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3671,7 +4239,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3689,7 +4260,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3707,7 +4281,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3725,7 +4302,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3743,7 +4323,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3761,7 +4344,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3779,7 +4365,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3797,7 +4386,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3815,7 +4407,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3833,7 +4428,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3851,7 +4449,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3869,7 +4470,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3887,7 +4491,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3905,7 +4512,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3923,7 +4533,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3941,7 +4554,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3959,7 +4575,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3977,7 +4596,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -3995,7 +4617,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4013,7 +4638,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4031,7 +4659,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4049,7 +4680,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4067,7 +4701,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4085,7 +4722,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4103,7 +4743,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4121,7 +4764,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4139,7 +4785,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4157,7 +4806,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4175,7 +4827,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4193,7 +4848,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4211,7 +4869,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4229,7 +4890,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4247,7 +4911,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4265,7 +4932,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4283,7 +4953,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4301,7 +4974,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4319,7 +4995,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4337,7 +5016,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4355,7 +5037,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4373,7 +5058,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4391,7 +5079,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4409,7 +5100,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4427,7 +5121,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4445,7 +5142,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4463,7 +5163,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4481,7 +5184,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4499,7 +5205,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4517,7 +5226,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4535,7 +5247,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4553,7 +5268,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4571,7 +5289,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4589,7 +5310,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4607,7 +5331,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4625,7 +5352,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4643,7 +5373,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4661,7 +5394,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4679,7 +5415,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4697,7 +5436,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4715,7 +5457,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4733,7 +5478,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4751,7 +5499,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4769,7 +5520,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4787,7 +5541,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4805,7 +5562,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4823,7 +5583,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4841,7 +5604,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4859,7 +5625,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4877,7 +5646,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4895,7 +5667,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4913,7 +5688,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4931,7 +5709,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4949,7 +5730,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4967,7 +5751,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -4985,7 +5772,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5003,7 +5793,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5021,7 +5814,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5039,7 +5835,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5057,7 +5856,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5075,7 +5877,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5093,7 +5898,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5111,7 +5919,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5129,7 +5940,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5147,7 +5961,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5165,7 +5982,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5183,7 +6003,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5201,7 +6024,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5219,7 +6045,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5237,7 +6066,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5255,7 +6087,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5273,7 +6108,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5291,7 +6129,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5309,7 +6150,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5327,7 +6171,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5345,7 +6192,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5363,7 +6213,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5381,7 +6234,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5399,7 +6255,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5417,7 +6276,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5435,7 +6297,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5453,7 +6318,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5471,7 +6339,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5489,7 +6360,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5507,7 +6381,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5525,7 +6402,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5543,7 +6423,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5561,7 +6444,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5579,7 +6465,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5597,7 +6486,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5615,7 +6507,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5633,7 +6528,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5651,7 +6549,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5669,7 +6570,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5687,7 +6591,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5705,7 +6612,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5723,7 +6633,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5741,7 +6654,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5759,7 +6675,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5777,7 +6696,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5795,7 +6717,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5813,7 +6738,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5831,7 +6759,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5849,7 +6780,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5867,7 +6801,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5885,7 +6822,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5903,7 +6843,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5921,7 +6864,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5939,7 +6885,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5957,7 +6906,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5975,7 +6927,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -5993,7 +6948,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6011,7 +6969,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6029,7 +6990,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6047,7 +7011,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6065,7 +7032,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6083,7 +7053,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6101,7 +7074,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6119,7 +7095,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6137,7 +7116,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6155,7 +7137,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6173,7 +7158,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6191,7 +7179,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6209,7 +7200,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6227,7 +7221,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6245,7 +7242,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6263,7 +7263,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6281,7 +7284,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6299,7 +7305,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6317,7 +7326,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6335,7 +7347,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6353,7 +7368,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6371,7 +7389,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6389,7 +7410,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6407,7 +7431,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6425,7 +7452,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6443,7 +7473,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6461,7 +7494,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6479,7 +7515,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6497,7 +7536,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6515,7 +7557,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6533,7 +7578,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6551,7 +7599,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6569,7 +7620,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6587,7 +7641,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6605,7 +7662,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6623,7 +7683,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6641,7 +7704,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6659,7 +7725,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6677,7 +7746,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6695,7 +7767,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6713,7 +7788,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6731,7 +7809,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6749,7 +7830,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6767,7 +7851,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6785,7 +7872,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6803,7 +7893,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6821,7 +7914,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6839,7 +7935,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6857,7 +7956,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6875,7 +7977,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6893,7 +7998,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6911,7 +8019,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6929,7 +8040,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6947,7 +8061,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6965,7 +8082,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -6983,7 +8103,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7001,7 +8124,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7019,7 +8145,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7037,7 +8166,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7055,7 +8187,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7073,7 +8208,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7091,7 +8229,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7109,7 +8250,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7127,7 +8271,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7145,7 +8292,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7163,7 +8313,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7181,7 +8334,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7199,7 +8355,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7217,7 +8376,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7235,7 +8397,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7253,7 +8418,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7271,7 +8439,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7289,7 +8460,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7307,7 +8481,10 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     },
     {
         "type": "binary",
@@ -7325,6 +8502,9 @@
         },
         "is_tar_archive": null,
         "additional_metadata": null,
-        "group": "asmtest"
+        "group": "asmtest",
+        "tags": [
+            "asmtest"
+        ]
     }
 ]
