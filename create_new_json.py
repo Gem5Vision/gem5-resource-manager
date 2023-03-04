@@ -39,8 +39,6 @@ with open('resources.json', 'w') as newf:
     # add new column for name and initialize it with id but replace all - with space
     df['name'] = df['id'].str.replace('-', ' ')
 
-    # add new column for gem5_version and initialize it with 22.1
-    df['gem5_version'] = '22.1'
     # add author column and initialize it to empty list
     df['author'] = None
     # add downloads column and initialize it to 0
