@@ -67,7 +67,7 @@ with open('resources.json', 'r+') as f:
     for resource in data:
         if resource['source'] is not None:
             try:
-                # print(resource['source'])
+                print(resource['source'])
                 resource['github_url'] = 'https://github.com/gem5/gem5-resources/tree/develop/' + \
                     str(resource['source'])
                 request = requests.get(
@@ -91,18 +91,20 @@ with open('resources.json', 'r+') as f:
                     else:
                         resource['tags'].extend(tags)
                 # get author
-                author = content.split('author:')[1]
-                author = author.split('\n')[0]
-                # covert ["Name1", "Name2"] to a list of strings
-                author = author.replace(
-                    '[', '').replace(']', '').replace('"', '')
-                author = author.split(',')
-                author = [a.strip() for a in author]
-                resource['author'] = author
-                print(content)
-                license = content.split('license:')[1]
-                print("license:", license)
-                resource['license'] = license
+                # check if author is present
+                if('author:' in content):
+                    author = content.split('author:')[1]
+                    author = author.split('\n')[0]
+                    # covert ["Name1", "Name2"] to a list of strings
+                    author = author.replace(
+                        '[', '').replace(']', '').replace('"', '')
+                    author = author.split(',')
+                    author = [a.strip() for a in author]
+                    resource['author'] = author
+                if 'license:' in content:
+                    license = content.split('license:')[1].split('\n')[0]
+                    print("Licensedasdasdasd:", license)
+                    resource['license'] = license
             except:
                 pass
     f.seek(0)
