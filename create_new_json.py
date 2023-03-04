@@ -17,9 +17,6 @@ with open('resources.json', 'w') as newf:
     # get all categories
     categories = df['type'].unique()
     print(categories)
-    # get names of all the groups
-    groups = df[df['group'].notnull()]['group'].unique()
-    print(groups)
     # get all types of architectures
     archs = df[df['architecture'].notnull()]['architecture'].unique()
     print(archs)
@@ -70,7 +67,7 @@ with open('resources.json', 'r+') as f:
     for resource in data:
         if resource['source'] is not None:
             try:
-                print(resource['source'])
+                # print(resource['source'])
                 resource['github_url'] = 'https://github.com/gem5/gem5-resources/tree/develop/' + \
                     str(resource['source'])
                 request = requests.get(
@@ -80,13 +77,13 @@ with open('resources.json', 'r+') as f:
                 content = content.split('---')[1]
                 content = content.split('---')[0]
                 if('tags:' in content):
-                    print('tags')
+                    # print('tags')
                     tags = content.split('tags:\n')[1]
                     tags = tags.split(':')[0]
                     # remove last line
                     tags = tags.split('\n')[:-1]
                     tags = [tag.strip().replace('- ', '') for tag in tags]
-                    print(tags)
+                    # print(tags)
                     if tags == ['']:
                         tags = None
                     if resource['tags'] is None:
@@ -102,6 +99,10 @@ with open('resources.json', 'r+') as f:
                 author = author.split(',')
                 author = [a.strip() for a in author]
                 resource['author'] = author
+                print(content)
+                license = content.split('license:')[1]
+                print("license:", license)
+                resource['license'] = license
             except:
                 pass
     f.seek(0)

@@ -21,7 +21,6 @@
         "is_tar_archive": null,
         "url": null,
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -46,7 +45,6 @@
         "is_tar_archive": null,
         "url": null,
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -72,7 +70,6 @@
         "is_tar_archive": null,
         "url": null,
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -102,7 +99,6 @@
         "is_tar_archive": null,
         "url": null,
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -133,7 +129,6 @@
         "is_tar_archive": null,
         "url": null,
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -158,7 +153,6 @@
             "simpoint_interval": 1000000,
             "warmup_interval": 1000000
         },
-        "group": null,
         "tags": null
     },
     {
@@ -180,7 +174,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/misc/gpu/vega-mmio.log",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -202,7 +195,6 @@
         "is_tar_archive": true,
         "url": "{url_base}/checkpoints/riscv-hello-example-checkpoint.tar",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -224,7 +216,6 @@
         "is_tar_archive": true,
         "url": "{url_base}/checkpoints/simpoints-se-checkpoints-example-20220928.tar.gz",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -246,7 +237,6 @@
         "is_tar_archive": true,
         "url": "{url_base}/checkpoints/simpoints-se-checkpoints-example-20221014.tar.gz",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -268,7 +258,6 @@
         "is_tar_archive": true,
         "url": "{url_base}/checkpoints/riscv-hello-example-checkpoint-20220801.tar",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -292,7 +281,6 @@
         "additional_metadata": {
             "root_partition": null
         },
-        "group": null,
         "tags": null
     },
     {
@@ -316,7 +304,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -338,7 +325,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/m5-exit/bin/x86/linux/m5_exit",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -360,7 +346,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/m5-exit-repeat/x86-m5-exit-repeat-20220825",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -382,7 +367,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/matrix-multiply/x86-matrix-multiply-20220826",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -406,7 +390,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -430,7 +413,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -454,7 +436,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -478,7 +459,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -502,7 +482,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -526,7 +505,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -550,7 +528,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -574,7 +551,6 @@
         "additional_metadata": {
             "root_partition": "1"
         },
-        "group": null,
         "tags": null
     },
     {
@@ -596,7 +572,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/misc/riscv/bbl-busybox-boot-exit",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -618,7 +593,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/bootloaders/arm/boot.arm64-20220707",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -640,7 +614,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/bootloaders/arm/boot_emm.arm64-20220707",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -662,7 +635,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/bootloaders/arm/boot_foundation.arm64-20220707",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -684,7 +656,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/bootloaders/arm/boot_v2.arm64-20220707",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -706,7 +677,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-5.4.0-105-generic",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -730,7 +700,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-4.14.134",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -754,7 +723,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-4.19.83",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -778,7 +746,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-4.4.186",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -802,7 +769,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-4.9.186",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -826,7 +792,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-5.10.110",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -850,7 +815,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-5.15.36",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -874,7 +838,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/arm/static/arm64-vmlinux-5.4.49",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -898,7 +861,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-4.14.134",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -922,7 +884,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-4.19.83",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -946,7 +907,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-4.4.186",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -970,7 +930,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-4.9.186",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -994,7 +953,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-5.2.3",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -1018,7 +976,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/x86/static/vmlinux-5.4.49",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -1042,7 +999,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/riscv/static/bootloader-vmlinux-5.10",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -1066,7 +1022,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/kernels/riscv/static/lupio-linux-20220727",
         "additional_metadata": null,
-        "group": "linux-kernel",
         "tags": [
             "linux-kernel"
         ]
@@ -1090,7 +1045,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/print-this/riscv-print-this",
         "additional_metadata": null,
-        "group": "print-this",
         "tags": [
             "print-this"
         ]
@@ -1114,7 +1068,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/print-this/x86-print-this",
         "additional_metadata": null,
-        "group": "print-this",
         "tags": [
             "print-this"
         ]
@@ -1138,7 +1091,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/riscv/linux/hello-20220728",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1162,7 +1114,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/arm/linux/hello64-static",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1186,7 +1137,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/arm/linux/hello32-static",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1210,7 +1160,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/mips/linux/hello",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1234,7 +1183,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/sparc/linux/hello",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1258,7 +1206,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/power/linux/hello",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1282,7 +1229,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/x86/linux/hello64-static",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1306,7 +1252,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/x86/linux/hello32-static",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1330,7 +1275,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/hello/bin/x86/linux/hello64-dynamic",
         "additional_metadata": null,
-        "group": "hello",
         "tags": [
             "hello"
         ]
@@ -1354,7 +1298,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/insttest/bin/sparc/linux/insttest",
         "additional_metadata": null,
-        "group": null,
         "tags": null
     },
     {
@@ -1376,7 +1319,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-access",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1400,7 +1342,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-breakpoint",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1424,7 +1365,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-csr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1448,7 +1388,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-illegal",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1472,7 +1411,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-ma_addr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1496,7 +1434,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-ma_fetch",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1520,7 +1457,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-mcsr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1544,7 +1480,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-sbreak",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1568,7 +1503,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64mi-p-scall",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1592,7 +1526,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64samt-ps-sysclone_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1616,7 +1549,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64samt-ps-sysfutex1_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1640,7 +1572,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64samt-ps-sysfutex2_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1664,7 +1595,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64samt-ps-sysfutex3_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1688,7 +1618,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64samt-ps-sysfutex_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1712,7 +1641,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-csr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1736,7 +1664,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-dirty",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1760,7 +1687,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-icache-alias",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1784,7 +1710,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-ma_fetch",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1808,7 +1733,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-sbreak",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1832,7 +1756,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-scall",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1856,7 +1779,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64si-p-wfi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1880,7 +1802,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoadd_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1904,7 +1825,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoadd_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1928,7 +1848,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoand_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1952,7 +1871,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoand_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -1976,7 +1894,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amomax_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2000,7 +1917,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amomax_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2024,7 +1940,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amomaxu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2048,7 +1963,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amomaxu_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2072,7 +1986,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amomin_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2096,7 +2009,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amomin_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2120,7 +2032,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amominu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2144,7 +2055,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amominu_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2168,7 +2078,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2192,7 +2101,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoor_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2216,7 +2124,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoswap_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2240,7 +2147,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoswap_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2264,7 +2170,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoxor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2288,7 +2193,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-amoxor_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2312,7 +2216,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-p-lrsc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2336,7 +2239,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoadd_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2360,7 +2262,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoadd_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2384,7 +2285,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoand_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2408,7 +2308,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoand_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2432,7 +2331,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amomax_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2456,7 +2354,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amomax_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2480,7 +2377,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amomaxu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2504,7 +2400,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amomaxu_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2528,7 +2423,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amomin_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2552,7 +2446,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amomin_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2576,7 +2469,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amominu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2600,7 +2492,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amominu_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2624,7 +2515,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2648,7 +2538,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoor_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2672,7 +2561,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoswap_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2696,7 +2584,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoswap_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2720,7 +2607,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoxor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2744,7 +2630,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-amoxor_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2768,7 +2653,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-ps-lrsc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2792,7 +2676,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoadd_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2816,7 +2699,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoadd_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2840,7 +2722,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoand_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2864,7 +2745,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoand_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2888,7 +2768,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amomax_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2912,7 +2791,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amomax_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2936,7 +2814,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amomaxu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2960,7 +2837,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amomaxu_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -2984,7 +2860,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amomin_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3008,7 +2883,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amomin_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3032,7 +2906,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amominu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3056,7 +2929,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amominu_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3080,7 +2952,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3104,7 +2975,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoor_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3128,7 +2998,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoswap_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3152,7 +3021,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoswap_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3176,7 +3044,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoxor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3200,7 +3067,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-amoxor_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3224,7 +3090,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ua-v-lrsc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3248,7 +3113,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amoadd_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3272,7 +3136,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amoand_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3296,7 +3159,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amomax_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3320,7 +3182,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amomaxu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3344,7 +3205,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amomin_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3368,7 +3228,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amominu_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3392,7 +3251,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amoor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3416,7 +3274,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amoswap_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3440,7 +3297,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-amoxor_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3464,7 +3320,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uamt-ps-lrsc_d",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3488,7 +3343,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uc-p-rvc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3512,7 +3366,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uc-v-rvc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3536,7 +3389,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3560,7 +3412,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3584,7 +3435,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3608,7 +3458,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3632,7 +3481,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3656,7 +3504,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3680,7 +3527,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3704,7 +3550,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3728,7 +3573,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3752,7 +3596,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3776,7 +3619,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3800,7 +3642,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-p-structural",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3824,7 +3665,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3848,7 +3688,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3872,7 +3711,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3896,7 +3734,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3920,7 +3757,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3944,7 +3780,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3968,7 +3803,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -3992,7 +3826,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4016,7 +3849,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4040,7 +3872,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4064,7 +3895,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4088,7 +3918,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-ps-structural",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4112,7 +3941,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4136,7 +3964,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4160,7 +3987,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4184,7 +4010,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4208,7 +4033,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4232,7 +4056,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4256,7 +4079,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4280,7 +4102,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4304,7 +4125,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4328,7 +4148,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4352,7 +4171,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4376,7 +4194,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ud-v-structural",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4400,7 +4217,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4424,7 +4240,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4448,7 +4263,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4472,7 +4286,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4496,7 +4309,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4520,7 +4332,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4544,7 +4355,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4568,7 +4378,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4592,7 +4401,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4616,7 +4424,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4640,7 +4447,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-p-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4664,7 +4470,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4688,7 +4493,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4712,7 +4516,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4736,7 +4539,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4760,7 +4562,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4784,7 +4585,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4808,7 +4608,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4832,7 +4631,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4856,7 +4654,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4880,7 +4677,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4904,7 +4700,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-ps-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4928,7 +4723,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4952,7 +4746,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -4976,7 +4769,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5000,7 +4792,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5024,7 +4815,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5048,7 +4838,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5072,7 +4861,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5096,7 +4884,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5120,7 +4907,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5144,7 +4930,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5168,7 +4953,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uf-v-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5192,7 +4976,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-add",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5216,7 +4999,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-addi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5240,7 +5022,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-addiw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5264,7 +5045,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-addw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5288,7 +5068,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-and",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5312,7 +5091,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-andi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5336,7 +5114,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-auipc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5360,7 +5137,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-beq",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5384,7 +5160,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-bge",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5408,7 +5183,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-bgeu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5432,7 +5206,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-blt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5456,7 +5229,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-bltu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5480,7 +5252,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-bne",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5504,7 +5275,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-fence_i",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5528,7 +5298,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-jal",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5552,7 +5321,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-jalr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5576,7 +5344,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lb",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5600,7 +5367,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lbu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5624,7 +5390,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-ld",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5648,7 +5413,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5672,7 +5436,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lhu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5696,7 +5459,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lui",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5720,7 +5482,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5744,7 +5505,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-lwu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5768,7 +5528,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-or",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5792,7 +5551,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-ori",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5816,7 +5574,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sb",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5840,7 +5597,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5864,7 +5620,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5888,7 +5643,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-simple",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5912,7 +5666,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sll",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5936,7 +5689,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-slli",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5960,7 +5712,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-slliw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -5984,7 +5735,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sllw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6008,7 +5758,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-slt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6032,7 +5781,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-slti",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6056,7 +5804,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sltiu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6080,7 +5827,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sltu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6104,7 +5850,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sra",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6128,7 +5873,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-srai",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6152,7 +5896,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sraiw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6176,7 +5919,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sraw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6200,7 +5942,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-srl",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6224,7 +5965,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-srli",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6248,7 +5988,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-srliw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6272,7 +6011,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-srlw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6296,7 +6034,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sub",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6320,7 +6057,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-subw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6344,7 +6080,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-sw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6368,7 +6103,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-xor",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6392,7 +6126,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-p-xori",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6416,7 +6149,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-add",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6440,7 +6172,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-addi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6464,7 +6195,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-addiw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6488,7 +6218,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-addw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6512,7 +6241,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-and",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6536,7 +6264,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-andi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6560,7 +6287,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-auipc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6584,7 +6310,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-beq",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6608,7 +6333,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-bge",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6632,7 +6356,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-bgeu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6656,7 +6379,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-blt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6680,7 +6402,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-bltu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6704,7 +6425,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-bne",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6728,7 +6448,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-fence_i",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6752,7 +6471,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-jal",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6776,7 +6494,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-jalr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6800,7 +6517,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lb",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6824,7 +6540,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lbu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6848,7 +6563,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-ld",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6872,7 +6586,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6896,7 +6609,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lhu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6920,7 +6632,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lui",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6944,7 +6655,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6968,7 +6678,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-lwu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -6992,7 +6701,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-or",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7016,7 +6724,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-ori",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7040,7 +6747,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sb",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7064,7 +6770,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7088,7 +6793,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7112,7 +6816,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-simple",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7136,7 +6839,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sll",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7160,7 +6862,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-slli",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7184,7 +6885,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-slliw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7208,7 +6908,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sllw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7232,7 +6931,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-slt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7256,7 +6954,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-slti",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7280,7 +6977,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sltiu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7304,7 +7000,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sltu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7328,7 +7023,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sra",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7352,7 +7046,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-srai",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7376,7 +7069,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sraiw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7400,7 +7092,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sraw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7424,7 +7115,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-srl",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7448,7 +7138,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-srli",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7472,7 +7161,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-srliw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7496,7 +7184,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-srlw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7520,7 +7207,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sub",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7544,7 +7230,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-subw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7568,7 +7253,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-sw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7592,7 +7276,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-xor",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7616,7 +7299,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-ps-xori",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7640,7 +7322,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-add",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7664,7 +7345,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-addi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7688,7 +7368,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-addiw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7712,7 +7391,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-addw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7736,7 +7414,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-and",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7760,7 +7437,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-andi",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7784,7 +7460,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-auipc",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7808,7 +7483,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-beq",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7832,7 +7506,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-bge",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7856,7 +7529,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-bgeu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7880,7 +7552,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-blt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7904,7 +7575,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-bltu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7928,7 +7598,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-bne",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7952,7 +7621,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-fence_i",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -7976,7 +7644,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-jal",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8000,7 +7667,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-jalr",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8024,7 +7690,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lb",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8048,7 +7713,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lbu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8072,7 +7736,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-ld",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8096,7 +7759,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8120,7 +7782,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lhu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8144,7 +7805,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lui",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8168,7 +7828,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8192,7 +7851,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-lwu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8216,7 +7874,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-or",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8240,7 +7897,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-ori",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8264,7 +7920,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sb",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8288,7 +7943,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8312,7 +7966,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8336,7 +7989,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-simple",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8360,7 +8012,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sll",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8384,7 +8035,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-slli",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8408,7 +8058,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-slliw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8432,7 +8081,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sllw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8456,7 +8104,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-slt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8480,7 +8127,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-slti",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8504,7 +8150,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sltiu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8528,7 +8173,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sltu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8552,7 +8196,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sra",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8576,7 +8219,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-srai",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8600,7 +8242,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sraiw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8624,7 +8265,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sraw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8648,7 +8288,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-srl",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8672,7 +8311,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-srli",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8696,7 +8334,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-srliw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8720,7 +8357,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-srlw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8744,7 +8380,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sub",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8768,7 +8403,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-subw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8792,7 +8426,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-sw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8816,7 +8449,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-xor",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8840,7 +8472,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64ui-v-xori",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8864,7 +8495,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-div",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8888,7 +8518,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-divu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8912,7 +8541,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-divuw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8936,7 +8564,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-divw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8960,7 +8587,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-mul",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -8984,7 +8610,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-mulh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9008,7 +8633,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-mulhsu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9032,7 +8656,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-mulhu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9056,7 +8679,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-mulw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9080,7 +8702,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-rem",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9104,7 +8725,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-remu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9128,7 +8748,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-remuw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9152,7 +8771,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-p-remw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9176,7 +8794,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-div",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9200,7 +8817,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-divu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9224,7 +8840,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-divuw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9248,7 +8863,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-divw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9272,7 +8886,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-mul",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9296,7 +8909,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-mulh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9320,7 +8932,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-mulhsu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9344,7 +8955,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-mulhu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9368,7 +8978,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-mulw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9392,7 +9001,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-rem",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9416,7 +9024,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-remu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9440,7 +9047,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-remuw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9464,7 +9070,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-ps-remw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9488,7 +9093,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-div",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9512,7 +9116,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-divu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9536,7 +9139,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-divuw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9560,7 +9162,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-divw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9584,7 +9185,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-mul",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9608,7 +9208,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-mulh",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9632,7 +9231,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-mulhsu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9656,7 +9254,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-mulhu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9680,7 +9277,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-mulw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9704,7 +9300,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-rem",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9728,7 +9323,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-remu",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9752,7 +9346,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-remuw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9776,7 +9369,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64um-v-remw",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9800,7 +9392,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9824,7 +9415,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fclass",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9848,7 +9438,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fcmp",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9872,7 +9461,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fcvt",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9896,7 +9484,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fcvt_w",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9920,7 +9507,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fdiv",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9944,7 +9530,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fmadd",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9968,7 +9553,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-fmin",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -9992,7 +9576,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-ldst",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -10016,7 +9599,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-move",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]
@@ -10040,7 +9622,6 @@
         "is_tar_archive": null,
         "url": "{url_base}/test-progs/asmtest/bin/rv64uzfh-ps-recoding",
         "additional_metadata": null,
-        "group": "asmtest",
         "tags": [
             "asmtest"
         ]

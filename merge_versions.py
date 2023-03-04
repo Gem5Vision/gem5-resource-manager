@@ -5,9 +5,9 @@ import requests
 
 ver_map = {
     'dev': "http://dist.gem5.org/dist/develop",
-           '22.1': "http://dist.gem5.org/dist/v22-1",
-           '22.0': "http://dist.gem5.org/dist/v22-0",
-           '21.2': "http://dist.gem5.org/dist/v21-2"
+    '22.1': "http://dist.gem5.org/dist/v22-1",
+    '22.0': "http://dist.gem5.org/dist/v22-0",
+    '21.2': "http://dist.gem5.org/dist/v21-2"
 }
 
 
@@ -60,7 +60,6 @@ def json_to_pd(filename, ver, url):
         for resource in resources:
             if resource['type'] == 'group':
                 for group in resource['contents']:
-                    group['group'] = resource['name']
                     group['tags'] = [resource['name']]
                     # replcae the {url_base} with the url
                     download_url = ""
