@@ -3,10 +3,15 @@ from pymongo import MongoClient
 import click
 import click_spinner
 from create_resources_json import ResourceJsonCreator
+import os
+
+# read MONGO_URI from environment variable
+
+MONGO_URI = os.environ.get('MONGO_URI')
 
 
 def get_database():
-    CONNECTION_STRING = "mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority"
+    CONNECTION_STRING = MONGO_URI
     client = MongoClient(CONNECTION_STRING)
     return client['gem5-vision']['resources_test']
 

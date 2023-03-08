@@ -35,7 +35,10 @@ class ResourceJsonCreator:
         url = 'http://dist.gem5.org/dist/'
         ver_map = {}
         for version in versions:
-            ver_map[version] = url + 'v' + version.replace(".", "-")
+            if version != 'dev':
+                ver_map[version] = url + 'v' + version.replace(".", "-")
+            else:
+                ver_map[version] = url + 'develop'
         # print(ver_map)
         return ver_map
 
