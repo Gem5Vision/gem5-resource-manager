@@ -1,19 +1,22 @@
+import json
 import requests
 from pymongo import MongoClient
 import click
 import click_spinner
 from create_resources_json import ResourceJsonCreator
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 # read MONGO_URI from environment variable
 
-MONGO_URI = os.environ.get('MONGO_URI')
+MONGO_URI = os.getenv('MONGO_URI')
 
 
 def get_database():
     CONNECTION_STRING = MONGO_URI
     client = MongoClient(CONNECTION_STRING)
-    return client['gem5-vision']['resources_test']
+    return client['gem5-vision']['resources']
 
 
 collection = get_database()
@@ -55,14 +58,17 @@ def removeTags(id, tags):
 @cli.command()
 def updateMongoDB():
     with click_spinner.spinner():
-        res = requests.get(
-            'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json')
-        resources = res.json()
-        # clear the collection
-        collection.delete_many({})
-        # push the new data
-        collection.insert_many(resources)
-        click.echo("Updated the database")
+        # read from resources.json
+        with open('resources.json') as f:
+            resources = json.load(f)
+            """ res = requests.get(
+                'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json')
+            resources = res.json() """
+            # clear the collection
+            collection.delete_many({})
+            # push the new data
+            collection.insert_many(resources)
+            click.echo("Updated the database")
 
 
 @cli.command()
