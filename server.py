@@ -35,5 +35,15 @@ def find():
     return json_util.dumps(resource)
 
 
+@app.route('/update', methods=['POST'])
+def update():
+    print(request.json)
+    # remove _id from request.json
+    del request.json['_id']
+    collection.update_one(
+        {'id': request.json['id']}, {'$set': request.json})
+    return {'status': "Updated"}
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -10,76 +10,25 @@
         <input type="text" name="find" id="id" />
         <input type="submit" value="Find" />
       </form>
-      <div id="resource" class="col"></div>
+      <textarea id="json" style="width: 100%; height: 50%;"></textarea>
       <button type="button" class="btn btn-primary" id="update">Update</button>
     </div>
     <script>
-      function print_json(obj) {
-        var ul = $('<ul>')
-        // add a class to the ul
-        ul.addClass('list-group')
-        ul.css('display', 'flex')
-        ul.css('flex-direction', 'column')
-        ul.css('width', '100%')
-        for (var i in obj) {
-          var li = $('<li>')
-          li.addClass('list-group-item')
-          // make it flex
-          li.css('display', 'flex')
-          li.css('align-items', 'center')
-          li.css('width', '100%')
-          // check if i is int
-          if (!Number.isInteger(parseInt(i))) {
-            li.append(document.createTextNode(i + ': '))
-          }
-          if (typeof obj[i] === 'object') {
-            li.append(print_json(obj[i]))
-          } else {
-            let textarea = document.createElement('textarea')
-            textarea.innerHTML = obj[i]
-            textarea.style.width = '100%'
-            li.append(textarea)
-          }
-      
-          ul.append(li)
-        }
-      
-        return ul
-      }
-      
-      function htmlToJson(element) {
-        let obj = {}
-        // use list if key is empty
-        console.log(element.innerText.split(':')[0])
-        if (element.innerText.split(':')[0] === '') {
-          obj = []
-        }
-        let children = element.children
-        for (let i = 0; i < children.length; i++) {
-          if (children[i].children[0].children.length > 0) {
-            if (obj[children[i].innerText.split(':')[0]]) {
-              if (!Array.isArray(obj[children[i].innerText.split(':')[0]])) {
-                obj[children[i].innerText.split(':')[0]] = [obj[children[i].innerText.split(':')[0]]]
-              }
-              obj[children[i].innerText.split(':')[0]].push(htmlToJson(children[i].children[0]))
-              continue
-            }
-            obj[children[i].innerText.split(':')[0]] = htmlToJson(children[i].children[0])
-          } else {
-            if (children[i].innerText.split(':')[0] === '') {
-              obj.push(children[i].children[0].value)
-              continue
-            }
-            obj[children[i].innerText.split(':')[0]] = children[i].children[0].value
-          }
-        }
-        return obj
-      }
-      
       document.getElementById('update').addEventListener('click', (e) => {
         e.preventDefault()
-        let obj = htmlToJson(document.getElementById('resource').children[0])
-        console.log(obj)
+        let json = JSON.parse(document.getElementById('json').value)
+        console.log(json)
+        fetch('/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(json)
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data)
+          })
       })
       
       document.getElementById('find').addEventListener('submit', (e) => {
@@ -95,12 +44,7 @@
         })
           .then((res) => res.json())
           .then((data) => {
-            document.getElementById('resource').innerHTML = ''
-            let elements = print_json(data)
-            // convert to node
-            $('#resource').append(elements)
-            let obj = htmlToJson(document.getElementById('resource').children[0])
-            console.log(obj)
+            $('#json').val(JSON.stringify(data, null, 4))
           })
       })
     </script>
