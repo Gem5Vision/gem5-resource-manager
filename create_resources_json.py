@@ -166,20 +166,16 @@ class ResourceJsonCreator:
 
     def __extract_code_examples(self, resources, source):
         for index, resource in resources.iterrows():
-            # if self.debug:
-            # print(resource)
             id = resource['id']
             # search for files in the folder tree that contain the 'id' value
             matching_files = self.__search_folder(
                 source+'/configs', id)
             filenames = [os.path.basename(path) for path in matching_files]
-            print(filenames)
             tested_files = []
             for file in filenames:
                tested_files.append(True if
                                 len(self.__search_folder(source+'/tests/gem5', file)) > 0
                                 else False)
-            print(tested_files)
             matching_files = [file.replace(source+'/', '')
                               for file in matching_files]
             matching_files = [self.base_url + '/' +
@@ -187,8 +183,23 @@ class ResourceJsonCreator:
             if (self.debug and len(matching_files) > 0):
                 print('Files containing id {}:'.format(id))
                 print(matching_files)
-            resources.at[index, 'example_urls'] = matching_files
-            resources.at[index, 'tested_examples'] = tested_files
+
+            code_examples = []
+
+            # Loop through matching_files and tested_files, and
+            # create a new JSON object for each element
+            for i in range(len(matching_files)):
+                json_obj = {
+                    "example": matching_files[i],
+                    "tested": tested_files[i]
+                }
+                code_examples.append(json_obj)
+            json_result = json.dumps(code_examples)
+
+            if (self.debug):
+                print(json.dumps(code_examples, indent=4))
+
+            resources.at[index, 'code_examples'] = json.loads(json_result)
 
         return resources
 
@@ -209,8 +220,7 @@ class ResourceJsonCreator:
         resources.rename(
             columns={'documentation': 'description'}, inplace=True)
         resources['name'] = resources['id'].str.replace('-', ' ')
-        resources['example_urls'] = None
-        resources['tested_examples'] = None
+        resources['code_examples'] = None
         resources['license'] = None
         resources['author'] = None
         resources['github_url'] = None
