@@ -14,7 +14,7 @@ class ResourceJsonCreator:
         '22.0': "http://resources.gem5.org/prev-resources-json/resources-21-2.json",
         '21.2': "http://resources.gem5.org/prev-resources-json/resources-22-0.json"}
 
-    def __init__(self,  versions, debug,):
+    def __init__(self,  versions, debug=False):
         if debug:
             print("Creating Resource JSON for gem5 versions: ", versions)
         # print(src)
@@ -172,6 +172,14 @@ class ResourceJsonCreator:
             # search for files in the folder tree that contain the 'id' value
             matching_files = self.__search_folder(
                 source+'/configs', id)
+            filenames = [os.path.basename(path) for path in matching_files]
+            print(filenames)
+            tested_files = []
+            for file in filenames:
+               tested_files.append(True if
+                                len(self.__search_folder(source+'/tests/gem5', file)) > 0
+                                else False)
+            print(tested_files)
             matching_files = [file.replace(source+'/', '')
                               for file in matching_files]
             matching_files = [self.base_url + '/' +
@@ -180,6 +188,7 @@ class ResourceJsonCreator:
                 print('Files containing id {}:'.format(id))
                 print(matching_files)
             resources.at[index, 'example_urls'] = matching_files
+            resources.at[index, 'tested_examples'] = tested_files
 
         return resources
 
@@ -201,6 +210,7 @@ class ResourceJsonCreator:
             columns={'documentation': 'description'}, inplace=True)
         resources['name'] = resources['id'].str.replace('-', ' ')
         resources['example_urls'] = None
+        resources['tested_examples'] = None
         resources['license'] = None
         resources['author'] = None
         resources['github_url'] = None
@@ -256,5 +266,5 @@ class ResourceJsonCreator:
         with open(output, 'w') as f:
             json.dump(resources, f, indent=4)
 
-# res = ResourceJsonCreator('/home/adsad', ["22.1", "22.0", "21.2"])
-# res.create_json()
+res = ResourceJsonCreator(["22.1", "22.0", "21.2"], True)
+res.create_json('gem5', 'harshil.json')
