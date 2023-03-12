@@ -63,13 +63,6 @@ class ResourceJsonCreator:
             if self.debug:
                 with open("resources_test_" + k + ".json", "w") as f:
                     json.dump(resources, f, indent=4)
-            # print the first row of the first dataframe
-            # read the json files
-            """ for k, v in ver_map.items():
-                with open('resources_test_'+k+'.json', 'r') as f:
-                data = json.load(f)
-                df = pd.DataFrame(data)
-                dfs.append(df) """
         return self.__merge_dataframes(dfs)
 
     def __getSize(self, url):
