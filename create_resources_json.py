@@ -6,6 +6,13 @@ import os
 
 
 class ResourceJsonCreator:
+    """
+    This class generates the JSON which is pushed onto MongoDB.
+    On a high-level, it does the following:
+        - Merges all the current available JSONs of gem5 versions into one.
+        - Adds certain fields to the JSON.
+        - Populates those fields.
+    """
     # Global Variables
     base_url = "https://github.com/gem5/gem5/tree/develop"  # gem5 GitHub URL
     resource_url_map = {
@@ -66,6 +73,12 @@ class ResourceJsonCreator:
         return self.__merge_dataframes(dfs)
 
     def __getSize(self, url):
+        """
+        Helper function to return the size of a download through its URL.
+        Returns 0 if URL has an error.
+
+        :param url: Download URL
+        """
         if self.debug:
             return 0
         try:
@@ -78,6 +91,15 @@ class ResourceJsonCreator:
             return 0
 
     def __search_folder(self, folder_path, id):
+        """
+        Helper function to find the instance of a string in a folder.
+        This is recursive, i.e., subfolders will also be searched.
+
+        :param folder_path: Path to the folder to begin searching
+        :param id: Phrase to search in the folder
+
+        :returns matching_files: List of file paths to the files containing id
+        """
         matching_files = []
         for filename in os.listdir(folder_path):
             file_path = os.path.join(folder_path, filename)
@@ -165,6 +187,20 @@ class ResourceJsonCreator:
         return fin_df
 
     def __extract_code_examples(self, resources, source):
+        """
+        This function goes by IDs present in the resources DataFrame.
+        It finds which files use those IDs in gem5/configs.
+        It adds the GitHub URL of those files under "example".
+        It finds whether those files are used in gem5/tests/gem5.
+        If yes, it marks "tested" as True. If not, it marks "tested" as False.
+        "example" and "tested" are made into a JSON for every code example.
+        This list of JSONs is assigned to the 'code_examples' field of the DataFrame.
+
+        :param resources: A DataFrame containing the current state of resources.
+        :param source: Path to gem5
+
+        :returns resources: DataFrame with ['code-examples'] populated.
+        """
         for index, resource in resources.iterrows():
             id = resource["id"]
             # search for files in the folder tree that contain the 'id' value
