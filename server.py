@@ -2,7 +2,6 @@ from flask import render_template, Flask, request, redirect, url_for, session
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-import json
 from bson import Code, json_util
 
 load_dotenv()

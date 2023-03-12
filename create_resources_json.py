@@ -169,13 +169,14 @@ class ResourceJsonCreator:
             id = resource['id']
             # search for files in the folder tree that contain the 'id' value
             matching_files = self.__search_folder(
-                source+'/configs', id)
+                source+'/configs', '"'+id+'"')
             filenames = [os.path.basename(path) for path in matching_files]
             tested_files = []
             for file in filenames:
-               tested_files.append(True if
-                                len(self.__search_folder(source+'/tests/gem5', file)) > 0
-                                else False)
+                tested_files.append(True if
+                                    len(self.__search_folder(
+                                        source+'/tests/gem5', file)) > 0
+                                    else False)
             matching_files = [file.replace(source+'/', '')
                               for file in matching_files]
             matching_files = [self.base_url + '/' +
@@ -220,10 +221,13 @@ class ResourceJsonCreator:
         resources.rename(
             columns={'documentation': 'description'}, inplace=True)
         resources['name'] = resources['id'].str.replace('-', ' ')
-        resources['code_examples'] = None
-        resources['license'] = None
-        resources['author'] = None
-        resources['github_url'] = None
+        resources['usage'] = ""
+        # initialize code_examples to empty list
+        resources['code_examples'] = [[] for _ in range(len(resources))]
+        resources['license'] = ""
+        resources['author'] = [[] for _ in range(len(resources))]
+        resources['tags'] = [[] for _ in range(len(resources))]
+        resources['github_url'] = ""
         resources = resources.where((pd.notnull(resources)), None)
         # resources = resources.to_dict('records')
         if self.debug:
@@ -244,8 +248,8 @@ class ResourceJsonCreator:
                         tags = tags.split(':')[0]
                         tags = tags.split('\n')[:-1]
                         tags = [tag.strip().replace('- ', '') for tag in tags]
-                        if tags == ['']:
-                            tags = None
+                        if tags == [''] or tags == None:
+                            tags = []
                         if resource['tags'] is None:
                             resources.at[index, 'tags'] = tags
                         else:
@@ -276,5 +280,5 @@ class ResourceJsonCreator:
         with open(output, 'w') as f:
             json.dump(resources, f, indent=4)
 
-res = ResourceJsonCreator(["22.1", "22.0", "21.2"], True)
-res.create_json('gem5', 'harshil.json')
+# res = ResourceJsonCreator(["22.1", "22.0", "21.2"], True)
+# res.create_json('gem5', 'harshil.json')
