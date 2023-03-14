@@ -1,6 +1,29 @@
+var editor
+var originalModel
+var modifiedModel
+
+require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
+require(["vs/editor/editor.main"], () => {
+    /* editor = monaco.editor.create(document.getElementById('editor'), {
+        value: ``,
+        language: 'json',
+        theme: 'vs-dark',
+    }); */
+    originalModel = monaco.editor.createModel(``, 'json');
+    modifiedModel = monaco.editor.createModel(``, 'json');
+    editor = monaco.editor.createDiffEditor(document.getElementById('editor'), {
+        theme: 'vs-dark',
+        language: 'json',
+    });
+    editor.setModel({
+        original: originalModel,
+        modified: modifiedModel
+    });
+});
+
 function update(e) {
     e.preventDefault()
-    let json = JSON.parse(document.getElementById('editor').value)
+    let json = JSON.parse(modifiedModel.getValue())
     console.log(json)
     fetch('/update', {
         method: 'POST',
@@ -16,7 +39,7 @@ function update(e) {
 
 function add(e) {
     e.preventDefault()
-    let json = JSON.parse(document.getElementById('editor').value)
+    let json = JSON.parse(modifiedModel.getValue())
     console.log(json)
     fetch('/insert', {
         method: 'POST',
@@ -30,7 +53,7 @@ function add(e) {
         })
 }
 
-function deleteRes (e){
+function deleteRes(e) {
     e.preventDefault()
     let id = document.getElementById('id').value
     fetch('/delete', {
@@ -65,7 +88,8 @@ function find(e) {
                         console.log(data)
                         delete data._id
                         data['id'] = document.getElementById('id').value
-                        document.getElementById('editor').value = JSON.stringify(data, null, 4)
+                        originalModel.setValue(JSON.stringify(data, null, 4))
+                        modifiedModel.setValue(JSON.stringify(data, null, 4))
                         document.getElementById('update').disabled = true
                         document.getElementById('add').disabled = false
                         document.getElementById('delete').disabled = true
@@ -73,7 +97,9 @@ function find(e) {
             } else {
                 // remove _id from data
                 delete data._id
-                document.getElementById('editor').value = JSON.stringify(data, null, 4)
+                originalModel.setValue(JSON.stringify(data, null, 4))
+                modifiedModel.setValue(JSON.stringify(data, null, 4))
+                // document.getElementById('editor').value = JSON.stringify(data, null, 4)
                 document.getElementById('update').disabled = false
                 document.getElementById('add').disabled = true
                 document.getElementById('delete').disabled = false

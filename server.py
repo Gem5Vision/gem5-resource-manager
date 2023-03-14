@@ -1,8 +1,8 @@
-from flask import render_template, Flask, request, redirect, url_for, session
+from flask import render_template, Flask, request
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
-from bson import Code, json_util
+from bson import json_util
 
 load_dotenv()
 # read MONGO_URI from environment variable
