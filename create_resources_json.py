@@ -119,8 +119,16 @@ class ResourceJsonCreator:
             resource["type"] = "bootloader"
         elif "benchmark" in resource["documentation"]:
             resource["type"] = "benchmark"
+            if "additional_metadata" in resource and "root_partition" in resource["additional_metadata"] and resource["additional_metadata"]["root_partition"] is not None:
+                resource["root_partition"] = resource["additional_metadata"]["root_partition"]
+            else:
+                resource["root_partition"] = ""
         elif resource["url"] is not None and ".img.gz" in resource["url"]:
             resource["type"] = "diskimage"
+            if "additional_metadata" in resource and "root_partition" in resource["additional_metadata"] and resource["additional_metadata"]["root_partition"] is not None:
+                resource["root_partition"] = resource["additional_metadata"]["root_partition"]
+            else:
+                resource["root_partition"] = ""
         elif "binary" in resource["documentation"]:
             resource["type"] = "binary"
         elif "checkpoint" in resource["documentation"]:
@@ -143,8 +151,12 @@ class ResourceJsonCreator:
                         download_url = group["url"].replace("{url_base}", url)
                     group[ver] = {
                         "version": ver,
-                        "url": url,
+                        "url":  download_url,
                         "size": self.__getSize(download_url),
+                        "is_tar_archive": resource["is_tar_archive"] if "is_tar_archive" in resource else False,
+                        "md5sum": resource["md5sum"] if "md5sum" in resource else "",
+                        "is_zipped": resource["is_zipped"] if "is_zipped" in resource else False
+
                     }
 
                     group = self.__change_type(group)
@@ -158,8 +170,12 @@ class ResourceJsonCreator:
                     download_url = resource["url"].replace("{url_base}", url)
                 resource[ver] = {
                     "version": ver,
-                    "url": url,
+                    "url":  download_url,
                     "size": self.__getSize(download_url),
+                    "is_tar_archive": resource["is_tar_archive"] if "is_tar_archive" in resource.keys() else False,
+                    "md5sum": resource["md5sum"] if "md5sum" in resource else "",
+                    "is_zipped": resource["is_zipped"] if"is_zipped" in resource else False
+
                 }
                 new_resources.append(resource)
                 if self.debug:
@@ -170,13 +186,16 @@ class ResourceJsonCreator:
     def __merge_dataframes(self, dfs):
         fin_df = dfs[0]
         for df in dfs[1:]:
-            fin_df = pd.merge(fin_df, df, on="name", how="outer", suffixes=("", "_y"))
+            fin_df = pd.merge(fin_df, df, on="name",
+                              how="outer", suffixes=("", "_y"))
             fin_df = fin_df.loc[:, ~fin_df.columns.str.endswith("_y")]
         keys = list(self.link_map.keys())
-        fin_df[keys[0]] = fin_df[keys].apply(lambda x: list(x.dropna()), axis=1)
+        fin_df[keys[0]] = fin_df[keys].apply(
+            lambda x: list(x.dropna()), axis=1)
         fin_df["versions"] = fin_df[keys[0]]
         fin_df.drop(keys, axis=1, inplace=True)
-        fin_df = fin_df.where((pd.notnull(fin_df)), None)
+        fin_df = fin_df.dropna(axis=1, how="all")
+        # fin_df = fin_df.where((pd.notnull(fin_df)), None)
         return fin_df
 
     def __extract_code_examples(self, resources, source):
@@ -197,7 +216,8 @@ class ResourceJsonCreator:
         for index, resource in resources.iterrows():
             id = resource["id"]
             # search for files in the folder tree that contain the 'id' value
-            matching_files = self.__search_folder(source + "/configs", '"' + id + '"')
+            matching_files = self.__search_folder(
+                source + "/configs", '"' + id + '"')
             filenames = [os.path.basename(path) for path in matching_files]
             tested_files = []
             for file in filenames:
@@ -206,8 +226,10 @@ class ResourceJsonCreator:
                     if len(self.__search_folder(source + "/tests/gem5", file)) > 0
                     else False
                 )
-            matching_files = [file.replace(source + "/", "") for file in matching_files]
-            matching_files = [self.base_url + "/" + file for file in matching_files]
+            matching_files = [file.replace(source + "/", "")
+                              for file in matching_files]
+            matching_files = [self.base_url + "/" +
+                              file for file in matching_files]
             if self.debug and len(matching_files) > 0:
                 print("Files containing id {}:".format(id))
                 print(matching_files)
@@ -217,7 +239,8 @@ class ResourceJsonCreator:
             # Loop through matching_files and tested_files, and
             # create a new JSON object for each element
             for i in range(len(matching_files)):
-                json_obj = {"example": matching_files[i], "tested": tested_files[i]}
+                json_obj = {
+                    "example": matching_files[i], "tested": tested_files[i]}
                 code_examples.append(json_obj)
             json_result = json.dumps(code_examples)
 
@@ -233,7 +256,8 @@ class ResourceJsonCreator:
         if self.debug:
             print(categories)
 
-        archs = resources[resources["architecture"].notnull()]["architecture"].unique()
+        archs = resources[resources["architecture"].notnull()
+                          ]["architecture"].unique()
         if self.debug:
             print(archs)
             print(resources[resources["type"] == "resource"]["name"])
@@ -241,61 +265,69 @@ class ResourceJsonCreator:
         resources.rename(columns={"name": "id"}, inplace=True)
         resources.rename(columns={"type": "category"}, inplace=True)
         resources.rename(columns={"url": "download_url"}, inplace=True)
-        resources.rename(columns={"documentation": "description"}, inplace=True)
-        resources["name"] = resources["id"].str.replace("-", " ")
+        resources.rename(
+            columns={"documentation": "description"}, inplace=True)
+        # resources["name"] = resources["id"].str.replace("-", " ")
         resources["usage"] = ""
         # initialize code_examples to empty list
         resources["code_examples"] = [[] for _ in range(len(resources))]
         resources["license"] = ""
         resources["author"] = [[] for _ in range(len(resources))]
         resources["tags"] = [[] for _ in range(len(resources))]
-        resources["github_url"] = ""
-        resources = resources.where((pd.notnull(resources)), None)
+        resources["source_url"] = ""
+        # resources = resources.where((pd.notnull(resources)), None)
         # resources = resources.to_dict('records')
-        if self.debug:
-            return resources
-        for index, resource in resources.iterrows():
-            if resource["source"] is not None:
-                try:
-                    # print(resource['source'])
-                    resources.at[
-                        index, "github_url"
-                    ] = "https://github.com/gem5/gem5-resources/tree/develop/" + str(
-                        resource["source"]
-                    )
-                    request = requests.get(
-                        "https://raw.githubusercontent.com/gem5/gem5-resources/develop/"
-                        + str(resource["source"])
-                        + "/README.md"
-                    )
-                    content = request.text
-                    content = content.split("---")[1]
-                    content = content.split("---")[0]
-                    if "tags:" in content:
-                        tags = content.split("tags:\n")[1]
-                        tags = tags.split(":")[0]
-                        tags = tags.split("\n")[:-1]
-                        tags = [tag.strip().replace("- ", "") for tag in tags]
-                        if tags == [""] or tags == None:
-                            tags = []
-                        if resource["tags"] is None:
-                            resources.at[index, "tags"] = tags
-                        else:
-                            resources.at[index, "tags"].extend(tags)
-                    if "author:" in content:
-                        author = content.split("author:")[1]
-                        author = author.split("\n")[0]
-                        author = (
-                            author.replace("[", "").replace("]", "").replace('"', "")
+        if not self.debug:
+            for index, resource in resources.iterrows():
+                if resource["source"] is not None:
+                    try:
+                        # print(resource['source'])
+                        resources.at[
+                            index, "source_url"
+                        ] = "https://github.com/gem5/gem5-resources/tree/develop/" + str(
+                            resource["source"]
                         )
-                        author = author.split(",")
-                        author = [a.strip() for a in author]
-                        resources.at[index, "author"] = author
-                    if "license:" in content:
-                        license = content.split("license:")[1].split("\n")[0]
-                        resources.at[index, "license"] = license
-                except:
-                    pass
+                        request = requests.get(
+                            "https://raw.githubusercontent.com/gem5/gem5-resources/develop/"
+                            + str(resource["source"])
+                            + "/README.md"
+                        )
+                        content = request.text
+                        content = content.split("---")[1]
+                        content = content.split("---")[0]
+                        if "tags:" in content:
+                            tags = content.split("tags:\n")[1]
+                            tags = tags.split(":")[0]
+                            tags = tags.split("\n")[:-1]
+                            tags = [tag.strip().replace("- ", "")
+                                    for tag in tags]
+                            if tags == [""] or tags == None:
+                                tags = []
+                            if resource["tags"] is None:
+                                resources.at[index, "tags"] = tags
+                            else:
+                                resources.at[index, "tags"].extend(tags)
+                        if "author:" in content:
+                            author = content.split("author:")[1]
+                            author = author.split("\n")[0]
+                            author = (
+                                author.replace("[", "").replace(
+                                    "]", "").replace('"', "")
+                            )
+                            author = author.split(",")
+                            author = [a.strip() for a in author]
+                            resources.at[index, "author"] = author
+                        if "license:" in content:
+                            license = content.split("license:")[
+                                1].split("\n")[0]
+                            resources.at[index, "license"] = license
+                    except:
+                        pass
+        resources = resources.drop('source', axis=1)
+        resources = resources.drop('download_url', axis=1)
+        resources = resources.drop('md5sum', axis=1)
+        resources = resources.drop('is_zipped', axis=1)
+        resources = resources.drop('is_tar_archive', axis=1)
         return resources
 
     def create_json(self, source, output):
@@ -306,9 +338,15 @@ class ResourceJsonCreator:
         print("Extracting code examples from the gem5 repository")
         resources = self.__extract_code_examples(resources, source)
         resources = resources.to_dict("records")
+        # remove nan fields per row
+        # avoid dict changing size during iteration
+        for resource in resources:
+            for key in list(resource.keys()):
+                if resource[key] is None:
+                    resource.pop(key)
         with open(output, "w") as f:
             json.dump(resources, f, indent=4)
 
 
-# res = ResourceJsonCreator(["22.1", "22.0", "21.2"], True)
-# res.create_json('gem5', 'harshil.json')
+""" res = ResourceJsonCreator(["dev", "22.1", "22.0", "21.2"], True)
+res.create_json('gem5', 'harshil.json') """

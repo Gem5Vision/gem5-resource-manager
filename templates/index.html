@@ -11,6 +11,8 @@
   <div class="container">
     <form class="form-outline">
       <input class="form-control" type="text" id="id" placeholder="Enter ID" />
+      <select id="category" class="form-select" aria-label="Default select example">
+      </select>
       <input class="btn btn-primary" type="submit" onclick="find(event)" value="Find" />
     </form>
 
@@ -31,18 +33,3 @@
 </body>
 
 </html>
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs/loader.js"></script>
-<script>
-    require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.22.3/min/vs' }});
-    require(['vs/editor/editor.main'], function() {
-        var editor = monaco.editor.create(document.getElementById('container'), {
-            value: [
-                'function x() {',
-                '\tconsole.log("Hello world!");',
-                '}'
-            ].join('\n'),
-            language: 'javascript'
-        });
-    });
-</script> -->

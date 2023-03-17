@@ -35,16 +35,24 @@ def find():
 
 @app.route("/update", methods=["POST"])
 def update():
-    # remove _id from request.json
-    collection.update_one({"id": request.json["id"]}, {"$set": request.json})
+    # remove all keys that are not in the request
+    collection.replace_one({"id": request.json["id"]}, request.json)
     return {"status": "Updated"}
 
 
-@app.route("/keys", methods=["GET"])
+@app.route("/categories", methods=["GET"])
+def getCategories():
+    categories = collection.distinct("category")
+    return json_util.dumps(categories)
+
+
+@app.route("/keys", methods=["POST"])
 def getFields():
     # get all keys and types in the form of "key": "type"
+    category = request.json["category"]
     keys = collection.aggregate(
         [
+            {"$match": {"category": category}},
             {
                 "$project": {
                     "keys": {"$objectToArray": "$$ROOT"},
@@ -63,8 +71,8 @@ def getFields():
         ]
     )
     keys = list(keys)[0]["keys"]
-    print(keys)
     columns = {}
+    keys.sort(key=lambda x: x["k"])
     for key in keys:
         if key["v"] == "array":
             columns[key["k"]] = []

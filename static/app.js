@@ -34,6 +34,7 @@ function update(e) {
     }).then((res) => res.json())
         .then((data) => {
             console.log(data)
+            find(e)
         })
 }
 
@@ -50,6 +51,7 @@ function add(e) {
     }).then((res) => res.json())
         .then((data) => {
             console.log(data)
+            find(e)
         })
 }
 
@@ -65,6 +67,7 @@ function deleteRes(e) {
     }).then((res) => res.json())
         .then((data) => {
             console.log(data)
+            find(e)
         })
 }
 
@@ -82,12 +85,22 @@ function find(e) {
         .then((res) => res.json())
         .then((data) => {
             if (data == null) {
-                fetch('/keys')
+                fetch('/keys',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            category: document.getElementById('category').value
+                        })
+                    })
                     .then((res) => res.json())
                     .then((data) => {
                         console.log(data)
                         delete data._id
                         data['id'] = document.getElementById('id').value
+                        data['category'] = document.getElementById('category').value
                         originalModel.setValue(JSON.stringify(data, null, 4))
                         modifiedModel.setValue(JSON.stringify(data, null, 4))
                         document.getElementById('update').disabled = true
@@ -104,5 +117,19 @@ function find(e) {
                 document.getElementById('add').disabled = true
                 document.getElementById('delete').disabled = false
             }
+        })
+}
+
+window.onload = () => {
+    fetch('/categories').then((res) => res.json())
+        .then((data) => {
+            console.log(data)
+            let select = document.getElementById('category')
+            data.forEach((category) => {
+                let option = document.createElement('option')
+                option.value = category
+                option.innerHTML = category
+                select.appendChild(option)
+            })
         })
 }
