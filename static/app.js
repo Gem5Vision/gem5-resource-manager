@@ -13,7 +13,12 @@ require(["vs/editor/editor.main"], () => {
     modifiedModel = monaco.editor.createModel(``, 'json');
     editor = monaco.editor.createDiffEditor(document.getElementById('editor'), {
         theme: 'vs-dark',
-        language: 'json',
+        language: 'json'
+    });
+    // add trailing comma error
+    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        trailingCommas: "error",
+        comments: "error",
     });
     editor.setModel({
         original: originalModel,
