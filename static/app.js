@@ -4,30 +4,51 @@ var modifiedModel
 
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' } });
 require(["vs/editor/editor.main"], () => {
-    /* editor = monaco.editor.create(document.getElementById('editor'), {
-        value: ``,
-        language: 'json',
-        theme: 'vs-dark',
-    }); */
-    originalModel = monaco.editor.createModel(``, 'json');
-    modifiedModel = monaco.editor.createModel(``, 'json');
+    originalModel = monaco.editor.createModel(`{\n}`, 'json');
+    modifiedModel = monaco.editor.createModel(`{\n}`, 'json');
     editor = monaco.editor.createDiffEditor(document.getElementById('editor'), {
         theme: 'vs-dark',
         language: 'json'
-    });
-    // add trailing comma error
-    monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-        trailingCommas: "error",
-        comments: "error",
     });
     editor.setModel({
         original: originalModel,
         modified: modifiedModel
     });
+    fetch('/schema').then((res) => res.json())
+        .then((data) => {
+            monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+                trailingCommas: "error",
+                comments: "error",
+                validate: true,
+                schemas: [{
+                    uri: "http://myserver/foo-schema.json",
+                    fileMatch: ["*"],
+                    schema: data
+                }]
+            });
+        })
 });
+
+function checkErrors() {
+    // only check modified model
+    let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri })
+    if (errors.length > 0) {
+        console.log(errors)
+        let str = ''
+        errors.forEach((error) => {
+            str += error.message + '\n'
+        })
+        alert(str)
+        return true
+    }
+    return false
+}
 
 function update(e) {
     e.preventDefault()
+    if (checkErrors()) {
+        return
+    }
     let json = JSON.parse(modifiedModel.getValue())
     console.log(json)
     fetch('/update', {
@@ -45,6 +66,9 @@ function update(e) {
 
 function add(e) {
     e.preventDefault()
+    if (checkErrors()) {
+        return
+    }
     let json = JSON.parse(modifiedModel.getValue())
     console.log(json)
     fetch('/insert', {
