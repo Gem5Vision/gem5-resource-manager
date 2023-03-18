@@ -1,5 +1,20 @@
 # json-to-mongodb
 
+## Cli tool
+```bash
+Usage: bobby.py [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  addtags
+  createresourcesjson
+  getresource
+  removetags
+  updatemongodb
+```
+
 ## Instructions to made JSON "parseable"
 
 1. Get resources.txt from https://gem5.googlesource.com/public/gem5-resources/+/refs/heads/stable/resources.json?format=text
