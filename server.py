@@ -15,7 +15,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 def get_database():
     CONNECTION_STRING = MONGO_URI
     client = MongoClient(CONNECTION_STRING)
-    return client["gem5-vision"]["resources_test"]
+    return client["gem5-vision"]["resources"]
 
 
 collection = get_database()
