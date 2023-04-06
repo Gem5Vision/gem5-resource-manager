@@ -86,6 +86,7 @@ function add(e) {
 
 function deleteRes(e) {
     e.preventDefault()
+    console.log('delete')
     let id = document.getElementById('id').value
     fetch('/delete', {
         method: 'POST',
@@ -161,4 +162,19 @@ window.onload = () => {
                 select.appendChild(option)
             })
         })
+}
+
+const myModal = new bootstrap.Modal('#ConfirmModal', {
+    keyboard: false
+})
+
+let confirmButton = document.getElementById('confirm')
+
+function showModal(event, callback) {
+    event.preventDefault();
+    myModal.show();
+    confirmButton.onclick = () => {
+        callback(event);
+        myModal.hide();
+    }
 }

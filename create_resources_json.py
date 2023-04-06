@@ -156,7 +156,6 @@ class ResourceJsonCreator:
                         "is_tar_archive": resource["is_tar_archive"] if "is_tar_archive" in resource else False,
                         "md5sum": resource["md5sum"] if "md5sum" in resource else "",
                         "is_zipped": resource["is_zipped"] if "is_zipped" in resource else False
-
                     }
 
                     group = self.__change_type(group)
@@ -168,6 +167,7 @@ class ResourceJsonCreator:
                 download_url = ""
                 if "url" in resource and resource["url"] is not None:
                     download_url = resource["url"].replace("{url_base}", url)
+                resource["tags"] = []
                 resource[ver] = {
                     "version": ver,
                     "url":  download_url,
@@ -273,7 +273,7 @@ class ResourceJsonCreator:
         resources["code_examples"] = [[] for _ in range(len(resources))]
         resources["license"] = ""
         resources["author"] = [[] for _ in range(len(resources))]
-        resources["tags"] = [[] for _ in range(len(resources))]
+        # resources["tags"] = [[] for _ in range(len(resources))]
         resources["source_url"] = ""
         # resources = resources.where((pd.notnull(resources)), None)
         # resources = resources.to_dict('records')
