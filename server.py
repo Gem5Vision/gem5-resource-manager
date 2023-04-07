@@ -11,6 +11,10 @@ load_dotenv()
 
 MONGO_URI = os.getenv("MONGO_URI")
 
+schema = {}
+with open("schema/test.json", "r") as f:
+    schema = json.load(f)
+
 
 def get_database():
     CONNECTION_STRING = MONGO_URI
@@ -44,31 +48,36 @@ def update():
 
 @app.route("/categories", methods=["GET"])
 def getCategories():
-    with open("schema/resource.json", "r") as f:
-        schema = json.load(f)
     return json.dumps(schema["properties"]["category"]["enum"])
 
 
 @app.route("/schema", methods=["GET"])
 def getSchema():
-    with open("schema/resource.json", "r") as f:
-        schema = json.load(f)
     return json_util.dumps(schema)
 
 
 @app.route("/keys", methods=["POST"])
 def getFields():
-    # use the /schema/resource.json file to get the keys and types for the category
-    with open("schema/resource.json", "r") as f:
-        schema = json.load(f)
     empty_object = {
         "category": request.json["category"],
+        "id": request.json["id"]
     }
     validator = jsonschema.Draft7Validator(schema)
     errors = list(validator.iter_errors(empty_object))
     for error in errors:
-        required = error.message.split("'")[1]
-        empty_object[required] = error.schema["properties"][required]["default"]
+        if "is a required property" in error.message:
+            required = error.message.split("'")[1]
+            empty_object[required] = error.schema["properties"][required]["default"]
+        if "is not valid under any of the given schemas" in error.message:
+            validator = validator.evolve(
+                schema=error.schema["definitions"][request.json["category"]])
+            for e in validator.iter_errors(empty_object):
+                if "is a required property" in e.message:
+                    required = e.message.split("'")[1]
+                    if "default" in e.schema["properties"][required]:
+                        empty_object[required] = e.schema["properties"][required]["default"]
+                    else:
+                        empty_object[required] = ""
     return json.dumps(empty_object)
 
 

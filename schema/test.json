@@ -1,0 +1,417 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "gem5 Vision Database Schema",
+    "description": "A schema that indicates our database schema, and is also used to validate the data being entered into the database.",
+    "type": "object",
+    "properties": {
+        "category": {
+            "type": "string",
+            "enum": [
+                "benchmark",
+                "diskimage",
+                "binary",
+                "kernel",
+                "checkpoint",
+                "git",
+                "bootloader",
+                "file",
+                "directory",
+                "simpoint",
+                "simpoint-directory",
+                "resource",
+                "looppoint-pinpoint-csv",
+                "looppoint-json",
+                "workload"
+            ],
+            "description": "The category of the resource",
+            "default": "resource"
+        },
+        "author": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "The author(s) of the resource",
+            "default": []
+        },
+        "code_examples": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "example": {
+                        "type": "string"
+                    },
+                    "tested": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "description": "Code examples for the resource",
+            "default": []
+        },
+        "description": {
+            "type": "string",
+            "description": "A description of the resource",
+            "default": ""
+        },
+        "source_url": {
+            "type": "string",
+            "description": "The URL of the source code for the resource",
+            "default": ""
+        },
+        "id": {
+            "type": "string",
+            "description": "The unique identifier for the resource",
+            "default": ""
+        },
+        "license": {
+            "type": "string",
+            "description": "The license for the resource",
+            "default": ""
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Tags for the resource",
+            "default": []
+        },
+        "usage": {
+            "type": "string",
+            "description": "Usage instructions for the resource",
+            "default": ""
+        },
+        "versions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "size": {
+                        "type": "integer",
+                        "description": "The size of the resource in bytes",
+                        "default": 0
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "The URL of the resource",
+                        "default": ""
+                    },
+                    "version": {
+                        "type": "string",
+                        "description": "The version of the resource",
+                        "default": ""
+                    },
+                    "is_tar_archive": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ],
+                        "description": "Whether the resource is a tar archive",
+                        "default": null
+                    },
+                    "md5sum": {
+                        "type": "string",
+                        "description": "The MD5 sum of the resource",
+                        "default": ""
+                    },
+                    "is_zipped": {
+                        "type": [
+                            "boolean",
+                            "null"
+                        ],
+                        "description": "Whether the resource is zipped",
+                        "default": null
+                    }
+                }
+            },
+            "description": "The versions of the resource",
+            "default": [
+                {
+                    "size": 0,
+                    "url": "",
+                    "version": "",
+                    "is_tar_archive": null,
+                    "md5sum": "",
+                    "is_zipped": null
+                }
+            ],
+            "minItems": 1
+        }
+    },
+    "required": [
+        "author",
+        "category",
+        "description",
+        "id",
+        "license",
+        "source_url",
+        "tags",
+        "usage",
+        "versions"
+    ],
+    "anyOf": [
+        {
+            "$ref": "#/definitions/benchmark"
+        },
+        {
+            "$ref": "#/definitions/diskimage"
+        },
+        {
+            "$ref": "#/definitions/binary"
+        },
+        {
+            "$ref": "#/definitions/kernel"
+        },
+        {
+            "$ref": "#/definitions/checkpoint"
+        },
+        {
+            "$ref": "#/definitions/git"
+        },
+        {
+            "$ref": "#/definitions/bootloader"
+        },
+        {
+            "$ref": "#/definitions/file"
+        },
+        {
+            "$ref": "#/definitions/directory"
+        },
+        {
+            "$ref": "#/definitions/simpoint"
+        },
+        {
+            "$ref": "#/definitions/simpoint-directory"
+        },
+        {
+            "$ref": "#/definitions/resource"
+        },
+        {
+            "$ref": "#/definitions/looppoint-pinpoint-csv"
+        },
+        {
+            "$ref": "#/definitions/looppoint-json"
+        },
+        {
+            "$ref": "#/definitions/workload"
+        }
+    ],
+    "definitions": {
+        "architecture": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "enum": [
+                "ARM",
+                "MIPS",
+                "POWER",
+                "RISCV",
+                "X86",
+                "SPARC"
+            ],
+            "description": "The architecture of the bootloader",
+            "default": ""
+        },
+        "benchmark": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "benchmark"
+                }
+            }
+        },
+        "diskimage": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "diskimage"
+                },
+                "root_partition": {
+                    "type": "string",
+                    "description": "The root partition of the disk image",
+                    "default": ""
+                }
+            }
+        },
+        "binary": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "binary"
+                },
+                "arguments": {
+                    "type": "object",
+                    "description": "The arguments for the binary",
+                    "default": {}
+                },
+                "architecture": {
+                    "$ref": "#/definitions/architecture"
+                }
+            }
+        },
+        "kernel": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "kernel"
+                },
+                "architecture": {
+                    "$ref": "#/definitions/architecture"
+                }
+            },
+            "required": [
+                "architecture"
+            ]
+        },
+        "checkpoint": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "checkpoint"
+                }
+            }
+        },
+        "git": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "git"
+                }
+            }
+        },
+        "bootloader": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "bootloader"
+                },
+                "architecture": {
+                    "$ref": "#/definitions/architecture"
+                }
+            },
+            "required": [
+                "architecture"
+            ]
+        },
+        "file": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "file"
+                }
+            }
+        },
+        "directory": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "directory"
+                }
+            }
+        },
+        "abstract-simpoint": {
+            "type": "object",
+            "properties": {
+                "simpoint_interval": {
+                    "type": "integer",
+                    "description": "The interval between simpoints",
+                    "default": 0
+                },
+                "simpoint_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "The list of simpoints",
+                    "default": []
+                },
+                "weight_list": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "The list of weights",
+                    "default": []
+                },
+                "warmup_interval": {
+                    "type": "integer",
+                    "description": "The warmup interval",
+                    "default": 0
+                },
+                "workload_name": {
+                    "type": "string",
+                    "description": "The name of the workload",
+                    "default": ""
+                }
+            },
+            "required": [
+                "simpoint_interval",
+                "simpoint_list",
+                "weight_list",
+                "warmup_interval"
+            ]
+        },
+        "simpoint": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/abstract-simpoint"
+                }
+            ],
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "simpoint"
+                }
+            }
+        },
+        "simpoint-directory": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/abstract-simpoint"
+                }
+            ],
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "simpoint-directory"
+                }
+            }
+        },
+        "resource": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "resource"
+                }
+            }
+        },
+        "looppoint-pinpoint-csv": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "looppoint-pinpoint-csv"
+                }
+            }
+        },
+        "looppoint-json": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "looppoint-json"
+                }
+            }
+        },
+        "workload": {
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "workload"
+                }
+            }
+        }
+    }
+}
