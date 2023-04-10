@@ -217,6 +217,7 @@
         },
         "benchmark": {
             "type": "object",
+            "description": "A program that is used to test the performance of a computer system.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -225,6 +226,7 @@
             }
         },
         "diskimage": {
+            "description": "A file that contains an exact copy of the data stored on a storage device.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -238,6 +240,7 @@
             }
         },
         "binary": {
+            "description": "A program that is used to test the performance of a computer system.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -254,6 +257,7 @@
             }
         },
         "kernel": {
+            "description": "A computer program that acts as the core of an operating system by managing system resources.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -268,6 +272,7 @@
             ]
         },
         "checkpoint": {
+            "description": "A snapshot of a simulation.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -276,6 +281,7 @@
             }
         },
         "git": {
+            "description": "A git resource.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -284,6 +290,7 @@
             }
         },
         "bootloader": {
+            "description": "A small program that is responsible for loading the operating system into memory when a computer starts up.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -298,6 +305,7 @@
             ]
         },
         "file": {
+            "description": "A resource consisting of a single file.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -306,6 +314,7 @@
             }
         },
         "directory": {
+            "description": "A resource consisting of a directory.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -356,6 +365,7 @@
             ]
         },
         "simpoint": {
+            "description": "A simpoint resource. This resource stores all information required to perform a Simpoint creation and restore. It contains the Simpoint, the Simpoint interval, the weight for each Simpoint, the full warmup length, and the warmup length for each Simpoint.",
             "allOf": [
                 {
                     "$ref": "#/definitions/abstract-simpoint"
@@ -369,6 +379,7 @@
             }
         },
         "simpoint-directory": {
+            "description": "A Simpoint diretory resource. This Simpoint Resource assumes the existance of a directory containing a simpoint file and a weight file.",
             "allOf": [
                 {
                     "$ref": "#/definitions/abstract-simpoint"
@@ -382,6 +393,7 @@
             }
         },
         "resource": {
+            "description": "An abstract class which all Resource classes inherit from.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -390,6 +402,7 @@
             }
         },
         "looppoint-pinpoint-csv": {
+            "description": "This Looppoint resource used to create a Looppoint resource from a pinpoints CSV file.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -398,6 +411,7 @@
             }
         },
         "looppoint-json": {
+            "description": "This Looppoint resource used to create a Looppoint resource from a pinpoints CSV file.",
             "properties": {
                 "category": {
                     "type": "string",
@@ -406,6 +420,7 @@
             }
         },
         "workload": {
+            "description": "Bundles of resources and any input parameters.",
             "properties": {
                 "category": {
                     "type": "string",
