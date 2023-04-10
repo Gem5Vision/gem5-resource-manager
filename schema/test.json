@@ -365,7 +365,7 @@
             ]
         },
         "simpoint": {
-            "description": "A simpoint resource. This resource stores all information required to perform a Simpoint creation and restore.",
+            "description": "This resource stores all information required to perform a Simpoint creation and restore.",
             "allOf": [
                 {
                     "$ref": "#/definitions/abstract-simpoint"
@@ -379,7 +379,7 @@
             }
         },
         "simpoint-directory": {
-            "description": "A Simpoint diretory resource. This Simpoint Resource assumes the existance of a directory containing a simpoint file and a weight file.",
+            "description": "This Simpoint Resource assumes the existance of a directory containing a simpoint file and a weight file.",
             "allOf": [
                 {
                     "$ref": "#/definitions/abstract-simpoint"
