@@ -365,7 +365,7 @@
             ]
         },
         "simpoint": {
-            "description": "A simpoint resource. This resource stores all information required to perform a Simpoint creation and restore. It contains the Simpoint, the Simpoint interval, the weight for each Simpoint, the full warmup length, and the warmup length for each Simpoint.",
+            "description": "A simpoint resource. This resource stores all information required to perform a Simpoint creation and restore.",
             "allOf": [
                 {
                     "$ref": "#/definitions/abstract-simpoint"
