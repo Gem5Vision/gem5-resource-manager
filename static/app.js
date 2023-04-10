@@ -21,7 +21,7 @@ require(["vs/editor/editor.main"], () => {
                 comments: "error",
                 validate: true,
                 schemas: [{
-                    uri: "http://myserver/foo-schema.json",
+                    uri: "http://json-schema.org/draft-07/schema",
                     fileMatch: ["*"],
                     schema: data
                 }]
@@ -30,7 +30,6 @@ require(["vs/editor/editor.main"], () => {
 });
 
 function checkErrors() {
-    // only check modified model
     let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri })
     if (errors.length > 0) {
         console.log(errors)
@@ -122,7 +121,8 @@ function find(e) {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            category: document.getElementById('category').value
+                            category: document.getElementById('category').value,
+                            id: document.getElementById('id').value
                         })
                     })
                     .then((res) => res.json())
@@ -137,18 +137,35 @@ function find(e) {
                         document.getElementById('add').disabled = false
                         document.getElementById('delete').disabled = true
                     })
+                /* modifiedModel.setValue(JSON.stringify({
+                    id: document.getElementById('id').value,
+                    category: document.getElementById('category').value
+                }, null, 4))
+                // await new Promise((resolve) => setTimeout(resolve, 1000))
+                let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri })
+                if (errors.length > 0) {
+                    console.log(errors)
+                    for (let error of errors) {
+                        if (error.message.includes('Missing property')) {
+                            let key = error.message.split(' ')[2]
+                            console.log(key)
+                        }
+                    }
+                    document.getElementById('update').disabled = true
+                    document.getElementById('add').disabled = false
+                    document.getElementById('delete').disabled = true
+                } */
             } else {
-                // remove _id from data
                 delete data._id
                 originalModel.setValue(JSON.stringify(data, null, 4))
                 modifiedModel.setValue(JSON.stringify(data, null, 4))
-                // document.getElementById('editor').value = JSON.stringify(data, null, 4)
                 document.getElementById('update').disabled = false
                 document.getElementById('add').disabled = true
                 document.getElementById('delete').disabled = false
             }
         })
 }
+
 
 window.onload = () => {
     fetch('/categories').then((res) => res.json())
