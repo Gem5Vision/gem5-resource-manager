@@ -7,10 +7,11 @@
         "category": {
             "type": "string",
             "enum": [
-                "benchmark",
+                "workload",
                 "diskimage",
                 "binary",
                 "kernel",
+                "benchmark",
                 "checkpoint",
                 "git",
                 "bootloader",
@@ -20,8 +21,7 @@
                 "simpoint-directory",
                 "resource",
                 "looppoint-pinpoint-csv",
-                "looppoint-json",
-                "workload"
+                "looppoint-json"
             ],
             "description": "The category of the resource",
             "default": "resource"
