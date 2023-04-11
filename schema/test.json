@@ -215,6 +215,16 @@
             "description": "The architecture of the bootloader",
             "default": ""
         },
+        "benchmark": {
+            "type": "object",
+            "description": "A program that is used to test the performance of a computer system.",
+            "properties": {
+                "category": {
+                    "type": "string",
+                    "const": "benchmark"
+                }
+            }
+        },
         "workload": {
             "description": "Bundles of resources and any input parameters.",
             "properties": {
@@ -269,16 +279,6 @@
             "required": [
                 "architecture"
             ]
-        },
-        "benchmark": {
-            "type": "object",
-            "description": "A program that is used to test the performance of a computer system.",
-            "properties": {
-                "category": {
-                    "type": "string",
-                    "const": "benchmark"
-                }
-            }
         },
         "checkpoint": {
             "description": "A snapshot of a simulation.",
