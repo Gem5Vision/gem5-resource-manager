@@ -162,6 +162,7 @@ function find(e) {
                 document.getElementById('update').disabled = false
                 document.getElementById('add').disabled = true
                 document.getElementById('delete').disabled = false
+                document.getElementById('category').value = data.category
             }
         })
 }

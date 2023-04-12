@@ -151,7 +151,7 @@
         "usage",
         "versions"
     ],
-    "anyOf": [
+    "oneOf": [
         {
             "$ref": "#/definitions/benchmark"
         },
@@ -550,6 +550,5 @@
                 }
             ]
         }
-       
     }
 }
