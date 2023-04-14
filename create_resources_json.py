@@ -149,14 +149,16 @@ class ResourceJsonCreator:
                     download_url = ""
                     if group["url"] is not None:
                         download_url = group["url"].replace("{url_base}", url)
-                    group[ver] = {
+                    """ group[ver] = {
                         "version": ver,
                         "url":  download_url,
                         "size": self.__getSize(download_url),
                         "is_tar_archive": resource["is_tar_archive"] if "is_tar_archive" in resource else False,
                         "md5sum": resource["md5sum"] if "md5sum" in resource else "",
                         "is_zipped": resource["is_zipped"] if "is_zipped" in resource else False
-                    }
+                    } """
+                    if download_url is not "":
+                        group["size"] = self.__getSize(download_url)
 
                     group = self.__change_type(group)
                     new_resources.append(group)
@@ -168,7 +170,7 @@ class ResourceJsonCreator:
                 if "url" in resource and resource["url"] is not None:
                     download_url = resource["url"].replace("{url_base}", url)
                 resource["tags"] = []
-                resource[ver] = {
+                """ resource[ver] = {
                     "version": ver,
                     "url":  download_url,
                     "size": self.__getSize(download_url),
@@ -176,7 +178,9 @@ class ResourceJsonCreator:
                     "md5sum": resource["md5sum"] if "md5sum" in resource else "",
                     "is_zipped": resource["is_zipped"] if"is_zipped" in resource else False
 
-                }
+                } """
+                if "download_url" in resource.keys():
+                    resource["size"] = self.__getSize(download_url)
                 new_resources.append(resource)
                 if self.debug:
                     print(len(new_resources))
@@ -268,13 +272,18 @@ class ResourceJsonCreator:
         resources.rename(
             columns={"documentation": "description"}, inplace=True)
         # resources["name"] = resources["id"].str.replace("-", " ")
-        resources["usage"] = ""
+        if (resources["category"] == "workload"):
+            resources["example_usage"] = f"Workload({resources['id']})"
+        else:
+            resources["example_usage"] = f"get_resource(resource_name={resources['id']})"
         # initialize code_examples to empty list
         resources["code_examples"] = [[] for _ in range(len(resources))]
         resources["license"] = ""
         resources["author"] = [[] for _ in range(len(resources))]
         # resources["tags"] = [[] for _ in range(len(resources))]
         resources["source_url"] = ""
+        resources["resource_version"] = "1.0.0"
+        resource["gem5_versions"] = ["23.0"]
         # resources = resources.where((pd.notnull(resources)), None)
         # resources = resources.to_dict('records')
         if not self.debug:
@@ -330,13 +339,19 @@ class ResourceJsonCreator:
         resources = resources.drop('is_tar_archive', axis=1)
         return resources
 
+    def __create_new_json(self):
+        # "dev": "https://gem5.googlesource.com/public/gem5-resources/+/refs/heads/develop/resources.json?format=TEXT"
+        return self.__json_to_pd(
+            "dev", "https://raw.githubusercontent.com/gem5/gem5-resources/develop/resources.json")
+
     def create_json(self, source, output):
         print("Merging json files and adding sizes")
-        resources = self.__merge_jsons()
+        resources = self.__create_new_json()
         print("Populating resources with additional information")
         resources = self.__populate_resources(resources)
         print("Extracting code examples from the gem5 repository")
         resources = self.__extract_code_examples(resources, source)
+        # resources = resources.drop('versions', axis=1)
         resources = resources.to_dict("records")
         # remove nan fields per row
         # avoid dict changing size during iteration
