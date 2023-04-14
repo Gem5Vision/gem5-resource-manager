@@ -157,8 +157,10 @@ class ResourceJsonCreator:
                         "md5sum": resource["md5sum"] if "md5sum" in resource else "",
                         "is_zipped": resource["is_zipped"] if "is_zipped" in resource else False
                     } """
-                    if download_url is not "":
+                    if download_url != "":
                         group["size"] = self.__getSize(download_url)
+                    else:
+                        group["size"] = 0
 
                     group = self.__change_type(group)
                     new_resources.append(group)
@@ -181,6 +183,8 @@ class ResourceJsonCreator:
                 } """
                 if "download_url" in resource.keys():
                     resource["size"] = self.__getSize(download_url)
+                else:
+                    resource["size"] = 0
                 new_resources.append(resource)
                 if self.debug:
                     print(len(new_resources))
@@ -272,10 +276,7 @@ class ResourceJsonCreator:
         resources.rename(
             columns={"documentation": "description"}, inplace=True)
         # resources["name"] = resources["id"].str.replace("-", " ")
-        if (resources["category"] == "workload"):
-            resources["example_usage"] = f"Workload({resources['id']})"
-        else:
-            resources["example_usage"] = f"get_resource(resource_name={resources['id']})"
+
         # initialize code_examples to empty list
         resources["code_examples"] = [[] for _ in range(len(resources))]
         resources["license"] = ""
@@ -283,11 +284,17 @@ class ResourceJsonCreator:
         # resources["tags"] = [[] for _ in range(len(resources))]
         resources["source_url"] = ""
         resources["resource_version"] = "1.0.0"
-        resource["gem5_versions"] = ["23.0"]
+        resources["gem5_versions"] = [["23.0"] for _ in range(len(resources))]
         # resources = resources.where((pd.notnull(resources)), None)
         # resources = resources.to_dict('records')
         if not self.debug:
             for index, resource in resources.iterrows():
+                if (resource["category"] == "workload"):
+                    resources.at[
+                        index, "example_usage"] = f"Workload({resource['id']})"
+                else:
+                    resources.at[
+                        index, "example_usage"] = f"get_resource(resource_name={resource['id']})"
                 if resource["source"] is not None:
                     try:
                         # print(resource['source'])
@@ -352,8 +359,9 @@ class ResourceJsonCreator:
         print("Extracting code examples from the gem5 repository")
         resources = self.__extract_code_examples(resources, source)
         # resources = resources.drop('versions', axis=1)
+        # replace nan with None
+        resources = resources.where((pd.notnull(resources)), None)
         resources = resources.to_dict("records")
-        # remove nan fields per row
         # avoid dict changing size during iteration
         for resource in resources:
             for key in list(resource.keys()):
