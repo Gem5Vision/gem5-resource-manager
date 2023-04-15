@@ -35,8 +35,14 @@ def index():
 
 @app.route("/find", methods=["POST"])
 def find():
-    resource = collection.find_one({"id": request.json["id"]})
-    return json_util.dumps(resource)
+    resource = collection.find({"id": request.json["id"]}).sort(
+        "resource_version", -1).limit(1)
+    # check if resource is empty list
+    json_resource = json_util.dumps(resource)
+    if json_resource == "[]":
+        print("FIND: resource not found")
+        return {"exists": False}
+    return json_resource
 
 
 @app.route("/update", methods=["POST"])
@@ -83,7 +89,8 @@ def getFields():
 
 @app.route("/delete", methods=["POST"])
 def delete():
-    collection.delete_one({"id": request.json["id"]})
+    collection.delete_one(
+        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
     return {"status": "Deleted"}
 
 
@@ -91,6 +98,17 @@ def delete():
 def insert():
     collection.insert_one(request.json)
     return {"status": "Inserted"}
+
+
+@app.route("/checkExists", methods=["POST"])
+def checkExists():
+    resource = collection.find_one(
+        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
+    print(resource)
+    if resource == None:
+        return {"exists": False}
+    else:
+        return {"exists": True}
 
 
 if __name__ == "__main__":
