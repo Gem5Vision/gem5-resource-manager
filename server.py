@@ -40,7 +40,7 @@ def find():
     # check if resource is empty list
     json_resource = json_util.dumps(resource)
     if json_resource == "[]":
-        print("FIND: resource not found")
+        print("Find: resource not found")
         return {"exists": False}
     return json_resource
 
