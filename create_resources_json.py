@@ -291,13 +291,14 @@ class ResourceJsonCreator:
             for index, resource in resources.iterrows():
                 if (resource["category"] == "workload"):
                     resources.at[
-                        index, "example_usage"] = f"Workload({resource['id']})"
+                        index, "example_usage"] = f"Workload(\"{resource['id']}\")"
                 else:
                     resources.at[
-                        index, "example_usage"] = f"get_resource(resource_name={resource['id']})"
-                if resource["source"] is not None:
+                        index, "example_usage"] = f"get_resource(resource_name=\"{resource['id']}\")"
+                if resource["source"] is not None and str(resource["source"]) != "nan":
                     try:
-                        # print(resource['source'])
+                        if(str(resource["source"]) == "nan"):
+                            print(resource['source'])
                         resources.at[
                             index, "source_url"
                         ] = "https://github.com/gem5/gem5-resources/tree/develop/" + str(
