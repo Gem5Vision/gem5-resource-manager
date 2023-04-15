@@ -78,7 +78,7 @@
             "description": "Tags for the resource",
             "default": []
         },
-        "usage": {
+        "example_usage": {
             "type": "string",
             "description": "Usage instructions for the resource",
             "default": ""
