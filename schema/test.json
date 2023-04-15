@@ -136,7 +136,7 @@
         "license",
         "source_url",
         "tags",
-        "usage",
+        "example_usage",
         "gem5_versions",
         "resource_version"
     ],
