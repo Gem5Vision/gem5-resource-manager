@@ -149,15 +149,7 @@ class ResourceJsonCreator:
                     download_url = ""
                     if group["url"] is not None:
                         download_url = group["url"].replace("{url_base}", url)
-                    """ group[ver] = {
-                        "version": ver,
-                        "url":  download_url,
-                        "size": self.__getSize(download_url),
-                        "is_tar_archive": resource["is_tar_archive"] if "is_tar_archive" in resource else False,
-                        "md5sum": resource["md5sum"] if "md5sum" in resource else "",
-                        "is_zipped": resource["is_zipped"] if "is_zipped" in resource else False
-                    } """
-                    if download_url != "":
+                        group["url"] = download_url
                         group["size"] = self.__getSize(download_url)
                     else:
                         group["size"] = 0
@@ -171,20 +163,11 @@ class ResourceJsonCreator:
                 download_url = ""
                 if "url" in resource and resource["url"] is not None:
                     download_url = resource["url"].replace("{url_base}", url)
-                resource["tags"] = []
-                """ resource[ver] = {
-                    "version": ver,
-                    "url":  download_url,
-                    "size": self.__getSize(download_url),
-                    "is_tar_archive": resource["is_tar_archive"] if "is_tar_archive" in resource.keys() else False,
-                    "md5sum": resource["md5sum"] if "md5sum" in resource else "",
-                    "is_zipped": resource["is_zipped"] if"is_zipped" in resource else False
-
-                } """
-                if "download_url" in resource.keys():
+                    resource["url"] = download_url
                     resource["size"] = self.__getSize(download_url)
                 else:
                     resource["size"] = 0
+                resource["tags"] = []
                 new_resources.append(resource)
                 if self.debug:
                     print(len(new_resources))
@@ -272,7 +255,7 @@ class ResourceJsonCreator:
 
         resources.rename(columns={"name": "id"}, inplace=True)
         resources.rename(columns={"type": "category"}, inplace=True)
-        resources.rename(columns={"url": "download_url"}, inplace=True)
+        # resources.rename(columns={"url": "download_url"}, inplace=True)
         resources.rename(
             columns={"documentation": "description"}, inplace=True)
         # resources["name"] = resources["id"].str.replace("-", " ")
@@ -340,17 +323,12 @@ class ResourceJsonCreator:
                             resources.at[index, "license"] = license
                     except:
                         pass
-        resources = resources.drop('source', axis=1)
-        resources = resources.drop('download_url', axis=1)
-        resources = resources.drop('md5sum', axis=1)
-        resources = resources.drop('is_zipped', axis=1)
-        resources = resources.drop('is_tar_archive', axis=1)
         return resources
 
     def __create_new_json(self):
         # "dev": "https://gem5.googlesource.com/public/gem5-resources/+/refs/heads/develop/resources.json?format=TEXT"
         return self.__json_to_pd(
-            "dev", "https://raw.githubusercontent.com/gem5/gem5-resources/develop/resources.json")
+            "dev", "http://dist.gem5.org/dist/develop")
 
     def create_json(self, source, output):
         print("Merging json files and adding sizes")
