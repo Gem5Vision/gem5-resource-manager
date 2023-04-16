@@ -463,6 +463,35 @@
         ],
         "example_usage": "Workload(\"arm64-ubuntu-20.04-boot\")"
     },
+      {
+        "category": "workload",
+        "id": "arm64-ubuntu-20.04-boot",
+        "description": "A full boot of Ubuntu 20.04 with Linux 5.4.49 for ARM64. It runs an `m5 exit` command when the boot is completed unless the readfile is specified. If specified the readfile will be executed after booting.",
+        "function": "set_kernel_disk_workload",
+        "resources": {
+            "kernel": "arm64-linux-kernel-5.4.49",
+            "disk_image": "arm64-ubuntu-20.04-img",
+            "bootloader": "arm64-bootloader-foundation"
+        },
+        "additional_params": {},
+        "architecture": "ARM",
+        "size": 0,
+        "tags": [],
+        "code_examples": [
+            {
+                "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/arm-ubuntu-run.py",
+                "tested": true
+            }
+        ],
+        "license": "",
+        "author": [],
+        "source_url": "",
+        "resource_version": "2.0.0",
+        "gem5_versions": [
+            "23.0"
+        ],
+        "example_usage": "Workload(\"arm64-ubuntu-20.04-boot\")"
+    },
     {
         "category": "workload",
         "id": "x86-print-this-15000-with-simpoints",
