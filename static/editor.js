@@ -8,7 +8,8 @@ require(["vs/editor/editor.main"], () => {
     modifiedModel = monaco.editor.createModel(`{\n}`, 'json');
     editor = monaco.editor.createDiffEditor(document.getElementById('editor'), {
         theme: 'vs-dark',
-        language: 'json'
+        language: 'json',
+        automaticLayout: true
     });
     editor.setModel({
         original: originalModel,
