@@ -6,9 +6,9 @@
 {% endblock %}
 
 {% block main %}
-  <div class="container-fluid" style="height: calc(100vh - 81px); padding: 0;">
-    <div class="d-flex" style="height: inherit;">
-      <div id="databaseActions" class="d-flex flex-column offcanvas-lg offcanvas-start shadow-sm" style="padding: 0.75rem; background-color: #f8f9fa!important;;">
+  <div class="container-fluid" style="height: inherit;">
+    <div class="row" style="height: inherit;">
+      <div id="databaseActions" class="col-lg-3 offcanvas-lg offcanvas-start shadow-sm overflow-y-auto" style="background-color: #f8f9fa!important; max-width: 325px; height: initial;">
         <div class="d-flex flex-row justify-content-between mt-2">
           <h5 class="secondary-text-bold" style="color: #0095AF;">Database Actions</h5>
           <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#databaseActions" aria-label="Close"></button>
@@ -29,8 +29,8 @@
           <input class="form-control form-control-sm main-text-regular" type="file" id="loadSchema">
         </form>
       </div>
-      <div class="d-flex flex-column editorContainer" style="margin-left: auto; margin-right: auto;">
-        <button class="btn btn-outline-primary d-lg-none align-self-start main-text-regular" type="button" data-bs-toggle="offcanvas" data-bs-target="#databaseActions" aria-controls="sidebar" style="margin-top: 0.5rem; margin-left: 0.25rem;">
+      <div class="col ms-auto me-auto" style="max-width: 1440px;">
+        <button class="btn btn-outline-primary d-lg-none align-self-start main-text-regular mt-2 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#databaseActions" aria-controls="sidebar">
           Database Actions
         </button>
         <div class="d-flex flex-column align-items-center">
@@ -38,7 +38,7 @@
           <h4 class="secondary-text-semi" style="color: #425469; word-break: break-all;">mongodb://mongodb0.example.com:27017</h4>
         </div>
         <div id="editor" style="height: 75%; width: 100%;"></div>
-        <div class="d-flex editorButtonGroup justify-content-end pt-2">
+        <div class="d-flex editorButtonGroup justify-content-end pt-2 pb-2">
           <button type="button" class="btn btn-primary main-text-regular me-2" id="update" onclick="showModal(event, update)">Update</button>
           <button type="button" class="btn btn-primary main-text-regular me-2" id="add" onclick="showModal(event, add)" disabled>Add</button>
           <button type="button" class="btn btn-danger main-text-regular" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
