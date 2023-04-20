@@ -48,7 +48,9 @@ def find():
 @app.route("/update", methods=["POST"])
 def update():
     # remove all keys that are not in the request
-    collection.replace_one({"id": request.json["id"]}, request.json)
+    print(request.json["id"])
+    collection.replace_one(
+        {"id": request.json["id"], "resource_version": request.json["resource"]["resource_version"]}, request.json["resource"])
     return {"status": "Updated"}
 
 

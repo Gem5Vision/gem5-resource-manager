@@ -56,13 +56,14 @@ function update(e) {
     return;
   }
   let json = JSON.parse(modifiedModel.getValue());
+  let id = document.getElementById("id").value;
   console.log(json);
   fetch("/update", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(json),
+    body: JSON.stringify({ id: id, resource: json }),
   })
     .then((res) => res.json())
     .then((data) => {
