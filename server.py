@@ -1,5 +1,5 @@
 import json
-from flask import render_template, Flask, request
+from flask import render_template, Flask, request, redirect, url_for, Response
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
@@ -9,7 +9,8 @@ import jsonschema
 load_dotenv()
 # read MONGO_URI from environment variable
 
-MONGO_URI = os.getenv("MONGO_URI")
+# MONGO_URI = os.getenv("MONGO_URI")
+MONGO_URI = ""
 
 schema = {}
 with open("schema/test.json", "r") as f:
@@ -22,7 +23,8 @@ def get_database():
     return client["gem5-vision"]["resources_test"]
 
 
-collection = get_database()
+# collection = get_database()
+collection = ""
 
 
 app = Flask(__name__)
@@ -30,7 +32,29 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("editor.html")
+    return render_template("index.html")
+
+
+@app.route("/login/<string:database>")
+def login(database):
+    if database == "mongodb":
+        return render_template("mongoSignIn.html")
+    else:
+        return render_template("404.html")
+    
+
+@app.route("/validateURI", methods=["POST"])
+def validateURI():
+    MONGO_URI = request.json["uri"]
+    if MONGO_URI == "":
+        return {"error" : "empty"}     
+    collection = get_database()
+    return redirect(url_for("/editor"))
+
+
+@app.route("/editor")
+def editor():
+    return render_template("editor.html", database="MongoDB", uriTest=MONGO_URI)
 
 
 @app.route("/find", methods=["POST"])

@@ -101,6 +101,13 @@ main {
   width: 80%;
 }
 
+#liveAlertPlaceholder {
+  position: absolute;
+  left: 1rem;
+  right: 3rem;
+  margin-top: 1rem;
+}
+
 @media (max-width: 991px) {
   .editorContainer {
     width: 95%;

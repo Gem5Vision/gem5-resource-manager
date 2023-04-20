@@ -14,8 +14,8 @@
           <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#databaseActions" aria-label="Close"></button>
         </div>
         <form class="form-outline d-flex flex-column mt-3">
-          <label for="idInput" class="main-text-regular">Resource ID</label>
-          <input class="form-control mt-1" type="text" id="idInput" placeholder="Enter ID..." />
+          <label for="id" class="main-text-regular">Resource ID</label>
+          <input class="form-control mt-1" type="text" id="id" placeholder="Enter ID..." />
           <label for="category" class="main-text-regular mt-3">Category</label>
           <select id="category" class="form-select mt-1" aria-label="Default select example"></select>
           <input class="btn btn-outline-primary main-text-regular align-self-end mt-2" type="submit" onclick="find(event)" value="Find" />
@@ -23,10 +23,11 @@
         <form class="form-outline d-flex flex-column mt-3">
           <label for="updateURI" class="main-text-regular">Update URI</label>
           <input class="form-control mt-1" type="text" id="updateURI" placeholder="Enter URI..." />
+          <input class="btn btn-outline-primary main-text-regular align-self-end mt-2" type="submit" onclick="updateURI(event)" value="Update" />
         </form>
         <form class="form-outline d-flex flex-column mt-3">
           <label for="loadSchema" class="main-text-regular">Load Schema</label>
-          <input class="form-control form-control-sm main-text-regular" type="file" id="loadSchema">
+          <input class="form-control form-control-sm main-text-regular" type="file" id="schema" onchange="loadSchema(event)" />
         </form>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
@@ -34,8 +35,12 @@
           Database Actions
         </button>
         <div class="d-flex flex-column align-items-center">
-          <h2 class="page-title">MongoDB</h2>
-          <h4 class="secondary-text-semi" style="color: #425469; word-break: break-all;">mongodb://mongodb0.example.com:27017</h4>
+          <h2 class="page-title">{{ database }}</h2>
+          <h4 class="secondary-text-semi" style="color: #425469; word-break: break-all;">{{ uri }}</h4>
+        </div>
+        <div class="d-flex flex-row justify-content-around">
+          <h4 class="secondary-text-semi" style="color: #425469;">Current</h4>
+          <h4 class="secondary-text-semi" style="color: #425469;">Edited</h4>
         </div>
         <div id="editor" style="height: 75%; width: 100%;"></div>
         <div class="d-flex editorButtonGroup justify-content-end pt-2 pb-2">
