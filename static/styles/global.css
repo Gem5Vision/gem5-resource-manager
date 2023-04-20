@@ -93,8 +93,7 @@ main {
   background: linear-gradient(180deg, rgba(0,149,175,0) 0%, rgba(0,149,175,0.35057773109243695) 27%, rgba(0,149,175,0.5970763305322129) 45%, rgba(0,149,175,1) 69%, rgba(0,149,175,1) 100%);
   border-radius: 1rem;
   box-shadow: 0px 0px 5px black;
-  /* margin-bottom: 50px; */
-  height: 700px;
+  height: 555px;
   width: 530px;
 }
 
@@ -113,10 +112,6 @@ main {
 }
 
 @media (max-width: 425px) {
-  .panelContainer {
-    height: 625px;
-  }
-
   .main-text-regular,
   .main-text-semi,
   .main-text-bold,
@@ -134,9 +129,5 @@ main {
 
   .page-title {
     font-size: 2.25rem;
-  }
-
-  #gem5RAImg {
-    height: 250px;
   }
 }
