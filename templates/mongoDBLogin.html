@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-  <title>MongoDB SignIn</title>
+  <title>MongoDB Login</title>
 {% endblock %}
 
 {% block main %}
@@ -21,8 +21,8 @@
           </form>
         </div>
         <div class="d-flex flex-row align-self-end me-3 mt-5 buttonGroup">
-          <button type="button" id="saveSignIn" class="btn btn-outline-primary-inverted mt-2 mb-2 me-2" onclick="handleSignIn(event, true)">Save & Sign In</button>
-          <button type="button" id="signIn" class="btn btn-outline-primary-inverted mt-2 mb-2" onclick="handleSignIn(event, false)">Sign In</button>
+          <button type="button" id="saveLogin" class="btn btn-outline-primary-inverted mt-2 mb-2 me-2" onclick="handleLogin(event, true)">Save & Login</button>
+          <button type="button" id="login" class="btn btn-outline-primary-inverted mt-2 mb-2" onclick="handleLogin(event, false)">Login</button>
         </div>
       </div>
     </div>

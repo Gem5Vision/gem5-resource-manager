@@ -25,7 +25,7 @@ function loadPrevSession(event) {
   }
 }
 
-function handleSignIn(event, saveStatus) {
+function handleLogin(event, saveStatus) {
   event.preventDefault();
   const uri = document.getElementById('uri').value;
 

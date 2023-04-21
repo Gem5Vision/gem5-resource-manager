@@ -38,7 +38,7 @@ def index():
 @app.route("/login/<string:database>")
 def login(database):
     if database == "mongodb":
-        return render_template("mongoSignIn.html")
+        return render_template("mongoDBLogin.html")
     else:
         return render_template("404.html")
     
