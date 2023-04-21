@@ -16,12 +16,16 @@ const appendAlert = (message, type) => {
 }
 
 function loadPrevSession(event) {
-  const prevSession = localStorage.getItem("uri");
+  event.preventDefault();
+  const prevSession = localStorage.getItem("URI");
   if (!prevSession) {
     appendAlert('ERROR! No Saved Session!', 'danger');
     setTimeout(function() {
       bootstrap.Alert.getOrCreateInstance(document.querySelector(".alert")).close();
     }, 3000);
+  } else {
+    const url = '/editor?uri=' + encodeURIComponent(prevSession); 
+    window.location = url;
   }
 }
 
@@ -33,27 +37,25 @@ function handleLogin(event, saveStatus) {
     localStorage.setItem("URI", uri);
   }
 
-  fetch('/validateURI',
+  const url = '/validateURI?uri=' + encodeURIComponent(uri);
+  fetch(url,
   {
-      method: 'POST',
+      method: 'GET',
       headers: {
           'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          uri: uri
-      })
-  })
-  .then(res => res.json())
-  .then(data => {
-      if (data.error === "empty") {
-        appendAlert('ERROR! Cannot Proceed With Empty URI!', 'danger');
-        setTimeout(function() {
-          bootstrap.Alert.getOrCreateInstance(document.querySelector(".alert")).close();
-        }, 3000);
-      } else {
-          window.location = '/editor';
       }
   })
+  .then((res) => {
+    console.log("URI Validation Response Status: " + res.status)
+    if (res.status === 400) {
+      appendAlert('ERROR! Cannot Proceed With Empty URI!', 'danger');
+      setTimeout(function() {
+        bootstrap.Alert.getOrCreateInstance(document.querySelector(".alert")).close();
+      }, 3000);
+    }
+    
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
 } 
-
-

@@ -43,18 +43,22 @@ def login(database):
         return render_template("404.html")
     
 
-@app.route("/validateURI", methods=["POST"])
+@app.route("/validateURI", methods=['GET'])
 def validateURI():
-    MONGO_URI = request.json["uri"]
-    if MONGO_URI == "":
-        return {"error" : "empty"}     
-    collection = get_database()
-    return redirect(url_for("/editor"))
+    uri = request.args.get('uri')
+    if uri == "":
+        return {"error" : "empty"}, 400
+    #TODO: URI Validation
+    return redirect(url_for("editor", uri=uri), 302)
 
 
 @app.route("/editor")
 def editor():
-    return render_template("editor.html", database="MongoDB", uriTest=MONGO_URI)
+    global MONGO_URI
+    MONGO_URI = request.args.get('uri')
+    global collection
+    collection = get_database()
+    return render_template("editor.html", database="MongoDB", uri=MONGO_URI)
 
 
 @app.route("/find", methods=["POST"])
