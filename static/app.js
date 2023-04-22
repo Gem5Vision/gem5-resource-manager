@@ -155,8 +155,46 @@ function deleteRes(e) {
     });
 }
 
+let didChange = false;
+document.getElementById("id").onchange = function () {
+  console.log("id changed");
+  didChange = true;
+};
+
+function addVersions() {
+  let select = document.getElementById("version-dropdown");
+  select.innerHTML = "Latest";
+  fetch("/versions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: document.getElementById("id").value,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      let select = document.getElementById("version-dropdown");
+      if (data.length == 0) {
+        data = [{ resource_version: "Latest" }];
+      }
+      data.forEach((version) => {
+        let option = document.createElement("option");
+        option.value = version["resource_version"];
+        option.innerText = version["resource_version"];
+        select.appendChild(option);
+      });
+    });
+}
+
 function find(e) {
   e.preventDefault();
+  if (didChange) {
+    addVersions();
+    didChange = false;
+  }
+
   fetch("/find", {
     method: "POST",
     headers: {
@@ -164,6 +202,7 @@ function find(e) {
     },
     body: JSON.stringify({
       id: document.getElementById("id").value,
+      resource_version: document.getElementById("version-dropdown").value,
     }),
   })
     .then((res) => res.json())
@@ -202,11 +241,18 @@ function find(e) {
         document.getElementById("delete").disabled = false;
         document.getElementById("add_version").disabled = false;
         document.getElementById("category").value = data.category;
+        document.getElementById("version-dropdown").value =
+          data.resource_version;
       }
     });
 }
 
 window.onload = () => {
+  let ver_dropdown = document.getElementById("version-dropdown");
+  let option = document.createElement("option");
+  option.value = "Latest";
+  option.innerHTML = "Latest";
+  ver_dropdown.appendChild(option);
   fetch("/categories")
     .then((res) => res.json())
     .then((data) => {

@@ -35,8 +35,13 @@ def index():
 
 @app.route("/find", methods=["POST"])
 def find():
-    resource = collection.find({"id": request.json["id"]}).sort(
-        "resource_version", -1).limit(1)
+    print("res: ", request.json["resource_version"])
+    if request.json["resource_version"] == "":
+        resource = collection.find({"id": request.json["id"]}).sort(
+            "resource_version", -1).limit(1)
+    else:
+        resource = collection.find({"id": request.json["id"], "resource_version": request.json["resource_version"]}).sort(
+            "resource_version", -1).limit(1)
     # check if resource is empty list
     json_resource = json_util.dumps(resource)
     if json_resource == "[]":
@@ -54,17 +59,25 @@ def update():
     return {"status": "Updated"}
 
 
-@app.route("/categories", methods=["GET"])
+@app.route("/versions", methods=["POST"])
+def getVersions():
+    versions = collection.find({"id": request.json["id"]}, {
+                               "resource_version": 1, "_id": 0}).sort("resource_version", -1)
+    json_resource = json_util.dumps(versions)
+    return json_resource
+
+
+@ app.route("/categories", methods=["GET"])
 def getCategories():
     return json.dumps(schema["properties"]["category"]["enum"])
 
 
-@app.route("/schema", methods=["GET"])
+@ app.route("/schema", methods=["GET"])
 def getSchema():
     return json_util.dumps(schema)
 
 
-@app.route("/keys", methods=["POST"])
+@ app.route("/keys", methods=["POST"])
 def getFields():
     empty_object = {
         "category": request.json["category"],
@@ -89,7 +102,7 @@ def getFields():
     return json.dumps(empty_object)
 
 
-@app.route("/delete", methods=["POST"])
+@ app.route("/delete", methods=["POST"])
 def delete():
     collection.delete_one(
         {"id": request.json["id"], "resource_version": request.json["resource_version"]})
