@@ -5,24 +5,16 @@ import os
 from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
+from database import Database
 
-load_dotenv()
-# read MONGO_URI from environment variable
-
-MONGO_URI = os.getenv("MONGO_URI")
 
 schema = {}
 with open("schema/test.json", "r") as f:
     schema = json.load(f)
 
 
-def get_database():
-    CONNECTION_STRING = MONGO_URI
-    client = MongoClient(CONNECTION_STRING)
-    return client["gem5-vision"]["versions_test"]
-
-
-collection = get_database()
+database = Database("gem5-vision", "versions_test")
+# collection = database.get_collection()
 
 
 app = Flask(__name__)
@@ -35,17 +27,15 @@ def index():
 
 @app.route("/find", methods=["POST"])
 def find():
-    print("res: ", request.json["resource_version"])
     if request.json["resource_version"] == "":
-        resource = collection.find({"id": request.json["id"]}).sort(
+        resource = database.get_collection().find({"id": request.json["id"]}, {"_id": 0}).sort(
             "resource_version", -1).limit(1)
     else:
-        resource = collection.find({"id": request.json["id"], "resource_version": request.json["resource_version"]}).sort(
+        resource = database.get_collection().find({"id": request.json["id"], "resource_version": request.json["resource_version"]}, {"_id": 0}).sort(
             "resource_version", -1).limit(1)
     # check if resource is empty list
     json_resource = json_util.dumps(resource)
     if json_resource == "[]":
-        print("Find: resource not found")
         return {"exists": False}
     return json_resource
 
@@ -53,16 +43,15 @@ def find():
 @app.route("/update", methods=["POST"])
 def update():
     # remove all keys that are not in the request
-    print(request.json["id"])
-    collection.replace_one(
+    database.get_collection().replace_one(
         {"id": request.json["id"], "resource_version": request.json["resource"]["resource_version"]}, request.json["resource"])
     return {"status": "Updated"}
 
 
 @app.route("/versions", methods=["POST"])
 def getVersions():
-    versions = collection.find({"id": request.json["id"]}, {
-                               "resource_version": 1, "_id": 0}).sort("resource_version", -1)
+    versions = database.get_collection().find({"id": request.json["id"]}, {
+        "resource_version": 1, "_id": 0}).sort("resource_version", -1)
     json_resource = json_util.dumps(versions)
     return json_resource
 
@@ -104,22 +93,21 @@ def getFields():
 
 @ app.route("/delete", methods=["POST"])
 def delete():
-    collection.delete_one(
+    database.get_collection().delete_one(
         {"id": request.json["id"], "resource_version": request.json["resource_version"]})
     return {"status": "Deleted"}
 
 
 @app.route("/insert", methods=["POST"])
 def insert():
-    collection.insert_one(request.json)
+    database.get_collection().insert_one(request.json)
     return {"status": "Inserted"}
 
 
 @app.route("/checkExists", methods=["POST"])
 def checkExists():
-    resource = collection.find_one(
+    resource = database.get_collection().find_one(
         {"id": request.json["id"], "resource_version": request.json["resource_version"]})
-    print(resource)
     if resource == None:
         return {"exists": False}
     else:
