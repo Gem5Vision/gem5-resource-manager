@@ -31,4 +31,5 @@ jobs:
       env:
         MONGO_URI: ${{secrets.MONGO_URI}}
       run: |
-        python3 -m unittest tests.api_test
+        coverrage -m unittest tests.api_test
+        coverage report -m
