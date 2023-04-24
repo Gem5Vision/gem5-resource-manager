@@ -31,5 +31,5 @@ jobs:
       env:
         MONGO_URI: ${{secrets.MONGO_URI}}
       run: |
-        coverrage -m unittest tests.api_test
+        coverage -m unittest tests.api_test
         coverage report -m
