@@ -29,5 +29,4 @@ jobs:
         pip install -r requirements.txt
     - name: Test with unittest
       run: |
-        python3 ./server.py
-        python3 -m coverage -m unittest tests.api_test
+        python3 -m unittest tests.api_test
