@@ -354,10 +354,20 @@ class TestApi(unittest.TestCase):
         database.get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
 
-    def test_keys(self):
+    def test_keys_1(self):
+        """This method tests the keys method of the API."""
+        response = self.test_client.post(
+            "/keys", json={"category": "simpoint", "id": "test-resource"})
+        test_response = {"category": "simpoint", "id": "test-resource", "author": [], "description": "", "license": "", "source_url": "", "tags": [],
+                         "example_usage": "", "gem5_versions": [], "resource_version": "", "simpoint_interval": 0, "simpoint_list": [], "weight_list": [], "warmup_interval": 0}
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.data), test_response)
+
+    def test_keys_2(self):
+        """This method tests the keys method of the API."""
         response = self.test_client.post(
             "/keys", json={"category": "diskimage", "id": "test-resource"})
-        test_ersponse = {"category": "diskimage",
+        test_response = {"category": "diskimage",
                          "id": "test-resource",
                          "author": [],
                          "description": "",
@@ -368,8 +378,8 @@ class TestApi(unittest.TestCase):
                          "gem5_versions": [],
                          "resource_version": ""}
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(json.loads(response.data), test_ersponse)
+        self.assertEqual(json.loads(response.data), test_response)
 
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
