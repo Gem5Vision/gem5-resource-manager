@@ -16,7 +16,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
@@ -28,5 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Test with unittest
+      env:
+        MONGO_URI: ${{secrets.MONGO_URI}}
       run: |
         python3 -m unittest tests.api_test
