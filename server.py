@@ -25,9 +25,9 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/login/<string:database>")
-def login(database):
-    if database == "mongodb":
+@app.route("/login/<string:database_type>")
+def login(database_type):
+    if database_type == "mongodb":
         return render_template("mongoDBLogin.html")
     else:
         return render_template("404.html")

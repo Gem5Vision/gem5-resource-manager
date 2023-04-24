@@ -136,3 +136,9 @@ main {
     font-size: 2.25rem;
   }
 }
+
+@media (min-width: 425px) {
+  #databaseActions {
+    max-width: 375px;
+  }
+}

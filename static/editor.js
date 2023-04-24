@@ -13,6 +13,7 @@ require(["vs/editor/editor.main"], () => {
   editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
     theme: "vs-dark",
     language: "json",
+    automaticLayout: true
   });
   editor.setModel({
     original: originalModel,

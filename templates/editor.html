@@ -8,15 +8,17 @@
 {% block main %}
   <div class="container-fluid" style="height: inherit;">
     <div class="row" style="height: inherit;">
-      <div id="databaseActions" class="col-lg-3 offcanvas-lg offcanvas-start shadow-sm overflow-y-auto" style="background-color: #f8f9fa!important; max-width: 325px; height: initial;">
+      <div id="databaseActions" class="col-lg-3 offcanvas-lg offcanvas-start shadow-sm overflow-y-auto" style="background-color: #f8f9fa!important; height: initial;">
         <div class="d-flex flex-row justify-content-between mt-2">
           <h5 class="secondary-text-bold" style="color: #0095AF;">Database Actions</h5>
           <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#databaseActions" aria-label="Close"></button>
         </div>
         <form class="form-outline d-flex flex-column mt-3">
           <label for="id" class="main-text-regular">Resource ID</label>
-          <input class="form-control mt-1" type="text" id="id" placeholder="Enter ID..." />
-          <select id="version-dropdown" class="form-select" aria-label="Default select example"></select>
+          <div class="d-flex flex-row align-items-center gap-1">
+            <input class="form-control" type="text" id="id" placeholder="Enter ID..." />
+            <select id="version-dropdown" class="form-select main-text-regular" aria-label="Default select example" style="width: auto;"></select>
+          </div>
           <label for="category" class="main-text-regular mt-3">Category</label>
           <select id="category" class="form-select mt-1" aria-label="Default select example"></select>
           <input class="btn btn-outline-primary main-text-regular align-self-end mt-2" type="submit" onclick="find(event)" value="Find" />
@@ -25,10 +27,6 @@
           <label for="updateURI" class="main-text-regular">Update URI</label>
           <input class="form-control mt-1" type="text" id="updateURI" placeholder="Enter URI..." />
           <input class="btn btn-outline-primary main-text-regular align-self-end mt-2 disabled" type="submit" value="Update" />
-        </form>
-        <form class="form-outline d-flex flex-column mt-3">
-          <label for="loadSchema" class="main-text-regular">Load Schema</label>
-          <input class="form-control form-control-sm main-text-regular" type="file" id="schema" onchange="loadSchema(event)" />
         </form>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
@@ -44,11 +42,11 @@
           <h4 class="secondary-text-semi" style="color: #425469;">Edited</h4>
         </div>
         <div id="editor" style="height: 75%; width: 100%;"></div>
-        <div class="d-flex editorButtonGroup justify-content-end pt-2 pb-2">
-          <button type="button" class="btn btn-primary main-text-regular me-2" id="update" onclick="showModal(event, update)">Update</button>
-          <button type="button" class="btn btn-primary main-text-regular me-2" id="add" onclick="showModal(event, add)" disabled>Add</button>
+        <div class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2">
+          <button type="button" class="btn btn-primary main-text-regular" id="update" onclick="showModal(event, update)">Update</button>
+          <button type="button" class="btn btn-primary main-text-regular" id="add" onclick="showModal(event, add)" disabled>Add</button>
           <button type="button" class="btn btn-danger main-text-regular" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
-          <button type="button" class="btn btn-primary" id="add_version" onclick="showModal(event, addVersion)" disabled>Add new version</button>
+          <button type="button" class="btn btn-primary main-text-regular" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>
         </div>
       </div>
     </div>
