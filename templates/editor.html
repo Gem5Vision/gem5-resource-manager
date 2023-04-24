@@ -16,6 +16,7 @@
         <form class="form-outline d-flex flex-column mt-3">
           <label for="id" class="main-text-regular">Resource ID</label>
           <input class="form-control mt-1" type="text" id="id" placeholder="Enter ID..." />
+          <select id="version-dropdown" class="form-select" aria-label="Default select example"></select>
           <label for="category" class="main-text-regular mt-3">Category</label>
           <select id="category" class="form-select mt-1" aria-label="Default select example"></select>
           <input class="btn btn-outline-primary main-text-regular align-self-end mt-2" type="submit" onclick="find(event)" value="Find" />
@@ -47,6 +48,7 @@
           <button type="button" class="btn btn-primary main-text-regular me-2" id="update" onclick="showModal(event, update)">Update</button>
           <button type="button" class="btn btn-primary main-text-regular me-2" id="add" onclick="showModal(event, add)" disabled>Add</button>
           <button type="button" class="btn btn-danger main-text-regular" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
+          <button type="button" class="btn btn-primary" id="add_version" onclick="showModal(event, addVersion)" disabled>Add new version</button>
         </div>
       </div>
     </div>

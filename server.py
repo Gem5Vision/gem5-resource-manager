@@ -5,27 +5,17 @@ import os
 from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
+from database import Database
 
-load_dotenv()
-# read MONGO_URI from environment variable
-
-# MONGO_URI = os.getenv("MONGO_URI")
-MONGO_URI = ""
 
 schema = {}
 with open("schema/test.json", "r") as f:
     schema = json.load(f)
 
 
-def get_database():
-    CONNECTION_STRING = MONGO_URI
-    client = MongoClient(CONNECTION_STRING)
-    return client["gem5-vision"]["resources_test"]
-
-
-# collection = get_database()
-collection = ""
-
+# database = Database("gem5-vision", "versions_test")
+# collection = database.get_collection()
+database = ""
 
 app = Flask(__name__)
 
@@ -54,37 +44,54 @@ def validateURI():
 
 @app.route("/editor")
 def editor():
-    global MONGO_URI
-    MONGO_URI = request.args.get('uri')
-    global collection
-    collection = get_database()
-    return render_template("editor.html", database="MongoDB", uri=MONGO_URI)
+    mongo_uri = request.args.get('uri')
+    global database
+    database = Database(mongo_uri, "gem5-vision", "versions_test")
+    return render_template("editor.html", database="MongoDB", uri=mongo_uri)
 
 
 @app.route("/find", methods=["POST"])
 def find():
-    resource = collection.find_one({"id": request.json["id"]})
-    return json_util.dumps(resource)
+    if request.json["resource_version"] == "":
+        resource = database.get_collection().find({"id": request.json["id"]}, {"_id": 0}).sort(
+            "resource_version", -1).limit(1)
+    else:
+        resource = database.get_collection().find({"id": request.json["id"], "resource_version": request.json["resource_version"]}, {"_id": 0}).sort(
+            "resource_version", -1).limit(1)
+    # check if resource is empty list
+    json_resource = json_util.dumps(resource)
+    if json_resource == "[]":
+        return {"exists": False}
+    return json_resource
 
 
 @app.route("/update", methods=["POST"])
 def update():
     # remove all keys that are not in the request
-    collection.replace_one({"id": request.json["id"]}, request.json)
+    database.get_collection().replace_one(
+        {"id": request.json["id"], "resource_version": request.json["resource"]["resource_version"]}, request.json["resource"])
     return {"status": "Updated"}
 
 
-@app.route("/categories", methods=["GET"])
+@app.route("/versions", methods=["POST"])
+def getVersions():
+    versions = database.get_collection().find({"id": request.json["id"]}, {
+        "resource_version": 1, "_id": 0}).sort("resource_version", -1)
+    json_resource = json_util.dumps(versions)
+    return json_resource
+
+
+@ app.route("/categories", methods=["GET"])
 def getCategories():
     return json.dumps(schema["properties"]["category"]["enum"])
 
 
-@app.route("/schema", methods=["GET"])
+@ app.route("/schema", methods=["GET"])
 def getSchema():
     return json_util.dumps(schema)
 
 
-@app.route("/keys", methods=["POST"])
+@ app.route("/keys", methods=["POST"])
 def getFields():
     empty_object = {
         "category": request.json["category"],
@@ -109,21 +116,30 @@ def getFields():
     return json.dumps(empty_object)
 
 
-@app.route("/delete", methods=["POST"])
+@ app.route("/delete", methods=["POST"])
 def delete():
-    collection.delete_one({"id": request.json["id"]})
+    database.get_collection().delete_one(
+        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
     return {"status": "Deleted"}
 
 
 @app.route("/insert", methods=["POST"])
 def insert():
-    collection.insert_one(request.json)
+    database.get_collection().insert_one(request.json)
     return {"status": "Inserted"}
 
 
 @app.errorhandler(404)
 def handle404(error):
     return render_template('404.html'), 404
+@app.route("/checkExists", methods=["POST"])
+def checkExists():
+    resource = database.get_collection().find_one(
+        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
+    if resource == None:
+        return {"exists": False}
+    else:
+        return {"exists": True}
 
 
 if __name__ == "__main__":

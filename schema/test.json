@@ -78,66 +78,54 @@
             "description": "Tags for the resource",
             "default": []
         },
-        "usage": {
+        "example_usage": {
             "type": "string",
             "description": "Usage instructions for the resource",
             "default": ""
         },
-        "versions": {
+        "gem5_versions": {
             "type": "array",
             "items": {
-                "type": "object",
-                "properties": {
-                    "size": {
-                        "type": "integer",
-                        "description": "The size of the resource in bytes",
-                        "default": 0
-                    },
-                    "url": {
-                        "type": "string",
-                        "description": "The URL of the resource",
-                        "default": ""
-                    },
-                    "version": {
-                        "type": "string",
-                        "description": "The version of the resource",
-                        "default": ""
-                    },
-                    "is_tar_archive": {
-                        "type": [
-                            "boolean",
-                            "null"
-                        ],
-                        "description": "Whether the resource is a tar archive",
-                        "default": null
-                    },
-                    "md5sum": {
-                        "type": "string",
-                        "description": "The MD5 sum of the resource",
-                        "default": ""
-                    },
-                    "is_zipped": {
-                        "type": [
-                            "boolean",
-                            "null"
-                        ],
-                        "description": "Whether the resource is zipped",
-                        "default": null
-                    }
-                }
+                "type": "string"
             },
-            "description": "The versions of the resource",
-            "default": [
-                {
-                    "size": 0,
-                    "url": "",
-                    "version": "",
-                    "is_tar_archive": null,
-                    "md5sum": "",
-                    "is_zipped": null
-                }
+            "description": "The gem5 versions that the resource is compatible with",
+            "default": []
+        },
+        "resource_version": {
+            "type": "string",
+            "description": "The version of the resource",
+            "default": ""
+        },
+        "size": {
+            "type": "integer",
+            "description": "The size of the resource in bytes",
+            "default": 0
+        },
+        "url": {
+            "type": "string",
+            "description": "The URL of the resource",
+            "default": ""
+        },
+        "is_tar_archive": {
+            "type": [
+                "boolean",
+                "null"
             ],
-            "minItems": 1
+            "description": "Whether the resource is a tar archive",
+            "default": null
+        },
+        "md5sum": {
+            "type": "string",
+            "description": "The MD5 sum of the resource",
+            "default": ""
+        },
+        "is_zipped": {
+            "type": [
+                "boolean",
+                "null"
+            ],
+            "description": "Whether the resource is zipped",
+            "default": null
         }
     },
     "required": [
@@ -148,8 +136,9 @@
         "license",
         "source_url",
         "tags",
-        "usage",
-        "versions"
+        "example_usage",
+        "gem5_versions",
+        "resource_version"
     ],
     "oneOf": [
         {
