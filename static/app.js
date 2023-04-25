@@ -36,7 +36,7 @@ function loadPrevSession(event) {
   }
 }
 
-function handleLogin(event, saveStatus) {
+function handleMongoDBLogin(event, saveStatus) {
   event.preventDefault();
   const uri = document.getElementById('uri').value;
 
@@ -69,3 +69,74 @@ function handleLogin(event, saveStatus) {
     }
   })
 } 
+
+function handleJSONLogin(event, saveStatus) {
+  event.preventDefault();
+  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  console.log(activeTab);
+
+  if (activeTab === "remote-tab") {
+    handleRemoteJSON();
+  }
+
+  if (activeTab === "upload-tab") {
+    handleUploadJSON();
+  }
+
+  return;
+}
+
+function handleRemoteJSON() {
+  const url = document.getElementById("jsonRemoteURL").value;
+
+  if (url === "") {
+    appendAlert('Error!', 'Cannot Proceed With Empty URL!', 'danger');
+    return;
+  }
+
+  const flask_url = "/validateJSON?q=" + encodeURIComponent(url);
+  fetch(flask_url, {
+    method: 'GET',
+  })
+  .then((res) => {
+    console.log("JSON Remote Response Status: " + res.status);
+    
+    if (res.status === 400) {
+      appendAlert('Error!', 'Invalid JSON File URL!', 'danger');
+    }
+    
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
+}
+
+function handleUploadJSON() {
+  const jsonFile = document.getElementById("jsonFile");
+  const file = jsonFile.files[0];
+
+  if (jsonFile === "") {
+    appendAlert('Error!', 'Cannot Proceed Without Uploading a File!', 'danger');
+    return;
+  }
+
+  const form = new FormData();
+  form.append("file", file);
+
+  const flask_url = "/validateJSON?q=";
+  fetch(flask_url, {
+    method: 'POST',
+    body: form
+  })
+  .then((res) => {
+    console.log("JSON Upload Response Status: " + res.status);
+    
+    if (res.status === 400) {
+      appendAlert('Error!', 'Invalid JSON File Upload!', 'danger');
+    }
+    
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
+}

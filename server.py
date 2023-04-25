@@ -29,9 +29,11 @@ def index():
 def login(database_type):
     if database_type == "mongodb":
         return render_template("mongoDBLogin.html")
+    elif database_type == "json":
+        return render_template("jsonLogin.html")
     else:
         return render_template("404.html")
-    
+
 
 @app.route("/validateURI", methods=['GET'])
 def validateURI():
@@ -40,6 +42,18 @@ def validateURI():
         return {"error" : "empty"}, 400
     #TODO: URI Validation
     return redirect(url_for("editor", uri=uri), 302)
+
+
+@app.route("/validateJSON", methods=["GET", "POST"]) 
+def validateJSON():
+    if request.method == 'GET':
+        url = request.args.get('q')
+        if url == "":
+            return {"error" : "empty"}, 400
+    else:
+        if 'file' not in request.files:
+            return {"error" : "empty"}, 400
+        file = request.files['file']
 
 
 @app.route("/editor")

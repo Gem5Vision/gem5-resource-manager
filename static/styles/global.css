@@ -114,6 +114,20 @@ main {
   padding-right: 1rem;
 }
 
+.login-nav {
+  --bs-nav-link-color: #0095AF;
+  --bs-nav-link-hover-color: white;
+  --bs-nav-tabs-link-active-color: #0095AF;
+}
+
+.login-nav-link {
+  color: white;
+}
+
+.login-nav-link:hover {
+  background-color: #0095AF;
+}
+
 @media (max-width: 991px) {
   .editorContainer {
     width: 95%;
