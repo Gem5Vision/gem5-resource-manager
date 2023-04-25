@@ -1,9 +1,12 @@
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
 const appendAlert = (errorHeader, message, type) => {
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = [
-    `<div class="alert alert-${type} alert-dismissible fade show d-flex flex-column shadow-sm" role="alert">`,
+  const alertDiv = document.createElement('div');
+
+  alertDiv.classList.add("alert", `alert-${type}`, "alert-dismissible", "fade", "show", "d-flex", "flex-column", "shadow-sm");
+  alertDiv.setAttribute("role", "alert");
+
+  alertDiv.innerHTML = [
     `  <div class="d-flex align-items-center main-text-semi">`,
     `    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1.5rem" class="bi bi-exclamation-octagon-fill me-3" viewBox="0 0 16 16">`,
     `      <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 
@@ -15,11 +18,10 @@ const appendAlert = (errorHeader, message, type) => {
     `    </div>`,
     `  <hr />`,
     `  <div>${message}</div>`,
-    `</div>`
   ].join('');
 
-  alertPlaceholder.append(wrapper);
-
+  alertPlaceholder.append(alertDiv);
+  
   setTimeout(function() {
     bootstrap.Alert.getOrCreateInstance(document.querySelector(".alert")).close();
   }, 3000);
@@ -39,17 +41,36 @@ function loadPrevSession(event) {
 function handleMongoDBLogin(event, saveStatus) {
   event.preventDefault();
   const uri = document.getElementById('uri').value;
+  const collection = document.getElementById('collection').value;
+  const database = document.getElementById('database').value;
+  const alias = document.getElementById('alias').value;
+
+  const validateInputs = [{type : "Collection", value : collection}, { type : "Database", value : database}, {type : "URI", value : uri}];
+
+  let error = false;
 
   if (saveStatus) {
     localStorage.setItem("URI", uri);
   }
 
-  if (uri === "") {
-    appendAlert('Error!', 'Cannot Proceed With Empty URI!', 'danger');
+  for (let i = 0; i < validateInputs.length; i++) {
+    if (validateInputs[i].value === "") {
+      appendAlert("Error", `Cannot Proceed Without ${validateInputs[i].type} Value!`, 'danger');
+      error = true;
+    }
+  }
+
+  if (error) {
     return;
   }
 
-  const url = '/validateURI?uri=' + encodeURIComponent(uri);
+  const params = new URLSearchParams();
+  params.append('uri', encodeURIComponent(uri));
+  params.append('collection', collection);
+  params.append('database', database);
+  params.append('alias', alias);
+
+  const url = `/validateURI?${params.toString()}`;
   fetch(url,
   {
       method: 'GET',

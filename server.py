@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
 from database import Database
-
+import urllib.parse
 
 schema = {}
 with open("schema/test.json", "r") as f:
@@ -38,10 +38,12 @@ def login(database_type):
 @app.route("/validateURI", methods=['GET'])
 def validateURI():
     uri = request.args.get('uri')
+    collection = request.args.get('collection')
+    database = request.args.get('database')
+    alias = request.args.get('alias')
     if uri == "":
         return {"error" : "empty"}, 400
-    #TODO: URI Validation
-    return redirect(url_for("editor", uri=uri), 302)
+    return redirect(url_for("editor", uri=uri, collection=collection, database=database, alias=alias), 302)
 
 
 @app.route("/validateJSON", methods=["GET", "POST"]) 
@@ -58,11 +60,15 @@ def validateJSON():
 
 @app.route("/editor")
 def editor():
-    mongo_uri = request.args.get('uri')
+    mongo_uri = urllib.parse.unquote(request.args.get('uri'))
+    collection = request.args.get('collection')
+    database_name = request.args.get('database')
+    alias = request.args.get('alias')
     global database
-    database = Database(mongo_uri, "gem5-vision", "versions_test")
-    return render_template("editor.html", database="MongoDB", uri=mongo_uri)
-
+    # database = Database(mongo_uri, "gem5-vision", "versions_test")
+    database = Database(mongo_uri, database_name, collection)
+    return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
+    
 
 @app.route("/find", methods=["POST"])
 def find():
