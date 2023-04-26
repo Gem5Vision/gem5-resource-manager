@@ -1,10 +1,10 @@
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
-const appendAlert = (errorHeader, message, type) => {
+const appendAlert = (errorHeader, id, message, type) => {
   const alertDiv = document.createElement('div');
-
   alertDiv.classList.add("alert", `alert-${type}`, "alert-dismissible", "fade", "show", "d-flex", "flex-column", "shadow-sm");
   alertDiv.setAttribute("role", "alert");
+  alertDiv.setAttribute("id", id);
 
   alertDiv.innerHTML = [
     `  <div class="d-flex align-items-center main-text-semi">`,
@@ -23,7 +23,7 @@ const appendAlert = (errorHeader, message, type) => {
   alertPlaceholder.append(alertDiv);
   
   setTimeout(function() {
-    bootstrap.Alert.getOrCreateInstance(document.querySelector(".alert")).close();
+    bootstrap.Alert.getOrCreateInstance(document.getElementById(`${id}`)).close();
   }, 3000);
 }
 
@@ -31,7 +31,7 @@ function loadPrevSession(event) {
   event.preventDefault();
   const prevSession = localStorage.getItem("URI");
   if (!prevSession) {
-    appendAlert('Error!', 'No Saved Session!', 'danger');
+    appendAlert('Error!', 'prevSession', 'No Saved Session!', 'danger');
   } else {
     const url = '/editor?uri=' + encodeURIComponent(prevSession); 
     window.location = url;
@@ -55,7 +55,7 @@ function handleMongoDBLogin(event, saveStatus) {
 
   for (let i = 0; i < validateInputs.length; i++) {
     if (validateInputs[i].value === "") {
-      appendAlert("Error", `Cannot Proceed Without ${validateInputs[i].type} Value!`, 'danger');
+      appendAlert("Error", `${validateInputs[i].type}`, `Cannot Proceed Without ${validateInputs[i].type} Value!`, 'danger');
       error = true;
     }
   }
@@ -82,7 +82,7 @@ function handleMongoDBLogin(event, saveStatus) {
     console.log("URI Validation Response Status: " + res.status);
     
     if (res.status === 400) {
-      appendAlert('Error!', 'Cannot Proceed With Empty URI!', 'danger');
+      appendAlert('Error!', 'emptyURI', 'Cannot Proceed With Empty URI!', 'danger');
     }
     
     if (res.redirected) {
@@ -111,7 +111,7 @@ function handleRemoteJSON() {
   const url = document.getElementById("jsonRemoteURL").value;
 
   if (url === "") {
-    appendAlert('Error!', 'Cannot Proceed With Empty URL!', 'danger');
+    appendAlert('Error!', 'emptyURL', 'Cannot Proceed With Empty URL!', 'danger');
     return;
   }
 
@@ -123,7 +123,7 @@ function handleRemoteJSON() {
     console.log("JSON Remote Response Status: " + res.status);
     
     if (res.status === 400) {
-      appendAlert('Error!', 'Invalid JSON File URL!', 'danger');
+      appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
     }
     
     if (res.redirected) {
@@ -137,7 +137,7 @@ function handleUploadJSON() {
   const file = jsonFile.files[0];
 
   if (jsonFile === "") {
-    appendAlert('Error!', 'Cannot Proceed Without Uploading a File!', 'danger');
+    appendAlert('Error!', 'emptyUpload', 'Cannot Proceed Without Uploading a File!', 'danger');
     return;
   }
 
@@ -153,7 +153,7 @@ function handleUploadJSON() {
     console.log("JSON Upload Response Status: " + res.status);
     
     if (res.status === 400) {
-      appendAlert('Error!', 'Invalid JSON File Upload!', 'danger');
+      appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
     }
     
     if (res.redirected) {

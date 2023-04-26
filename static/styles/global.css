@@ -107,7 +107,8 @@ main {
 #liveAlertPlaceholder {
   position: absolute;
   margin-top: 1rem;
-  right: 1rem;
+  right: 2rem;
+  margin-left: 2rem;
 }
 
 .alert-dismissible {
