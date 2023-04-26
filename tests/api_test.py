@@ -1,10 +1,8 @@
 import flask
 import contextlib
-import requests
 import unittest
 from server import app, database
 import json
-from database import Database
 from bson import json_util
 
 
