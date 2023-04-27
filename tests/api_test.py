@@ -53,7 +53,39 @@ class TestApi(unittest.TestCase):
             response = self.test_client.get('/')
             self.assertEqual(response.status_code, 200)
             self.assertTrue(templates[0][0].name == 'index.html')
+    
+    def test_get_helppage(self):
+        """This method tests the call to the help page.
+    It checks if the call is GET, status code is 200 and if the template rendered is help.html."""
+        with captured_templates(self.app) as templates:
+            response = self.test_client.get('/help')
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(templates[0][0].name == 'help.html')
 
+    def test_get_mongodb_loginpage(self):
+        """This method tests the call to the MongoDB login page.
+    It checks if the call is GET, status code is 200 and if the template rendered is mongoDBLogin.html."""
+        with captured_templates(self.app) as templates:
+            response = self.test_client.get('/login/mongodb')
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(templates[0][0].name == 'mongoDBLogin.html')
+
+    def test_get_json_loginpage(self):
+        """This method tests the call to the JSON login page.
+    It checks if the call is GET, status code is 200 and if the template rendered is jsonLogin.html."""
+        with captured_templates(self.app) as templates:
+            response = self.test_client.get('/login/json')
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(templates[0][0].name == 'jsonLogin.html')
+
+    def test_get_editorpage_withoutparameters(self):
+        """This method tests the call to the editor page without required query parameters.
+    It checks if the call is GET, status code is 404 and if the template rendered is 404.html."""
+        with captured_templates(self.app) as templates:
+            response = self.test_client.get('/editor')
+            self.assertEqual(response.status_code, 404)
+            self.assertTrue(templates[0][0].name == '404.html')
+    
     def test_default_call_is_not_post(self):
         """This method tests that the default call is not a POST."""
 

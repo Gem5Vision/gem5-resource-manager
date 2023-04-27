@@ -1,283 +1,206 @@
-var editor;
-var originalModel;
-var modifiedModel;
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
-require.config({
-  paths: {
-    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs",
-  },
-});
-require(["vs/editor/editor.main"], () => {
-  originalModel = monaco.editor.createModel(`{\n}`, "json");
-  modifiedModel = monaco.editor.createModel(`{\n}`, "json");
-  editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
-    theme: "vs-dark",
-    language: "json",
-  });
-  editor.setModel({
-    original: originalModel,
-    modified: modifiedModel,
-  });
-  fetch("/schema")
-    .then((res) => res.json())
-    .then((data) => {
-      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-        trailingCommas: "error",
-        comments: "error",
-        validate: true,
-        schemas: [
-          {
-            uri: "http://json-schema.org/draft-07/schema",
-            fileMatch: ["*"],
-            schema: data,
-          },
-        ],
-      });
-    });
-});
+const appendAlert = (errorHeader, id, message, type) => {
+  const alertDiv = document.createElement('div');
+  alertDiv.classList.add("alert", `alert-${type}`, "alert-dismissible", "fade", "show", "d-flex", "flex-column", "shadow-sm");
+  alertDiv.setAttribute("role", "alert");
+  alertDiv.setAttribute("id", id);
 
-function checkErrors() {
-  let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri });
-  if (errors.length > 0) {
-    console.log(errors);
-    let str = "";
-    errors.forEach((error) => {
-      str += error.message + "\n";
-    });
-    alert(str);
-    return true;
-  }
-  return false;
+  alertDiv.innerHTML = [
+    `  <div class="d-flex align-items-center main-text-semi">`,
+    `    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1.5rem" class="bi bi-exclamation-octagon-fill me-3" viewBox="0 0 16 16">`,
+    `      <path d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 
+              .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 
+              3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>`,
+    `    </svg>`,
+    `    <span class="main-text-regular">${errorHeader}</span>`,
+    `      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
+    `    </div>`,
+    `  <hr />`,
+    `  <div>${message}</div>`,
+  ].join('');
+
+  alertPlaceholder.append(alertDiv);
+
+  setTimeout(function() {
+    bootstrap.Alert.getOrCreateInstance(document.getElementById(`${id}`)).close();
+  }, 3000);
 }
 
-function update(e) {
-  e.preventDefault();
-  if (checkErrors()) {
-    return;
-  }
-  let json = JSON.parse(modifiedModel.getValue());
-  let id = document.getElementById("id").value;
-  console.log(json);
-  fetch("/update", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id: id, resource: json }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      find(e);
-    });
-}
-
-function add(e) {
-  e.preventDefault();
-  if (checkErrors()) {
-    return;
-  }
-  let json = JSON.parse(modifiedModel.getValue());
-  console.log(json);
-  fetch("/insert", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(json),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      find(e);
-    });
-}
-
-function addVersion(e) {
-  e.preventDefault();
-  console.log("add version");
-  if (checkErrors()) {
-    return;
-  }
-  let json = JSON.parse(modifiedModel.getValue());
-  console.log(json["resource_version"]);
-  fetch("/checkExists", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: json["id"],
-      resource_version: json["resource_version"],
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data["exists"]);
-      if (data["exists"] == true) {
-        alert("Resource version already exists");
-      } else {
-        fetch("/insert", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(json),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            find(e);
-          });
-      }
-    });
-}
-
-function deleteRes(e) {
-  e.preventDefault();
-  console.log("delete");
-  let id = document.getElementById("id").value;
-  let resource_version = JSON.parse(originalModel.getValue())[
-    "resource_version"
-  ];
-  console.log(resource_version);
-  fetch("/delete", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id: id, resource_version: resource_version }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      find(e);
-    });
-}
-
-let didChange = false;
-document.getElementById("id").onchange = function () {
-  console.log("id changed");
-  didChange = true;
-};
-
-function addVersions() {
-  let select = document.getElementById("version-dropdown");
-  select.innerHTML = "Latest";
-  fetch("/versions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: document.getElementById("id").value,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      let select = document.getElementById("version-dropdown");
-      if (data.length == 0) {
-        data = [{ resource_version: "Latest" }];
-      }
-      data.forEach((version) => {
-        let option = document.createElement("option");
-        option.value = version["resource_version"];
-        option.innerText = version["resource_version"];
-        select.appendChild(option);
-      });
-    });
-}
-
-function find(e) {
-  e.preventDefault();
-  if (didChange) {
-    addVersions();
-    didChange = false;
-  }
-
-  fetch("/find", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: document.getElementById("id").value,
-      resource_version: document.getElementById("version-dropdown").value,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data["exists"] == false) {
-        fetch("/keys", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            category: document.getElementById("category").value,
-            id: document.getElementById("id").value,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            delete data._id;
-            data["id"] = document.getElementById("id").value;
-            data["category"] = document.getElementById("category").value;
-            originalModel.setValue(JSON.stringify(data, null, 4));
-            modifiedModel.setValue(JSON.stringify(data, null, 4));
-            document.getElementById("update").disabled = true;
-            document.getElementById("add").disabled = false;
-            document.getElementById("add_version").disabled = true;
-            document.getElementById("delete").disabled = true;
-          });
-      } else {
-        data = data[0];
-        console.log(data);
-        delete data._id;
-        originalModel.setValue(JSON.stringify(data, null, 4));
-        modifiedModel.setValue(JSON.stringify(data, null, 4));
-        document.getElementById("update").disabled = false;
-        document.getElementById("add").disabled = true;
-        document.getElementById("delete").disabled = false;
-        document.getElementById("add_version").disabled = false;
-        document.getElementById("category").value = data.category;
-        document.getElementById("version-dropdown").value =
-          data.resource_version;
-      }
-    });
-}
-
-window.onload = () => {
-  let ver_dropdown = document.getElementById("version-dropdown");
-  let option = document.createElement("option");
-  option.value = "Latest";
-  option.innerHTML = "Latest";
-  ver_dropdown.appendChild(option);
-  fetch("/categories")
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      let select = document.getElementById("category");
-      data.forEach((category) => {
-        let option = document.createElement("option");
-        option.value = category;
-        option.innerHTML = category;
-        select.appendChild(option);
-      });
-    });
-};
-
-const myModal = new bootstrap.Modal("#ConfirmModal", {
-  keyboard: false,
-});
-
-let confirmButton = document.getElementById("confirm");
-
-function showModal(event, callback) {
+function loadPrevSession(event) {
   event.preventDefault();
-  myModal.show();
-  confirmButton.onclick = () => {
-    callback(event);
-    myModal.hide();
-  };
+  const prevSession = localStorage.getItem("URL");
+  if (!prevSession) {
+    appendAlert('Error!', 'prevSession', 'No Saved Session!', 'danger');
+  } else {
+    window.location = prevSession;
+  }
+}
+
+function handleMongoDBLogin(event, saveStatus) {
+  event.preventDefault();
+  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+
+  activeTab === "enter-uri-tab" ? handleEnteredURI(saveStatus) : handleGenerateURI(saveStatus);
+
+  return;
+} 
+
+function handleEnteredURI(saveStatus) {
+  const uri = document.getElementById('uri').value;
+  const collection = document.getElementById('collection').value;
+  const database = document.getElementById('database').value;
+  const alias = document.getElementById('alias').value;
+  const emptyInputs = [{type : "Collection", value : collection}, { type : "Database", value : database}, {type : "URI", value : uri}];
+  let error = false;
+
+  for (let i = 0; i < emptyInputs.length; i++) {
+    if (emptyInputs[i].value === "") {
+      appendAlert("Error", `${emptyInputs[i].type}`, `Cannot Proceed Without ${emptyInputs[i].type} Value!`, 'danger');
+      error = true;
+    }
+  }
+
+  if (error) {
+    return;
+  }
+
+  handleMongoURLFetch(saveStatus, uri, collection, database, alias);
+}
+
+function handleGenerateURI(saveStatus) {
+  const connection = document.getElementById('connection').checked;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const collection = document.getElementById('collectionGenerate').value;
+  const database = document.getElementById('databaseGenerate').value;
+  const host = document.getElementById('host').value;
+  const alias = document.getElementById('aliasGenerate').value;
+  const retryWrites = document.getElementById('retryWrites').checked;
+  const writeConcern = document.getElementById('writeConcern').checked;
+  const options = document.getElementById('options').value;
+  let generatedURI = "";
+  const emptyInputs = [{type : "Host", value : host}, {type : "Collection", value : collection}, { type : "Database", value : database}];
+  let error = false;
+
+  for (let i = 0; i < emptyInputs.length; i++) {
+    if (emptyInputs[i].value === "") {
+      appendAlert("Error", `${emptyInputs[i].type}`, `Cannot Proceed Without ${emptyInputs[i].type} Value!`, 'danger');
+      error = true;
+    }
+  }
+  
+  if (error) {
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  connection ? generatedURI = "mongodb+srv://" : generatedURI = "mongodb://";
+  if (username && password) {
+    generatedURI += username + ":" + password + "@";
+  }
+
+  generatedURI += host + "/?";
+
+  retryWrites ? generatedURI += "retryWrites=true" : null;
+  writeConcern ? generatedURI += "&w=majority" : null;
+
+  handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
+}
+
+function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
+  const params = new URLSearchParams();
+  params.append('uri', encodeURIComponent(uri));
+  params.append('collection', collection);
+  params.append('database', database);
+  params.append('alias', alias);
+
+  const url = `/validateURI?${params.toString()}`;
+
+  if (saveStatus) {
+    localStorage.setItem("URL", url);
+  }
+
+  fetch(url,
+  {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  })
+  .then((res) => {
+    console.log("URI Validation Response Status: " + res.status);
+    
+    if (res.status === 400) {
+      appendAlert('Error!', 'emptyURI', 'Cannot Proceed With Empty URI!', 'danger');
+    }
+    
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
+}
+
+function handleJSONLogin(event, saveStatus) {
+  event.preventDefault();
+  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+
+  activeTab === "remote-tab" ? handleRemoteJSON() : handleUploadJSON();
+
+  return;
+}
+
+function handleRemoteJSON() {
+  const url = document.getElementById("jsonRemoteURL").value;
+
+  if (url === "") {
+    appendAlert('Error!', 'emptyURL', 'Cannot Proceed With Empty URL!', 'danger');
+    return;
+  }
+
+  const flask_url = "/validateJSON?q=" + encodeURIComponent(url);
+  fetch(flask_url, {
+    method: 'GET',
+  })
+  .then((res) => {
+    console.log("JSON Remote Response Status: " + res.status);
+    
+    if (res.status === 400) {
+      appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
+    }
+    
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
+}
+
+function handleUploadJSON() {
+  const jsonFile = document.getElementById("jsonFile");
+  const file = jsonFile.files[0];
+
+  if (jsonFile === "") {
+    appendAlert('Error!', 'emptyUpload', 'Cannot Proceed Without Uploading a File!', 'danger');
+    return;
+  }
+
+  const form = new FormData();
+  form.append("file", file);
+
+  const flask_url = "/validateJSON?q=";
+  fetch(flask_url, {
+    method: 'POST',
+    body: form
+  })
+  .then((res) => {
+    console.log("JSON Upload Response Status: " + res.status);
+    
+    if (res.status === 400) {
+      appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
+    }
+    
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
 }
