@@ -32,3 +32,14 @@ def checkResourceExists(resources, query):
         if resource["id"] == query["id"]:
             return {"exists": True}
     return {"exists": False}
+
+def insertResource(resources, query):
+    resources.append(query["resource"])
+    return {"status": "Inserted"}
+
+def deleteResource(resources, query):
+    for resource in resources:
+        if resource["id"] == query["id"] and resource["resource_version"] == query["resource_version"]:
+            resources.remove(resource)
+    return {"status": "Deleted"}
+
