@@ -24,7 +24,7 @@ database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mo
 #database = Database("gem5-vision", "versions_test")
 
 resources = None
-with open("kiwi.json", "r") as f:
+with open("test_json_endpoint.json", "r") as f:
     resources = json.load(f)
 
 isMongo = False
@@ -92,6 +92,7 @@ def help():
 
 @app.route("/find", methods=["POST"])
 def find():
+    print("resource before find:\n", resources)
     if isMongo:
         return mongo_db_api.findResource(database, request.json)
     return json_api.findResource(resources, request.json)
@@ -99,7 +100,9 @@ def find():
 
 @app.route("/update", methods=["POST"])
 def update():
-    return mongo_db_api.updateResource(database, request.json)
+    if isMongo:
+        return mongo_db_api.updateResource(database, request.json)
+    return json_api.updateResource(resources, request.json)
 
 
 @app.route("/versions", methods=["POST"])
@@ -146,21 +149,29 @@ def getFields():
 
 @ app.route("/delete", methods=["POST"])
 def delete():
-    return mongo_db_api.deleteResource(database, request.json)
+    if isMongo:
+        return mongo_db_api.deleteResource(database, request.json)
+    return json_api.deleteResource(resources, request.json)
 
 
 @app.route("/insert", methods=["POST"])
 def insert():
-    return mongo_db_api.insertResource(database, request.json)
+    print("resource before insert:\n", resources)
+    if isMongo:
+        return mongo_db_api.insertResource(database, request.json)
+    return json_api.insertResource(resources, request.json)
 
 
 
 @app.errorhandler(404)
 def handle404(error):
     return render_template('404.html'), 404
+
 @app.route("/checkExists", methods=["POST"])
 def checkExists():
-    return mongo_db_api.checkResourceExists(database, request.json)
+    if isMongo:
+        return mongo_db_api.checkResourceExists(database, request.json)
+    return json_api.checkResourceExists(resources, request.json)
 
 
 if __name__ == "__main__":

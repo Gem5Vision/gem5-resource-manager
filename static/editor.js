@@ -13,7 +13,7 @@ require(["vs/editor/editor.main"], () => {
   editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
     theme: "vs-dark",
     language: "json",
-    automaticLayout: true
+    automaticLayout: true,
   });
   editor.setModel({
     original: originalModel,
@@ -100,6 +100,7 @@ function addVersion(e) {
   if (checkErrors()) {
     return;
   }
+  addVersions();
   let json = JSON.parse(modifiedModel.getValue());
   console.log(json["resource_version"]);
   fetch("/checkExists", {

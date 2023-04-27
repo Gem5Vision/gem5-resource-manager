@@ -1,0 +1,25 @@
+[
+    {
+        "category": "kernel",
+        "id": "x86-linux-kernel-5.4.49",
+        "description": "test",
+        "architecture": "X86",
+        "size": 26557912,
+        "tags": [
+            "linux-kernel"
+        ],
+        "is_zipped": false,
+        "md5sum": "60a53c7d47d7057436bf4b9df707a841",
+        "source": "src/linux-kernel",
+        "url": "http://dist.gem5.org/dist/develop/kernels/x86/static/vmlinux-5.4.49",
+        "code_examples": [],
+        "license": "",
+        "author": [],
+        "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/linux-kernel",
+        "resource_version": "1.0.0",
+        "gem5_versions": [
+            "23.0"
+        ],
+        "example_usage": "get_resource(resource_name=\"x86-linux-kernel-5.4.49\")"
+    }
+]
