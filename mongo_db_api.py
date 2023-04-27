@@ -18,6 +18,7 @@ def findResource(database, json):
     json_resource = json_util.dumps(resource)
     if json_resource == "[]":
         return {"exists": False}
+    print(json_resource)
     return json_resource
 
 def updateResource(database, json):

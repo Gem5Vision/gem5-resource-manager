@@ -7,6 +7,7 @@ from bson import json_util
 import jsonschema
 from database import Database
 import mongo_db_api
+import json_api
 
 schema = {}
 with open("schema/test.json", "r") as f:
@@ -14,9 +15,12 @@ with open("schema/test.json", "r") as f:
 
 
 database = Database("gem5-vision", "versions_test")
-# collection = database.get_collection()
 
+resources = None
+with open("kiwi.json", "r") as f:
+    resources = json.load(f)
 
+isMongo = False
 app = Flask(__name__)
 
 
@@ -27,7 +31,9 @@ def index():
 
 @app.route("/find", methods=["POST"])
 def find():
-    return mongo_db_api.findResource(database, request.json)
+    if isMongo:
+        return mongo_db_api.findResource(database, request.json)
+    return json_api.findResource(resources, request.json)
 
 
 @app.route("/update", methods=["POST"])
