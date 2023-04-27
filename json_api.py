@@ -19,3 +19,10 @@ def getVersions(resources, query):
             versions.append({"resource_version": resource["resource_version"]})
             print("Found version")
     return json_util.dumps(versions)
+
+def updateResource(resources, query):
+    for resource in resources:
+        if resource["id"] == query["id"] and resource["resource_version"] == query["resource"]["resource_version"]:
+            resources.remove(resource)
+            resources.append(query["resource"])
+    return {"status": "Updated"}
