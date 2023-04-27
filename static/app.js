@@ -29,12 +29,11 @@ const appendAlert = (errorHeader, id, message, type) => {
 
 function loadPrevSession(event) {
   event.preventDefault();
-  const prevSession = localStorage.getItem("URI");
+  const prevSession = localStorage.getItem("URL");
   if (!prevSession) {
     appendAlert('Error!', 'prevSession', 'No Saved Session!', 'danger');
   } else {
-    const url = '/editor?uri=' + encodeURIComponent(prevSession); 
-    window.location = url;
+    window.location = prevSession;
   }
 }
 
@@ -44,15 +43,9 @@ function handleMongoDBLogin(event, saveStatus) {
   const collection = document.getElementById('collection').value;
   const database = document.getElementById('database').value;
   const alias = document.getElementById('alias').value;
-
   const validateInputs = [{type : "Collection", value : collection}, { type : "Database", value : database}, {type : "URI", value : uri}];
-
   let error = false;
-
-  if (saveStatus) {
-    localStorage.setItem("URI", uri);
-  }
-
+  
   for (let i = 0; i < validateInputs.length; i++) {
     if (validateInputs[i].value === "") {
       appendAlert("Error", `${validateInputs[i].type}`, `Cannot Proceed Without ${validateInputs[i].type} Value!`, 'danger');
@@ -71,6 +64,11 @@ function handleMongoDBLogin(event, saveStatus) {
   params.append('alias', alias);
 
   const url = `/validateURI?${params.toString()}`;
+
+  if (saveStatus) {
+    localStorage.setItem("URL", url);
+  }
+
   fetch(url,
   {
       method: 'GET',
