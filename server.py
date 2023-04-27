@@ -13,9 +13,8 @@ with open("schema/test.json", "r") as f:
     schema = json.load(f)
 
 
-# database = Database("gem5-vision", "versions_test")
-# collection = database.get_collection()
-database = ""
+database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
+
 
 app = Flask(__name__)
 
@@ -60,14 +59,17 @@ def validateJSON():
 
 @app.route("/editor")
 def editor():
-    mongo_uri = urllib.parse.unquote(request.args.get('uri'))
-    collection = request.args.get('collection')
-    database_name = request.args.get('database')
-    alias = request.args.get('alias')
-    global database
-    # database = Database(mongo_uri, "gem5-vision", "versions_test")
-    database = Database(mongo_uri, database_name, collection)
-    return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
+    if not request.args:
+        return render_template("404.html"), 404
+    else:
+        mongo_uri = urllib.parse.unquote(request.args.get('uri'))
+        collection = request.args.get('collection')
+        database_name = request.args.get('database')
+        alias = request.args.get('alias')
+        global database
+        # database = Database(mongo_uri, "gem5-vision", "versions_test")
+        database.change_database(mongo_uri, database_name, collection)
+        return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
     
 
 @app.route("/find", methods=["POST"])
