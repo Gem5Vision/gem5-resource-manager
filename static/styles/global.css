@@ -2,8 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@700&display=swap');
 
 html, body {
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
+  overflow-y: scroll;
 }
 
 .btn-outline-primary {
@@ -54,7 +55,9 @@ main {
 }
 
 .main-text-regular,
-.buttonGroup > button {
+.buttonGroup > button, 
+#markdown-body-styling p,
+#markdown-body-styling li {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 1rem;
@@ -78,7 +81,8 @@ main {
   font-size: 1rem;
 }
 
-.page-title {
+.page-title,
+#markdown-body-styling h1 {
   color: #425469;
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
@@ -134,6 +138,20 @@ main {
   border-color: #6c6c6c;
 }
 
+#markdown-body-styling h1 {
+  color: #425469;
+}
+
+code {
+  display: inline-table;
+  overflow-x: auto;
+  padding: 2px;
+  color: #333;
+  background: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
 @media (max-width: 991px) {
   .editorContainer {
     width: 95%;
@@ -148,7 +166,8 @@ main {
   .main-text-regular,
   .main-text-semi,
   .main-text-bold,
-  .buttonGroup > button {
+  .buttonGroup > button,
+  #markdown-body-styling p {
     font-size: 0.875rem;
   }
 
@@ -160,7 +179,8 @@ main {
     font-size: 1rem;
   }
 
-  .page-title {
+  .page-title,
+  #markdown-body-styling h1 {
     font-size: 2.25rem;
   }
 }

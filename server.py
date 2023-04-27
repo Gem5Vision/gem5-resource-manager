@@ -7,6 +7,7 @@ from bson import json_util
 import jsonschema
 from database import Database
 import urllib.parse
+import markdown
 
 schema = {}
 with open("schema/test.json", "r") as f:
@@ -71,6 +72,12 @@ def editor():
         database.change_database(mongo_uri, database_name, collection)
         return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
     
+
+@app.route("/help")
+def help():
+    with open('static/help.md', 'r') as f:
+        return render_template("help.html", rendered_html=markdown.markdown(f.read()))
+
 
 @app.route("/find", methods=["POST"])
 def find():
