@@ -23,11 +23,8 @@
           <select id="category" class="form-select mt-1" aria-label="Default select example"></select>
           <input class="btn btn-outline-primary main-text-regular align-self-end mt-2" type="submit" onclick="find(event)" value="Find" />
         </form>
-        <form class="form-outline d-flex flex-column mt-3">
-          <label for="updateURI" class="main-text-regular">Update URI</label>
-          <input class="form-control mt-1" type="text" id="updateURI" placeholder="Enter URI..." />
-          <input class="btn btn-outline-primary main-text-regular align-self-end mt-2 disabled" type="submit" value="Update" />
-        </form>
+        <div class="main-text-regular mt-3">Change Database</div>
+        <button type="button" class="btn btn-outline-primary main-text-regular mt-1" id="update" onclick="window.location = '/login/mongodb'">Reset URI</button>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
         <button class="btn btn-outline-primary d-lg-none align-self-start main-text-regular mt-2 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#databaseActions" aria-controls="sidebar">
