@@ -21,7 +21,7 @@ const appendAlert = (errorHeader, id, message, type) => {
   ].join('');
 
   alertPlaceholder.append(alertDiv);
-  
+
   setTimeout(function() {
     bootstrap.Alert.getOrCreateInstance(document.getElementById(`${id}`)).close();
   }, 3000);
@@ -39,16 +39,24 @@ function loadPrevSession(event) {
 
 function handleMongoDBLogin(event, saveStatus) {
   event.preventDefault();
+  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+
+  activeTab === "enter-uri-tab" ? handleEnteredURI(saveStatus) : handleGenerateURI(saveStatus);
+
+  return;
+} 
+
+function handleEnteredURI(saveStatus) {
   const uri = document.getElementById('uri').value;
   const collection = document.getElementById('collection').value;
   const database = document.getElementById('database').value;
   const alias = document.getElementById('alias').value;
-  const validateInputs = [{type : "Collection", value : collection}, { type : "Database", value : database}, {type : "URI", value : uri}];
+  const emptyInputs = [{type : "Collection", value : collection}, { type : "Database", value : database}, {type : "URI", value : uri}];
   let error = false;
-  
-  for (let i = 0; i < validateInputs.length; i++) {
-    if (validateInputs[i].value === "") {
-      appendAlert("Error", `${validateInputs[i].type}`, `Cannot Proceed Without ${validateInputs[i].type} Value!`, 'danger');
+
+  for (let i = 0; i < emptyInputs.length; i++) {
+    if (emptyInputs[i].value === "") {
+      appendAlert("Error", `${emptyInputs[i].type}`, `Cannot Proceed Without ${emptyInputs[i].type} Value!`, 'danger');
       error = true;
     }
   }
@@ -57,6 +65,50 @@ function handleMongoDBLogin(event, saveStatus) {
     return;
   }
 
+  handleMongoURLFetch(saveStatus, uri, collection, database, alias);
+}
+
+function handleGenerateURI(saveStatus) {
+  const connection = document.getElementById('connection').checked;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const collection = document.getElementById('collectionGenerate').value;
+  const database = document.getElementById('databaseGenerate').value;
+  const host = document.getElementById('host').value;
+  const alias = document.getElementById('aliasGenerate').value;
+  const retryWrites = document.getElementById('retryWrites').checked;
+  const writeConcern = document.getElementById('writeConcern').checked;
+  const options = document.getElementById('options').value;
+  let generatedURI = "";
+  const emptyInputs = [{type : "Host", value : host}, {type : "Collection", value : collection}, { type : "Database", value : database}];
+  let error = false;
+
+  for (let i = 0; i < emptyInputs.length; i++) {
+    if (emptyInputs[i].value === "") {
+      appendAlert("Error", `${emptyInputs[i].type}`, `Cannot Proceed Without ${emptyInputs[i].type} Value!`, 'danger');
+      error = true;
+    }
+  }
+  
+  if (error) {
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  connection ? generatedURI = "mongodb+srv://" : generatedURI = "mongodb://";
+  if (username && password) {
+    generatedURI += username + ":" + password + "@";
+  }
+
+  generatedURI += host + "/?";
+
+  retryWrites ? generatedURI += "retryWrites=true" : null;
+  writeConcern ? generatedURI += "&w=majority" : null;
+
+  handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
+}
+
+function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   const params = new URLSearchParams();
   params.append('uri', encodeURIComponent(uri));
   params.append('collection', collection);
@@ -87,20 +139,13 @@ function handleMongoDBLogin(event, saveStatus) {
       window.location = res.url;
     }
   })
-} 
+}
 
 function handleJSONLogin(event, saveStatus) {
   event.preventDefault();
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
-  console.log(activeTab);
 
-  if (activeTab === "remote-tab") {
-    handleRemoteJSON();
-  }
-
-  if (activeTab === "upload-tab") {
-    handleUploadJSON();
-  }
+  activeTab === "remote-tab" ? handleRemoteJSON() : handleUploadJSON();
 
   return;
 }
