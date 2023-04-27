@@ -11,3 +11,11 @@ def findResource(resources, query):
                 print("Found resource")
                 return json_util.dumps([resource])
     return {"exists": False}
+
+def getVersions(resources, query):
+    versions = []
+    for resource in resources:
+        if resource["id"] == query["id"]:
+            versions.append({"resource_version": resource["resource_version"]})
+            print("Found version")
+    return json_util.dumps(versions)

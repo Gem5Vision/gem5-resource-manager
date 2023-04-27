@@ -43,7 +43,9 @@ def update():
 
 @app.route("/versions", methods=["POST"])
 def getVersions():
-    return mongo_db_api.getVersions(database, request.json)
+    if isMongo:
+        return mongo_db_api.getVersions(database, request.json)
+    return json_api.getVersions(resources, request.json)
 
 
 @ app.route("/categories", methods=["GET"])
