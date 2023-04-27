@@ -6,17 +6,28 @@ from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
 from database import Database
+
 import urllib.parse
 import markdown
+
+import mongo_db_api
+import json_api
 
 schema = {}
 with open("schema/test.json", "r") as f:
     schema = json.load(f)
 
 
+
 database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
 
+#database = Database("gem5-vision", "versions_test")
 
+resources = None
+with open("kiwi.json", "r") as f:
+    resources = json.load(f)
+
+isMongo = False
 app = Flask(__name__)
 
 
@@ -81,33 +92,21 @@ def help():
 
 @app.route("/find", methods=["POST"])
 def find():
-    if request.json["resource_version"] == "":
-        resource = database.get_collection().find({"id": request.json["id"]}, {"_id": 0}).sort(
-            "resource_version", -1).limit(1)
-    else:
-        resource = database.get_collection().find({"id": request.json["id"], "resource_version": request.json["resource_version"]}, {"_id": 0}).sort(
-            "resource_version", -1).limit(1)
-    # check if resource is empty list
-    json_resource = json_util.dumps(resource)
-    if json_resource == "[]":
-        return {"exists": False}
-    return json_resource
+    if isMongo:
+        return mongo_db_api.findResource(database, request.json)
+    return json_api.findResource(resources, request.json)
 
 
 @app.route("/update", methods=["POST"])
 def update():
-    # remove all keys that are not in the request
-    database.get_collection().replace_one(
-        {"id": request.json["id"], "resource_version": request.json["resource"]["resource_version"]}, request.json["resource"])
-    return {"status": "Updated"}
+    return mongo_db_api.updateResource(database, request.json)
 
 
 @app.route("/versions", methods=["POST"])
 def getVersions():
-    versions = database.get_collection().find({"id": request.json["id"]}, {
-        "resource_version": 1, "_id": 0}).sort("resource_version", -1)
-    json_resource = json_util.dumps(versions)
-    return json_resource
+    if isMongo:
+        return mongo_db_api.getVersions(database, request.json)
+    return json_api.getVersions(resources, request.json)
 
 
 @ app.route("/categories", methods=["GET"])
@@ -147,15 +146,13 @@ def getFields():
 
 @ app.route("/delete", methods=["POST"])
 def delete():
-    database.get_collection().delete_one(
-        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
-    return {"status": "Deleted"}
+    return mongo_db_api.deleteResource(database, request.json)
 
 
 @app.route("/insert", methods=["POST"])
 def insert():
-    database.get_collection().insert_one(request.json)
-    return {"status": "Inserted"}
+    return mongo_db_api.insertResource(database, request.json)
+
 
 
 @app.errorhandler(404)
@@ -163,12 +160,7 @@ def handle404(error):
     return render_template('404.html'), 404
 @app.route("/checkExists", methods=["POST"])
 def checkExists():
-    resource = database.get_collection().find_one(
-        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
-    if resource == None:
-        return {"exists": False}
-    else:
-        return {"exists": True}
+    return mongo_db_api.checkResourceExists(database, request.json)
 
 
 if __name__ == "__main__":
