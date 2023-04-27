@@ -89,6 +89,12 @@ def help():
     with open('static/help.md', 'r') as f:
         return render_template("help.html", rendered_html=markdown.markdown(f.read()))
 
+@app.route("/toggleIsMongo", methods=["POST"])
+def toggleIsMongo():
+    # input is a json object with a single key "isMongo"
+    # {"isMongo": true/false}
+    isMongo = request.json["isMongo"]
+    return {"isMongo": isMongo}
 
 @app.route("/find", methods=["POST"])
 def find():
