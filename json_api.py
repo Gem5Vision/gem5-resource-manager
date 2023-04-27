@@ -26,3 +26,9 @@ def updateResource(resources, query):
             resources.remove(resource)
             resources.append(query["resource"])
     return {"status": "Updated"}
+
+def checkResourceExists(resources, query):
+    for resource in resources:
+        if resource["id"] == query["id"]:
+            return {"exists": True}
+    return {"exists": False}
