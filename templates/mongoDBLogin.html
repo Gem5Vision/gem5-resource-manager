@@ -53,16 +53,8 @@
                   <input class="form-control mt-1 main-text-regular" type="text" id="databaseGenerate" placeholder="Enter Database..." />
                   <label for="alias" class="main-text-regular mt-3" style="color: white;">Display Alias (Optional)</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="aliasGenerate" placeholder="Enter Alias..." />
-                  <div class="form-check form-switch mt-3">
-                    <input class="form-check-input" type="checkbox" role="switch" id="retryWrites" checked>
-                    <label class="form-check-label main-text-regular" for="retryWrites" style="color: white;">Retry Writes</label>
-                  </div>
-                  <div class="form-check form-switch mt-3">
-                    <input class="form-check-input" type="checkbox" role="switch" id="writeConcern" checked>
-                    <label class="form-check-label main-text-regular" for="writeConcern" style="color: white;">Write Concern</label>
-                  </div>                  
                   <label for="options" class="main-text-regular mt-3" style="color: white;">Options (Optional)</label>
-                  <input class="form-control mt-1 main-text-regular" type="text" id="options" placeholder="Enter Options..." />
+                  <input class="form-control mt-1 main-text-regular" type="text" id="options" value="retryWrites=true,w=majority" />
                 </form>
               </div>
             </div>

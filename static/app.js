@@ -20,6 +20,8 @@ const appendAlert = (errorHeader, id, message, type) => {
     `  <div>${message}</div>`,
   ].join('');
 
+  window.scrollTo(0, 0);
+
   alertPlaceholder.append(alertDiv);
 
   setTimeout(function() {
@@ -76,9 +78,7 @@ function handleGenerateURI(saveStatus) {
   const database = document.getElementById('databaseGenerate').value;
   const host = document.getElementById('host').value;
   const alias = document.getElementById('aliasGenerate').value;
-  const retryWrites = document.getElementById('retryWrites').checked;
-  const writeConcern = document.getElementById('writeConcern').checked;
-  const options = document.getElementById('options').value;
+  const options = document.getElementById('options').value.split(",");
   let generatedURI = "";
   const emptyInputs = [{type : "Host", value : host}, {type : "Collection", value : collection}, { type : "Database", value : database}];
   let error = false;
@@ -91,19 +91,19 @@ function handleGenerateURI(saveStatus) {
   }
   
   if (error) {
-    window.scrollTo(0, 0);
     return;
   }
 
-  connection ? generatedURI = "mongodb+srv://" : generatedURI = "mongodb://";
+  generatedURI = connection ? "mongodb+srv://" : "mongodb://";
   if (username && password) {
-    generatedURI += username + ":" + password + "@";
+    generatedURI += `${encodeURIComponent(username)}:${encodeURIComponent(password)}@`;
   }
 
-  generatedURI += host + "/?";
+  generatedURI += host;
 
-  retryWrites ? generatedURI += "retryWrites=true" : null;
-  writeConcern ? generatedURI += "&w=majority" : null;
+  if (options.length) {
+    generatedURI += `/?${options.join("&")}`;
+  }  
 
   handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
 }
