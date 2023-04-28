@@ -153,13 +153,28 @@ function handleJSONLogin(event, saveStatus) {
 
 function handleRemoteJSON() {
   const url = document.getElementById("jsonRemoteURL").value;
+  const filename = document.getElementById("remoteFilename").value;
+  const emptyInputs = [{type : "URL", value : url}, {type : "Filename", value : filename}];
+  let error = false;
 
-  if (url === "") {
-    appendAlert('Error!', 'emptyURL', 'Cannot Proceed With Empty URL!', 'danger');
+  for (let i = 0; i < emptyInputs.length; i++) {
+    if (emptyInputs[i].value === "") {
+      appendAlert("Error", `${emptyInputs[i].type}`, `Cannot Proceed Without ${emptyInputs[i].type} Value!`, 'danger');
+      error = true;
+    }
+  }
+  
+  if (error) {
     return;
   }
 
-  const flask_url = "/validateJSON?isMongo=false&q=" + encodeURIComponent(url);
+  const params = new URLSearchParams();
+  params.append('isMongo', 'false');
+  params.append('filename', filename + ".json");
+  params.append('q', url);
+
+  const flask_url = `/validateJSON?${params.toString()}`;
+
   fetch(flask_url, {
     method: 'GET',
   })
