@@ -27,7 +27,7 @@ resources = None
 with open("test_json_endpoint.json", "r") as f:
     resources = json.load(f)
 
-isMongo = False
+isMongo = True
 app = Flask(__name__)
 
 
