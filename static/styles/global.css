@@ -4,7 +4,6 @@
 html, body {
   min-height: 100vh;
   margin: 0;
-  overflow-y: scroll;
 }
 
 .btn-outline-primary {
