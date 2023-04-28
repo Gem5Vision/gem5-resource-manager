@@ -48,7 +48,8 @@ Actions that can be performed on database current in use.
 
 - Search: Search for resource in database with exact Resource ID
 - Version: Dropdown that allows for selection of a particular resource version of resource currently in view
-- Category: Specify category of resource to viewed as defined by schema 
+- Category: Specify category of resource to viewed as defined by schema
+- View Schema for Database: Sets view for schema for current database (read only) 
 - Change Database: Reset current editor to change to a different database 
 
 ### Editing Actions:
