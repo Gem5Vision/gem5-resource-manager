@@ -61,13 +61,23 @@ def validateURI():
 def validateJSON():
     if request.method == 'GET':
         url = request.args.get('q')
-        if url == "":
+        if not url:
             return {"error" : "empty"}, 400
+        response = requests.get(url)
+        if response.status_code != 200:
+            return {"error" : "invalid status"}, response.status_code
+        filename = request.args.get('filename')
+        with open(f"database/{filename}", 'wb') as f:
+            f.write(response.content)
+        with open(f"database/{filename}", 'r') as f:
+            isMongo = False
+            resources = json.load(f)
+            return redirect(url_for("editor", isMongo="false", filename=filename), 302)
     else:
         if 'file' not in request.files:
             return {"error" : "empty"}, 400
         file = request.files['file']
-
+        
 
 @app.route("/editor")
 def editor():
@@ -83,7 +93,7 @@ def editor():
         return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
     elif request.args.get('isMongo') == 'false':
         isMongo = False
-        return render_template("editor.html", editor_type="JSON")
+        return render_template("editor.html", editor_type="JSON", tagline=request.args.get('filename'))
     else:
         return render_template("404.html"), 404
 

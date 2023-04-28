@@ -184,6 +184,10 @@ function handleRemoteJSON() {
     if (res.status === 400) {
       appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
     }
+
+    if (res.status !== 200) {
+      appendAlert('Error!', 'invalidStatus', 'Invalid Status Code!', 'danger');
+    }
     
     if (res.redirected) {
       window.location = res.url;
