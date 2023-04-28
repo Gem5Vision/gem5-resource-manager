@@ -110,6 +110,7 @@ function handleGenerateURI(saveStatus) {
 
 function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   const params = new URLSearchParams();
+  params.append('isMongo', 'true');
   params.append('uri', encodeURIComponent(uri));
   params.append('collection', collection);
   params.append('database', database);
@@ -158,7 +159,7 @@ function handleRemoteJSON() {
     return;
   }
 
-  const flask_url = "/validateJSON?q=" + encodeURIComponent(url);
+  const flask_url = "/validateJSON?isMongo=false&q=" + encodeURIComponent(url);
   fetch(flask_url, {
     method: 'GET',
   })
@@ -187,7 +188,7 @@ function handleUploadJSON() {
   const form = new FormData();
   form.append("file", file);
 
-  const flask_url = "/validateJSON?q=";
+  const flask_url = "/validateJSON?isMongo=false";
   fetch(flask_url, {
     method: 'POST',
     body: form

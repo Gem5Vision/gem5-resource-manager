@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
 from database import Database
+import requests
 
 import urllib.parse
 import markdown
@@ -21,7 +22,6 @@ with open("schema/test.json", "r") as f:
 
 database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
 
-#database = Database("gem5-vision", "versions_test")
 
 resources = None
 with open("test_json_endpoint.json", "r") as f:
@@ -54,7 +54,7 @@ def validateURI():
     alias = request.args.get('alias')
     if uri == "":
         return {"error" : "empty"}, 400
-    return redirect(url_for("editor", uri=uri, collection=collection, database=database, alias=alias), 302)
+    return redirect(url_for("editor", isMongo="true", uri=uri, collection=collection, database=database, alias=alias), 302)
 
 
 @app.route("/validateJSON", methods=["GET", "POST"]) 
@@ -71,23 +71,27 @@ def validateJSON():
 
 @app.route("/editor")
 def editor():
+    global isMongo
     if not request.args:
         return render_template("404.html"), 404
-    else:
+    elif request.args.get('isMongo') == 'true':
+        isMongo = True
         mongo_uri = urllib.parse.unquote(request.args.get('uri'))
-        collection = request.args.get('collection')
-        database_name = request.args.get('database')
         alias = request.args.get('alias')
         global database
-        # database = Database(mongo_uri, "gem5-vision", "versions_test")
-        database.change_database(mongo_uri, database_name, collection)
+        database.change_database(mongo_uri, request.args.get('database'), request.args.get('collection'))
         return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
-    
+    elif request.args.get('isMongo') == 'false':
+        isMongo = False
+        return render_template("editor.html", editor_type="JSON")
+    else:
+        return render_template("404.html"), 404
 
 @app.route("/help")
 def help():
     with open('static/help.md', 'r') as f:
         return render_template("help.html", rendered_html=markdown.markdown(f.read()))
+
 
 @app.route("/toggleIsMongo", methods=["POST"])
 def toggleIsMongo():
