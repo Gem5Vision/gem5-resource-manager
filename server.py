@@ -10,7 +10,7 @@ import urllib.parse
 import markdown
 
 schema = {}
-with open("schema/test.json", "r") as f:
+with open("schema/schema.json", "r") as f:
     schema = json.load(f)
 
 
