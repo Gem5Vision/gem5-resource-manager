@@ -1,6 +1,15 @@
-var editor;
+const diffEditorContainer = document.getElementById("diff-editor");
+var diffEditor;
 var originalModel;
 var modifiedModel;
+
+const schemaEditorContainer = document.getElementById("schema-editor");
+var schemaEditor;
+var schemaModel;
+
+const schemaButton = document.getElementById('schema-toggle');
+const editingActionsButtons = Array.from(document.querySelectorAll('#editing-actions button'));
+var editingActionsState;
 
 require.config({
   paths: {
@@ -10,12 +19,12 @@ require.config({
 require(["vs/editor/editor.main"], () => {
   originalModel = monaco.editor.createModel(`{\n}`, "json");
   modifiedModel = monaco.editor.createModel(`{\n}`, "json");
-  editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
+  diffEditor = monaco.editor.createDiffEditor(diffEditorContainer, {
     theme: "vs-dark",
     language: "json",
     automaticLayout: true,
   });
-  editor.setModel({
+  diffEditor.setModel({
     original: originalModel,
     modified: modifiedModel,
   });
@@ -34,6 +43,19 @@ require(["vs/editor/editor.main"], () => {
           },
         ],
       });
+
+      schemaEditor = monaco.editor.create(schemaEditorContainer, {
+        theme: "vs-dark",
+        language: "json",
+        automaticLayout: true,
+        readOnly: true,
+      });
+  
+      schemaModel = monaco.editor.createModel(`{\n}`, "json");
+      schemaEditor.setModel(schemaModel);  
+      schemaModel.setValue(JSON.stringify(data, null, 4));  
+
+      schemaEditorContainer.style.display = "none";
     });
 });
 
@@ -197,7 +219,7 @@ function find(e) {
     didChange = false;
   }
 
-  editor.getEditorType() === "vs.editor.ICodeEditor" ? closeSchema() : null;
+  closeSchema();
 
   fetch("/find", {
     method: "POST",
@@ -286,64 +308,43 @@ function showModal(event, callback) {
   };
 }
 
-const schemaButton = document.getElementById('loadSchema');
+function showSchema() {
+  if (diffEditorContainer.style.display !== "none") {
+    diffEditorContainer.style.display = "none";
+    schemaEditorContainer.classList.add("editor-sizing");
+    schemaEditor.setPosition({column: 1, lineNumber: 1});
+    schemaEditor.revealPosition({column: 1, lineNumber: 1});
+    schemaEditorContainer.style.display = "block";
 
-function openSchema() {
-  fetch('/schema', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then((res) => res.json())
-  .then((data) => {
-    console.log(data);
+    editingActionsState = editingActionsButtons.map(button => button.disabled);
 
-    editor.dispose();
-
-    editor = monaco.editor.create(document.getElementById("editor"), {
-      theme: "vs-dark",
-      language: "json",
-      automaticLayout: true,
-      readOnly: true
-    });
-
-    model = monaco.editor.createModel(`{\n}`, "json");
-    editor.setModel(model);
-
-    model.setValue(JSON.stringify(data, null, 4));
-    document.getElementById("update").disabled = true;
-    document.getElementById("add").disabled = true;
-    document.getElementById("delete").disabled = true;
-    document.getElementById("add_version").disabled = true;
-
-    schemaButton.textContent = "Close Schema";
-    schemaButton.onclick = closeSchema;
+    editingActionsButtons.forEach((btn) => {
+      btn.disabled = true;
+    })
 
     const editorTitle = document.getElementById("editor-title");
     editorTitle.children[0].style.display = 'none';
     editorTitle.children[1].textContent = 'Schema (Read Only)';
-  });
-} 
+
+    schemaButton.textContent = "Close Schema";
+    schemaButton.onclick = closeSchema;
+  } 
+}
 
 function closeSchema() {
-  schemaButton.textContent = "Load Schema";
-  
-  editor.dispose();
+  if (schemaEditorContainer.style.display !== "none") {
+    schemaEditorContainer.style.display = "none";
+    diffEditorContainer.style.display = "block";
 
-  editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
-    theme: "vs-dark",
-    language: "json",
-    automaticLayout: true,
-  });
-  editor.setModel({
-    original: originalModel,
-    modified: modifiedModel,
-  });
+    editingActionsButtons.forEach((btn, i) => {
+      btn.disabled = editingActionsState[i];
+    })
 
-  const editorTitle = document.getElementById("editor-title");
-  editorTitle.children[0].style.display = 'unset';
-  editorTitle.children[1].textContent = 'Edited';
+    const editorTitle = document.getElementById("editor-title");
+    editorTitle.children[0].style.display = 'unset';
+    editorTitle.children[1].textContent = 'Edited';
 
-  schemaButton.onclick = openSchema;
+    schemaButton.textContent = "Show Schema";
+    schemaButton.onclick = showSchema;
+  } 
 }

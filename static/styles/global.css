@@ -107,6 +107,15 @@ main {
   width: 80%;
 }
 
+.monaco-editor { 
+  position: absolute !important; 
+}
+
+.editor-sizing {
+  height: 75%;
+  width: 100%;
+}
+
 #liveAlertPlaceholder {
   position: absolute;
   margin-top: 1rem;
