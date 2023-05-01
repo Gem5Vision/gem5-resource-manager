@@ -107,15 +107,6 @@ class ResourceJsonCreator:
         return matching_files
 
     def __change_type(self, resource):
-        # flatter out nested json for additional_metadata and additional_params
-        if "additional_metadata" in resource:
-            for k, v in resource["additional_metadata"].items():
-                resource[k] = v
-            del resource["additional_metadata"]
-        if "additional_params" in resource:
-            for k, v in resource["additional_params"].items():
-                resource[k] = v
-            del resource["additional_params"]
         if resource["type"] == "workload":
             # get the architecture from the name and remove 64 from it
             resource["architecture"] = (
@@ -352,6 +343,14 @@ class ResourceJsonCreator:
         resources = resources.to_dict("records")
         # remove NaN values
         for resource in resources:
+            if "additional_metadata" in resource and resource["additional_metadata"] is not None:
+                for k, v in resource["additional_metadata"].items():
+                    resource[k] = v
+                del resource["additional_metadata"]
+            if "additional_params" in resource and resource["additional_params"] is not None:
+                for k, v in resource["additional_params"].items():
+                    resource[k] = v
+                del resource["additional_params"]
             for key in list(resource.keys()):
                 if resource[key] is None or str(resource[key]) == "nan":
                     resource.pop(key)

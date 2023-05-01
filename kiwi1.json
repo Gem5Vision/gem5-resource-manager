@@ -8,10 +8,6 @@
             "binary": "x86-matrix-multiply-omp",
             "looppoint": "x86-matrix-multiply-omp-100-8-global-pinpoints"
         },
-        "arguments": [
-            100,
-            8
-        ],
         "architecture": "X86",
         "size": 0,
         "tags": [],
@@ -28,7 +24,11 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-csv\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-csv\")",
+        "arguments": [
+            100,
+            8
+        ]
     },
     {
         "category": "workload",
@@ -43,7 +43,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "1",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -52,7 +51,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-1\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-1\")",
+        "region_id": "1"
     },
     {
         "category": "workload",
@@ -67,7 +67,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "2",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -76,7 +75,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-2\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-2\")",
+        "region_id": "2"
     },
     {
         "category": "workload",
@@ -91,7 +91,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "3",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -100,7 +99,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-3\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-3\")",
+        "region_id": "3"
     },
     {
         "category": "workload",
@@ -115,7 +115,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "5",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -124,7 +123,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-5\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-5\")",
+        "region_id": "5"
     },
     {
         "category": "workload",
@@ -139,7 +139,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "6",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -148,7 +147,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-6\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-6\")",
+        "region_id": "6"
     },
     {
         "category": "workload",
@@ -163,7 +163,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "7",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -172,7 +171,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-7\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-7\")",
+        "region_id": "7"
     },
     {
         "category": "workload",
@@ -187,7 +187,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "8",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -196,7 +195,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-8\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-8\")",
+        "region_id": "8"
     },
     {
         "category": "workload",
@@ -211,7 +211,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "9",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -220,7 +219,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-9\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-9\")",
+        "region_id": "9"
     },
     {
         "category": "workload",
@@ -235,7 +235,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "10",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -244,7 +243,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-10\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-10\")",
+        "region_id": "10"
     },
     {
         "category": "workload",
@@ -259,7 +259,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "11",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -268,7 +267,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-11\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-11\")",
+        "region_id": "11"
     },
     {
         "category": "workload",
@@ -283,7 +283,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "12",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -292,7 +291,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-12\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-12\")",
+        "region_id": "12"
     },
     {
         "category": "workload",
@@ -307,7 +307,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "13",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -316,7 +315,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-13\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-13\")",
+        "region_id": "13"
     },
     {
         "category": "workload",
@@ -331,7 +331,6 @@
         "architecture": "X86",
         "size": 0,
         "tags": [],
-        "region_id": "14",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -340,7 +339,8 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-14\")"
+        "example_usage": "Workload(\"x86-matrix-multiply-omp-100-8-looppoint-region-14\")",
+        "region_id": "14"
     },
     {
         "category": "workload",
@@ -441,10 +441,6 @@
             "binary": "x86-print-this",
             "simpoint": "x86-print-this-1500-simpoints"
         },
-        "arguments": [
-            "print this",
-            15000
-        ],
         "architecture": "X86",
         "size": 0,
         "tags": [],
@@ -461,7 +457,11 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-print-this-15000-with-simpoints\")"
+        "example_usage": "Workload(\"x86-print-this-15000-with-simpoints\")",
+        "arguments": [
+            "print this",
+            15000
+        ]
     },
     {
         "category": "workload",
@@ -473,10 +473,6 @@
             "simpoint": "x86-print-this-1500-simpoints",
             "checkpoint": "simpoints-se-checkpoints-v22-1-v2"
         },
-        "arguments": [
-            "print this",
-            15000
-        ],
         "architecture": "X86",
         "size": 0,
         "tags": [],
@@ -493,7 +489,11 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "Workload(\"x86-print-this-15000-with-simpoints-and-checkpoint\")"
+        "example_usage": "Workload(\"x86-print-this-15000-with-simpoints-and-checkpoint\")",
+        "arguments": [
+            "print this",
+            15000
+        ]
     },
     {
         "category": "simpoint",
@@ -506,8 +506,6 @@
         "md5sum": "3fcffe3956c8a95e3fb82e232e2b41fb",
         "is_tar_archive": true,
         "url": "http://dist.gem5.org/dist/develop/simpoints/x86-print-this-15000-simpoints-20221013.tar",
-        "simpoint_interval": 1000000.0,
-        "warmup_interval": 1000000.0,
         "code_examples": [],
         "license": "",
         "author": [],
@@ -516,7 +514,9 @@
         "gem5_versions": [
             "23.0"
         ],
-        "example_usage": "get_resource(resource_name=\"x86-print-this-1500-simpoints\")"
+        "example_usage": "get_resource(resource_name=\"x86-print-this-1500-simpoints\")",
+        "simpoint_interval": 1000000,
+        "warmup_interval": 1000000
     },
     {
         "category": "resource",
@@ -987,7 +987,6 @@
         "md5sum": "d6126db9f6bed7774518ae25aa35f153",
         "source": "src/riscv-fs",
         "url": "http://dist.gem5.org/dist/develop/images/riscv/busybox/riscv-disk.img.gz",
-        "root_partition": "",
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/riscv-fs.py",
@@ -1020,7 +1019,7 @@
         "md5sum": "e5bee8a31f45f4803f87c0d781553ccc",
         "source": "src/lupv",
         "url": "http://dist.gem5.org/dist/develop/images/riscv/busybox/riscv-lupio-busybox.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/lupv/run_lupv.py",
@@ -1162,7 +1161,7 @@
         "md5sum": "19131e62c5b10f137948ec5975391477",
         "source": "src/parsec",
         "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/parsec.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-parsec-benchmarks.py",
@@ -1194,7 +1193,7 @@
         "md5sum": "c9217a88eff20e5547be87368a1499c1",
         "source": "src/gapbs",
         "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/gapbs.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-gapbs-benchmarks.py",
@@ -1226,7 +1225,7 @@
         "md5sum": "68073181c1ecca2347ad18c3577e0cd9",
         "source": "src/npb",
         "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/npb.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [
             {
                 "example": "https://github.com/gem5/gem5/tree/develop/configs/example/gem5_library/x86-npb-benchmarks.py",
@@ -1258,7 +1257,7 @@
         "md5sum": "a9aa1159fa11a61e78db8afaddd89bb3",
         "source": "src/gpu-fs",
         "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-gpu-fs-20220512.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [],
         "license": " BSD-3-Clause",
         "author": [
@@ -1285,7 +1284,7 @@
         "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
         "source": "src/x86-ubuntu",
         "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [],
         "license": "",
         "author": [
@@ -1312,7 +1311,7 @@
         "md5sum": "e9ea10a3c606d26e2fa2f8ce5d1a8758",
         "source": "src/riscv-ubuntu",
         "url": "http://dist.gem5.org/dist/develop/images/riscv/ubuntu-20-04/riscv-ubuntu-20221118.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [],
         "license": "",
         "author": [
@@ -1335,7 +1334,7 @@
         "is_zipped": true,
         "md5sum": "ec7d0156366743fa7b93cbfcea82925c",
         "url": "http://dist.gem5.org/dist/develop/images/arm/ubuntu-18-04/arm64-ubuntu-20220425.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [],
         "license": "",
         "author": [],
@@ -1357,7 +1356,7 @@
         "md5sum": "56cb88c9351bb9b0e65cfe689a205eab",
         "source": "src/arm-ubuntu",
         "url": "http://dist.gem5.org/dist/develop/images/arm/ubuntu-20-04/arm64-ubuntu-20220727.img.gz",
-        "root_partition": "",
+        "root_partition": "1",
         "code_examples": [],
         "license": "",
         "author": [],
