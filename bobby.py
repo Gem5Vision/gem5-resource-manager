@@ -16,7 +16,7 @@ MONGO_URI = os.getenv("MONGO_URI")
 def get_database():
     CONNECTION_STRING = MONGO_URI
     client = MongoClient(CONNECTION_STRING)
-    return client["gem5-vision"]["versions_test"]
+    return client["gem5-vision"]["resources"]
 
 
 collection = get_database()
@@ -57,7 +57,7 @@ def removeTags(id, tags):
 def updateMongoDB():
     with click_spinner.spinner():
         # read from resources.json
-        with open("kiwi.json") as f:
+        with open("kiwi1.json") as f:
             resources = json.load(f)
             """ res = requests.get(
                 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json')
