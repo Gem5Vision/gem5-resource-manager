@@ -14,6 +14,9 @@ import markdown
 import mongo_db_api
 import json_api
 
+import shutil
+from werkzeug.utils import secure_filename
+
 schema = {}
 with open("schema/test.json", "r") as f:
     schema = json.load(f)
@@ -22,14 +25,23 @@ with open("schema/test.json", "r") as f:
 
 database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
 
-
-resources = None
 with open("test_json_endpoint.json", "r") as f:
     resources = json.load(f)
 
+UPLOAD_FOLDER = 'database/'
+TEMP_UPLOAD_FOLDER = '.tmp/'
+ALLOWED_EXTENSIONS = {'json'}
+
+resources = None
 isMongo = True
+
 app = Flask(__name__)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['TEMP_UPLOAD_FOLDER'] = TEMP_UPLOAD_FOLDER
+
+app.config['FILEPATH'] = None
+app.config['TEMP_FILEPATH'] = None
 
 @app.route("/")
 def index():
@@ -47,7 +59,7 @@ def login(database_type):
 
 
 @app.route("/validateURI", methods=['GET'])
-def validateURI():
+def validate_uri():
     uri = request.args.get('uri')
     collection = request.args.get('collection')
     database = request.args.get('database')
@@ -57,27 +69,81 @@ def validateURI():
     return redirect(url_for("editor", isMongo="true", uri=uri, collection=collection, database=database, alias=alias), 302)
 
 
-@app.route("/validateJSON", methods=["GET", "POST"]) 
-def validateJSON():
-    if request.method == 'GET':
-        url = request.args.get('q')
-        if not url:
-            return {"error" : "empty"}, 400
-        response = requests.get(url)
-        if response.status_code != 200:
-            return {"error" : "invalid status"}, response.status_code
-        filename = request.args.get('filename')
-        with open(f"database/{filename}", 'wb') as f:
-            f.write(response.content)
-        with open(f"database/{filename}", 'r') as f:
-            isMongo = False
-            resources = json.load(f)
-            return redirect(url_for("editor", isMongo="false", filename=filename), 302)
-    else:
-        if 'file' not in request.files:
-            return {"error" : "empty"}, 400
-        file = request.files['file']
-        
+@app.route("/validateJSON", methods=["GET"])
+def validate_json_get():
+    global isMongo
+    global resources
+    url = request.args.get('q')
+    if not url:
+        return {"error" : "empty"}, 400
+    response = requests.get(url)
+    if response.status_code != 200:
+        return {"error" : "invalid status"}, response.status_code
+    filename = request.args.get('filename')
+    with open(f"database/{filename}", 'wb') as f:
+        f.write(response.content)
+    with open(f"database/{filename}", 'r') as f:
+        isMongo = False
+        resources = json.load(f)
+        return redirect(url_for("editor", isMongo="false", filename=filename), 302)
+
+
+@app.route("/validateJSON", methods=["POST"]) 
+def validate_json_post():
+    global resources
+    global isMongo
+    if 'file' not in request.files:
+        return {"error" : "empty"}, 400
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if os.path.exists(app.config['FILEPATH']): 
+        app.config['TEMP_FILEPATH'] = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], filename)
+        file.save(app.config['TEMP_FILEPATH'])
+        return {"conflict" : "exisitng file in server"}, 409
+    file.save(app.config['FILEPATH'])
+    with open(app.config['FILEPATH'], 'r') as f:
+        isMongo = False
+        resources = json.load(f)
+        return redirect(url_for("editor", isMongo="false", filename=os.path.basename(app.config['FILEPATH'])), 302)
+
+
+@app.route("/resolveConflict", methods=["GET"])
+def resolve_conflict():
+    global resources
+    global isMongo
+    filename = None
+    resolution = request.args.get("resolution")
+    resolution_options = ["clearInput", "openExisting", "overwrite", "newFilename"]
+    if not resolution:
+        return {"error" : "empty"}, 400 
+    if resolution not in resolution_options:
+        return {"error" : "invalid resolution"}, 400
+    if resolution == resolution_options[0]:
+        app.config['TEMP_FILEPATH'] = None
+        resources = None
+        return {"success" : "input cleared"}, 204
+    elif resolution == resolution_options[1]:
+        filename = os.path.basename(app.config['FILEPATH'])
+    elif resolution == resolution_options[2]:
+        os.remove(app.config['FILEPATH'])
+        shutil.move(app.config['TEMP_FILEPATH'], app.config['UPLOAD_FOLDER'])
+        app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], os.path.basename(app.config['TEMP_FILEPATH']))
+        filename = os.path.basename(app.config['FILEPATH'])
+    elif resolution == resolution_options[3]:
+        new_filename = secure_filename(request.args.get("filename"))
+        new_filepath = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
+        os.rename(app.config['FILEPATH'], new_filepath)
+        app.config['FILEPATH'] = new_filepath
+        filename = new_filename
+    isMongo = False
+    if os.path.exists(app.config['TEMP_FILEPATH']): 
+        os.remove(app.config['TEMP_FILEPATH'])
+    app.config['TEMP_FILEPATH'] = None
+    with open(app.config['FILEPATH'], 'r') as f:
+        resources = json.load(f)
+    return redirect(url_for("editor", isMongo="false", filename=filename), 302) 
+
 
 @app.route("/editor")
 def editor():
@@ -97,6 +163,7 @@ def editor():
     else:
         return render_template("404.html"), 404
 
+
 @app.route("/help")
 def help():
     with open('static/help.md', 'r') as f:
@@ -109,6 +176,7 @@ def toggleIsMongo():
     # {"isMongo": true/false}
     isMongo = request.json["isMongo"]
     return {"isMongo": isMongo}
+
 
 @app.route("/find", methods=["POST"])
 def find():
@@ -182,10 +250,10 @@ def insert():
     return json_api.insertResource(resources, request.json)
 
 
-
 @app.errorhandler(404)
 def handle404(error):
     return render_template('404.html'), 404
+
 
 @app.route("/checkExists", methods=["POST"])
 def checkExists():

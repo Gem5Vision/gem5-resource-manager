@@ -195,14 +195,18 @@ function handleRemoteJSON() {
   })
 }
 
+var filename;
+
 function handleUploadJSON() {
   const jsonFile = document.getElementById("jsonFile");
   const file = jsonFile.files[0];
-
-  if (jsonFile === "") {
+  
+  if (jsonFile.value === "") {
     appendAlert('Error!', 'emptyUpload', 'Cannot Proceed Without Uploading a File!', 'danger');
     return;
   }
+
+  filename = file.name;
 
   const form = new FormData();
   form.append("file", file);
@@ -218,7 +222,89 @@ function handleUploadJSON() {
     if (res.status === 400) {
       appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
     }
+
+    if (res.status === 409) {
+      const myModal = new bootstrap.Modal(document.getElementById('conflictResolutionModal'), {focus: true, keyboard: false});
+      document.getElementById("header-filename").textContent = `"${filename}"`;
+      myModal.show();
+    }
     
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  })
+}
+
+function saveConflictResolution() {
+  const conflictResolutionModal = bootstrap.Modal.getInstance(document.getElementById("conflictResolutionModal"));
+  const selectedValue = document.querySelector('input[name="conflictRadio"]:checked').id;
+  
+  if (selectedValue === null) {
+    appendAlert('Error!', 'nullRadio', 'Fatal! Null Radio!', 'danger');
+    return;
+  }
+
+  if (selectedValue === "clearInput") {
+    conflictResolutionModal.hide();
+    document.getElementById("jsonFile").value = '';
+    handleConflictResolution("clearInput", "");
+    return;
+  }
+
+  if (selectedValue === "openExisting") {
+    conflictResolutionModal.hide();
+    handleConflictResolution("openExisting", "");
+    return;
+  }
+
+  if (selectedValue === "overwrite") {
+    conflictResolutionModal.hide();
+    handleConflictResolution("overwrite", "");
+    return;
+  } 
+
+  if (selectedValue === "newFilename") {
+    const updatedFilename = document.getElementById("updatedFilename").value;
+    if (updatedFilename === "") {
+      appendAlert('Error!', 'emptyFilename', 'Must Enter A New Name!', 'danger');
+      return;
+    } 
+    
+    if (`${updatedFilename}.json` === filename) {
+      appendAlert('Error!', 'sameFilenames', 'Cannot Have Same Name as Current!', 'danger');
+      return;
+    }
+
+    conflictResolutionModal.hide();
+    handleConflictResolution("newFilename", updatedFilename);
+    return;
+  }
+}
+
+function handleConflictResolution(resolution, filename) {
+  const params = new URLSearchParams();
+  params.append('isMongo', 'false');
+  params.append('resolution', resolution);
+  params.append('filename', filename + ".json");
+
+  const flask_url = `/resolveConflict?${params.toString()}`;
+
+  fetch(flask_url, {
+    method: 'GET',
+  })
+  .then((res) => {
+    console.log("JSON Upload Response Status: " + res.status);
+
+    if (res.status === 204) {
+      console.log("Input Cleared, Cached File Deleted, Resources Unset");
+      return;
+    }
+
+    if (res.status !== 200) {
+      appendAlert('Error!', 'didNotRedirect', 'Server Did Not Redirect!', 'danger');
+      return;
+    }
+
     if (res.redirected) {
       window.location = res.url;
     }

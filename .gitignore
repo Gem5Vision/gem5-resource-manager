@@ -161,3 +161,8 @@ cython_debug/
 #.idea/
 
 gem5/
+
+# Internal
+# Cache uploaded database files when naming conflicts occur  
+/.tmp/*
+!.tmp/.gitkeep
