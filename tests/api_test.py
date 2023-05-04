@@ -128,7 +128,7 @@ class TestApi(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         returnedData = json.loads(response.data)
         schema = {}
-        with open("schema/test.json", "r") as f:
+        with open("schema/schema.json", "r") as f:
             schema = json.load(f)
         self.assertTrue(returnedData == schema)
 
