@@ -116,7 +116,7 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   params.append('database', database);
   params.append('alias', alias);
 
-  const url = `/validateURI?${params.toString()}`;
+  const url = `/validateMongoDB?${params.toString()}`;
 
   if (saveStatus) {
     localStorage.setItem("URL", url);

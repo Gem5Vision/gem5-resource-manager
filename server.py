@@ -43,6 +43,8 @@ app.config['TEMP_UPLOAD_FOLDER'] = TEMP_UPLOAD_FOLDER
 app.config['FILEPATH'] = None
 app.config['TEMP_FILEPATH'] = None
 
+app.config['DATABASE_TYPES'] = ["mongodb", "json"]
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -50,23 +52,23 @@ def index():
 
 @app.route("/login/<string:database_type>")
 def login(database_type):
-    if database_type == "mongodb":
-        return render_template("mongoDBLogin.html")
-    elif database_type == "json":
-        return render_template("jsonLogin.html")
-    else:
+    if database_type not in app.config['DATABASE_TYPES']:
         return render_template("404.html")
+    if database_type == app.config['DATABASE_TYPES'][0]:
+        return render_template("mongoDBLogin.html")
+    if database_type == app.config['DATABASE_TYPES'][1]:
+        return render_template("jsonLogin.html")
+     
 
-
-@app.route("/validateURI", methods=['GET'])
-def validate_uri():
+@app.route("/validateMongoDB", methods=['GET'])
+def validate_mongodb():
     uri = request.args.get('uri')
     collection = request.args.get('collection')
     database = request.args.get('database')
     alias = request.args.get('alias')
     if uri == "":
         return {"error" : "empty"}, 400
-    return redirect(url_for("editor", type="mongodb", uri=uri, collection=collection, database=database, alias=alias), 302)
+    return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][0], uri=uri, collection=collection, database=database, alias=alias), 302)
 
 
 @app.route("/validateJSON", methods=["GET"])
@@ -87,7 +89,7 @@ def validate_json_get():
         return {"conflict" : "existing file in server"}, 409
     with open(app.config['FILEPATH'], 'wb') as f:
         f.write(response.content)
-    return redirect(url_for("editor", type="json", filename=filename), 302)
+    return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=filename), 302)
 
 
 @app.route("/validateJSON", methods=["POST"]) 
@@ -105,7 +107,7 @@ def validate_json_post():
     file.save(app.config['FILEPATH'])
     with open(app.config['FILEPATH'], 'r') as f:
         resources = json.load(f)
-        return redirect(url_for("editor", type="json", filename=os.path.basename(app.config['FILEPATH'])), 302)
+        return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=os.path.basename(app.config['FILEPATH'])), 302)
 
 
 @app.route("/resolveConflict", methods=["GET"])
@@ -141,7 +143,7 @@ def resolve_conflict():
     app.config['TEMP_FILEPATH'] = None
     with open(app.config['FILEPATH'], 'r') as f:
         resources = json.load(f)
-    return redirect(url_for("editor", type="json", filename=filename), 302) 
+    return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=filename), 302) 
 
 
 @app.route("/editor")
@@ -151,17 +153,16 @@ def editor():
     global isMongo
     global database
     global resources
-    editor_type = ["mongodb", "json"]
     type = request.args.get("type")
-    if type not in editor_type:
+    if type not in app.config['DATABASE_TYPES']:
         return render_template("404.html"), 404
-    if type == editor_type[0]:
+    if type == app.config['DATABASE_TYPES'][0]:
         isMongo = True
         mongo_uri = urllib.parse.unquote(request.args.get('uri'))
         alias = request.args.get('alias')
         database.change_database(mongo_uri, request.args.get('database'), request.args.get('collection'))
-        return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
-    if type == editor_type[1]:
+        return render_template("editor.html", editor_type=app.config['DATABASE_TYPES'][0], tagline=(mongo_uri if alias == "" else alias))
+    if type == app.config['DATABASE_TYPES'][1]:
         isMongo = False
         filename = request.args.get('filename')
         if not os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)): 
@@ -169,7 +170,7 @@ def editor():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         with open(filepath, 'r') as f:
             resources = json.load(f)
-        return render_template("editor.html", editor_type="JSON", tagline=filename)
+        return render_template("editor.html", editor_type=app.config['DATABASE_TYPES'][1], tagline=filename)
 
 
 @app.route("/help")
