@@ -15,7 +15,7 @@ import mongo_db_api
 import json_api
 
 schema = {}
-with open("schema/test.json", "r") as f:
+with open("schema/schema.json", "r") as f:
     schema = json.load(f)
 
 

@@ -94,7 +94,8 @@
         "resource_version": {
             "type": "string",
             "description": "The version of the resource",
-            "default": ""
+            "default": "",
+            "pattern": "^[0-9]\\.[0-9]\\.[0-9]$"
         },
         "size": {
             "type": "integer",
