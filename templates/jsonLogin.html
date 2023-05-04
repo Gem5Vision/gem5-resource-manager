@@ -16,6 +16,9 @@
                 <button class="nav-link active login-nav-link" id="remote-tab" data-bs-toggle="tab" data-bs-target="#remote-panel" type="button" role="tab">Remote File</button>
               </li>
               <li class="nav-item" role="presentation">
+                <button class="nav-link login-nav-link" id="existing-tab" data-bs-toggle="tab" data-bs-target="#existing-panel" type="button" role="tab">Exisitng File</button>
+              </li>
+              <li class="nav-item" role="presentation">
                 <button class="nav-link login-nav-link" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload-panel" type="button" role="tab">Local File</button>
               </li>
             </ul>
@@ -31,6 +34,11 @@
                   </div>
                   <label for="jsonRemoteURL" class="main-text-semi panel-text-styling mt-3">URL to JSON File</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="jsonRemoteURL" name="jsonRemoteURL" placeholder="Enter URL..." />
+                </form>
+              </div>
+              <div class="tab-pane fade" id="existing-panel" role="tabpanel">
+                <form class="form-outline d-flex flex-column mt-3">
+                  <select id="existing-dropdown" class="form-select main-text-regular" style="width: auto;"></select>
                 </form>
               </div>
               <div class="tab-pane fade" id="upload-panel" role="tabpanel">

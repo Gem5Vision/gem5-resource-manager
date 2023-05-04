@@ -145,9 +145,16 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
 function handleJSONLogin(event, saveStatus) {
   event.preventDefault();
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
-
-  activeTab === "remote-tab" ? handleRemoteJSON() : handleUploadJSON();
-
+  if (activeTab === "remote-tab") {
+    handleRemoteJSON();
+  } else if (activeTab === "existing-tab") {
+    const filename = document.getElementById("existing-dropdown").value;
+    if (filename !== "No Existing Files") {
+      window.location = `/editor?type=json&filename=${filename}`
+    }
+  } else {
+    handleUploadJSON();
+  }
   return;
 }
 
@@ -320,4 +327,23 @@ function handleConflictResolution(resolution, filename) {
       window.location = res.url;
     }
   })
+}
+
+window.onload = () => {
+  fetch('/existingFiles', {
+    method: 'GET',
+  })
+  .then((res) => res.json())
+  .then((data) => {
+    let select = document.getElementById("existing-dropdown");
+    if (data.length === 0) {
+      data = ["No Existing Files"];
+    }
+    data.forEach((files) => {
+      let option = document.createElement("option");
+      option.value = files;
+      option.innerHTML = files;
+      select.appendChild(option);
+    });
+  });
 }

@@ -92,6 +92,12 @@ def validate_json_get():
     return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=filename), 302)
 
 
+@app.route('/existingFiles', methods=['GET'])
+def get_exisitng_files():
+    files = [f for f in os.listdir(app.config['UPLOAD_FOLDER']) if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], f))]
+    return json.dumps(files)
+
+
 @app.route("/validateJSON", methods=["POST"]) 
 def validate_json_post():
     global resources
