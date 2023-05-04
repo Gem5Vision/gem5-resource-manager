@@ -53,7 +53,7 @@ class TestApi(unittest.TestCase):
             response = self.test_client.get('/')
             self.assertEqual(response.status_code, 200)
             self.assertTrue(templates[0][0].name == 'index.html')
-    
+
     def test_get_helppage(self):
         """This method tests the call to the help page.
     It checks if the call is GET, status code is 200 and if the template rendered is help.html."""
@@ -85,7 +85,7 @@ class TestApi(unittest.TestCase):
             response = self.test_client.get('/editor')
             self.assertEqual(response.status_code, 404)
             self.assertTrue(templates[0][0].name == '404.html')
-    
+
     def test_default_call_is_not_post(self):
         """This method tests that the default call is not a POST."""
 
@@ -389,7 +389,7 @@ class TestApi(unittest.TestCase):
         response = self.test_client.post(
             "/keys", json={"category": "simpoint", "id": "test-resource"})
         test_response = {"category": "simpoint", "id": "test-resource", "author": [], "description": "", "license": "", "source_url": "", "tags": [],
-                         "example_usage": "", "gem5_versions": [], "resource_version": "", "simpoint_interval": 0, "simpoint_list": [], "weight_list": [], "warmup_interval": 0}
+                         "example_usage": "", "gem5_versions": [], "resource_version": "", "simpoint_interval": 0, "warmup_interval": 0, }
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data), test_response)
 
