@@ -185,8 +185,10 @@ function handleRemoteJSON() {
       appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
     }
 
-    if (res.status !== 200) {
-      appendAlert('Error!', 'invalidStatus', 'Invalid Status Code!', 'danger');
+    if (res.status === 409) {
+      const myModal = new bootstrap.Modal(document.getElementById('conflictResolutionModal'), {focus: true, keyboard: false});
+      document.getElementById("header-filename").textContent = `"${filename}"`;
+      myModal.show();
     }
     
     if (res.redirected) {
@@ -238,6 +240,7 @@ function handleUploadJSON() {
 function saveConflictResolution() {
   const conflictResolutionModal = bootstrap.Modal.getInstance(document.getElementById("conflictResolutionModal"));
   const selectedValue = document.querySelector('input[name="conflictRadio"]:checked').id;
+  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
   
   if (selectedValue === null) {
     appendAlert('Error!', 'nullRadio', 'Fatal! Null Radio!', 'danger');
@@ -245,8 +248,16 @@ function saveConflictResolution() {
   }
 
   if (selectedValue === "clearInput") {
+    if (activeTab === "upload-tab") {
+      document.getElementById("jsonFile").value = '';
+    }
+
+    if (activeTab === "remote-tab") {
+      document.getElementById('remoteFilename').value = '';
+      document.getElementById('jsonRemoteURL').value = '';
+    }
+
     conflictResolutionModal.hide();
-    document.getElementById("jsonFile").value = '';
     handleConflictResolution("clearInput", "");
     return;
   }
@@ -285,7 +296,7 @@ function handleConflictResolution(resolution, filename) {
   const params = new URLSearchParams();
   params.append('isMongo', 'false');
   params.append('resolution', resolution);
-  params.append('filename', filename + ".json");
+  params.append('filename', filename !== "" ? filename + ".json" : ""); 
 
   const flask_url = `/resolveConflict?${params.toString()}`;
 

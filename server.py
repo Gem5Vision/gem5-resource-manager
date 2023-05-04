@@ -29,7 +29,7 @@ with open("test_json_endpoint.json", "r") as f:
     resources = json.load(f)
 
 UPLOAD_FOLDER = 'database/'
-TEMP_UPLOAD_FOLDER = '.tmp/'
+TEMP_UPLOAD_FOLDER = 'database/.tmp/'
 ALLOWED_EXTENSIONS = {'json'}
 
 resources = None
@@ -66,52 +66,51 @@ def validate_uri():
     alias = request.args.get('alias')
     if uri == "":
         return {"error" : "empty"}, 400
-    return redirect(url_for("editor", isMongo="true", uri=uri, collection=collection, database=database, alias=alias), 302)
+    return redirect(url_for("editor", type="mongodb", uri=uri, collection=collection, database=database, alias=alias), 302)
 
 
 @app.route("/validateJSON", methods=["GET"])
 def validate_json_get():
-    global isMongo
     global resources
     url = request.args.get('q')
     if not url:
-        return {"error" : "empty"}, 400
+        return {"error" : "empty"}, 400    
     response = requests.get(url)
     if response.status_code != 200:
         return {"error" : "invalid status"}, response.status_code
-    filename = request.args.get('filename')
-    with open(f"database/{filename}", 'wb') as f:
+    filename = secure_filename(request.args.get('filename'))
+    app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+        app.config['TEMP_FILEPATH'] = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], filename)
+        with open(app.config['TEMP_FILEPATH'], 'wb') as f:
+            f.write(response.content)
+        return {"conflict" : "existing file in server"}, 409
+    with open(app.config['FILEPATH'], 'wb') as f:
         f.write(response.content)
-    with open(f"database/{filename}", 'r') as f:
-        isMongo = False
-        resources = json.load(f)
-        return redirect(url_for("editor", isMongo="false", filename=filename), 302)
+    return redirect(url_for("editor", type="json", filename=filename), 302)
 
 
 @app.route("/validateJSON", methods=["POST"]) 
 def validate_json_post():
     global resources
-    global isMongo
     if 'file' not in request.files:
         return {"error" : "empty"}, 400
     file = request.files['file']
     filename = secure_filename(file.filename)
     app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    if os.path.exists(app.config['FILEPATH']): 
+    if os.path.isfile(app.config['FILEPATH']): 
         app.config['TEMP_FILEPATH'] = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], filename)
         file.save(app.config['TEMP_FILEPATH'])
         return {"conflict" : "exisitng file in server"}, 409
     file.save(app.config['FILEPATH'])
     with open(app.config['FILEPATH'], 'r') as f:
-        isMongo = False
         resources = json.load(f)
-        return redirect(url_for("editor", isMongo="false", filename=os.path.basename(app.config['FILEPATH'])), 302)
+        return redirect(url_for("editor", type="json", filename=os.path.basename(app.config['FILEPATH'])), 302)
 
 
 @app.route("/resolveConflict", methods=["GET"])
 def resolve_conflict():
     global resources
-    global isMongo
     filename = None
     resolution = request.args.get("resolution")
     resolution_options = ["clearInput", "openExisting", "overwrite", "newFilename"]
@@ -120,6 +119,7 @@ def resolve_conflict():
     if resolution not in resolution_options:
         return {"error" : "invalid resolution"}, 400
     if resolution == resolution_options[0]:
+        os.remove(app.config['TEMP_FILEPATH'])
         app.config['TEMP_FILEPATH'] = None
         resources = None
         return {"success" : "input cleared"}, 204
@@ -132,36 +132,44 @@ def resolve_conflict():
         filename = os.path.basename(app.config['FILEPATH'])
     elif resolution == resolution_options[3]:
         new_filename = secure_filename(request.args.get("filename"))
-        new_filepath = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
-        os.rename(app.config['FILEPATH'], new_filepath)
-        app.config['FILEPATH'] = new_filepath
+        new_temp_filepath = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], new_filename)
+        os.rename(app.config['TEMP_FILEPATH'], new_temp_filepath)
+        app.config['FILEPATH'] = shutil.move(new_temp_filepath, app.config['UPLOAD_FOLDER'])
         filename = new_filename
-    isMongo = False
-    if os.path.exists(app.config['TEMP_FILEPATH']): 
+    if os.path.isfile(app.config['TEMP_FILEPATH']): 
         os.remove(app.config['TEMP_FILEPATH'])
     app.config['TEMP_FILEPATH'] = None
     with open(app.config['FILEPATH'], 'r') as f:
         resources = json.load(f)
-    return redirect(url_for("editor", isMongo="false", filename=filename), 302) 
+    return redirect(url_for("editor", type="json", filename=filename), 302) 
 
 
 @app.route("/editor")
 def editor():
-    global isMongo
     if not request.args:
         return render_template("404.html"), 404
-    elif request.args.get('isMongo') == 'true':
+    global isMongo
+    global database
+    global resources
+    editor_type = ["mongodb", "json"]
+    type = request.args.get("type")
+    if type not in editor_type:
+        return render_template("404.html"), 404
+    if type == editor_type[0]:
         isMongo = True
         mongo_uri = urllib.parse.unquote(request.args.get('uri'))
         alias = request.args.get('alias')
-        global database
         database.change_database(mongo_uri, request.args.get('database'), request.args.get('collection'))
         return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
-    elif request.args.get('isMongo') == 'false':
+    if type == editor_type[1]:
         isMongo = False
-        return render_template("editor.html", editor_type="JSON", tagline=request.args.get('filename'))
-    else:
-        return render_template("404.html"), 404
+        filename = request.args.get('filename')
+        if not os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)): 
+            return render_template("404.html"), 404
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        with open(filepath, 'r') as f:
+            resources = json.load(f)
+        return render_template("editor.html", editor_type="JSON", tagline=filename)
 
 
 @app.route("/help")
