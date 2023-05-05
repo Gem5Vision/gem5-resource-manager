@@ -330,20 +330,22 @@ function handleConflictResolution(resolution, filename) {
 }
 
 window.onload = () => {
-  fetch('/existingFiles', {
-    method: 'GET',
-  })
-  .then((res) => res.json())
-  .then((data) => {
-    let select = document.getElementById("existing-dropdown");
-    if (data.length === 0) {
-      data = ["No Existing Files"];
-    }
-    data.forEach((files) => {
-      let option = document.createElement("option");
-      option.value = files;
-      option.innerHTML = files;
-      select.appendChild(option);
+  if (window.location.pathname === "/login/json") {
+    fetch('/existingFiles', {
+      method: 'GET',
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      let select = document.getElementById("existing-dropdown");
+      if (data.length === 0) {
+        data = ["No Existing Files"];
+      }
+      data.forEach((files) => {
+        let option = document.createElement("option");
+        option.value = files;
+        option.innerHTML = files;
+        select.appendChild(option);
+      });
     });
-  });
+  }
 }

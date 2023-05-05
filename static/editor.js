@@ -293,6 +293,13 @@ window.onload = () => {
     });
 };
 
+window.onload = () => {
+  const resetInstance = document.getElementById("update-instance");
+  resetInstance.addEventListener("click", () => {
+    window.location = `/login/${(new URL(window.location)).searchParams.get("type") === "mongodb" ? 'mongodb' : 'json'}`;
+  })
+};
+
 const myModal = new bootstrap.Modal("#ConfirmModal", {
   keyboard: false,
 });
