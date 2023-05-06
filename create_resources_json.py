@@ -341,10 +341,18 @@ class ResourceJsonCreator:
         # replace nan with None
         resources = resources.where((pd.notnull(resources)), None)
         resources = resources.to_dict("records")
-        # avoid dict changing size during iteration
+        # remove NaN values
         for resource in resources:
+            if "additional_metadata" in resource and resource["additional_metadata"] is not None:
+                for k, v in resource["additional_metadata"].items():
+                    resource[k] = v
+                del resource["additional_metadata"]
+            if "additional_params" in resource and resource["additional_params"] is not None:
+                for k, v in resource["additional_params"].items():
+                    resource[k] = v
+                del resource["additional_params"]
             for key in list(resource.keys()):
-                if resource[key] is None:
+                if resource[key] is None or str(resource[key]) == "nan":
                     resource.pop(key)
         with open(output, "w") as f:
             json.dump(resources, f, indent=4)

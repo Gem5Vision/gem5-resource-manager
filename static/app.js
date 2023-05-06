@@ -20,6 +20,8 @@ const appendAlert = (errorHeader, id, message, type) => {
     `  <div>${message}</div>`,
   ].join('');
 
+  window.scrollTo(0, 0);
+
   alertPlaceholder.append(alertDiv);
 
   setTimeout(function() {
@@ -76,9 +78,7 @@ function handleGenerateURI(saveStatus) {
   const database = document.getElementById('databaseGenerate').value;
   const host = document.getElementById('host').value;
   const alias = document.getElementById('aliasGenerate').value;
-  const retryWrites = document.getElementById('retryWrites').checked;
-  const writeConcern = document.getElementById('writeConcern').checked;
-  const options = document.getElementById('options').value;
+  const options = document.getElementById('options').value.split(",");
   let generatedURI = "";
   const emptyInputs = [{type : "Host", value : host}, {type : "Collection", value : collection}, { type : "Database", value : database}];
   let error = false;
@@ -91,25 +91,26 @@ function handleGenerateURI(saveStatus) {
   }
   
   if (error) {
-    window.scrollTo(0, 0);
     return;
   }
 
-  connection ? generatedURI = "mongodb+srv://" : generatedURI = "mongodb://";
+  generatedURI = connection ? "mongodb+srv://" : "mongodb://";
   if (username && password) {
-    generatedURI += username + ":" + password + "@";
+    generatedURI += `${encodeURIComponent(username)}:${encodeURIComponent(password)}@`;
   }
 
-  generatedURI += host + "/?";
+  generatedURI += host;
 
-  retryWrites ? generatedURI += "retryWrites=true" : null;
-  writeConcern ? generatedURI += "&w=majority" : null;
+  if (options.length) {
+    generatedURI += `/?${options.join("&")}`;
+  }  
 
   handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
 }
 
 function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   const params = new URLSearchParams();
+  params.append('isMongo', 'true');
   params.append('uri', encodeURIComponent(uri));
   params.append('collection', collection);
   params.append('database', database);
@@ -152,13 +153,28 @@ function handleJSONLogin(event, saveStatus) {
 
 function handleRemoteJSON() {
   const url = document.getElementById("jsonRemoteURL").value;
+  const filename = document.getElementById("remoteFilename").value;
+  const emptyInputs = [{type : "URL", value : url}, {type : "Filename", value : filename}];
+  let error = false;
 
-  if (url === "") {
-    appendAlert('Error!', 'emptyURL', 'Cannot Proceed With Empty URL!', 'danger');
+  for (let i = 0; i < emptyInputs.length; i++) {
+    if (emptyInputs[i].value === "") {
+      appendAlert("Error", `${emptyInputs[i].type}`, `Cannot Proceed Without ${emptyInputs[i].type} Value!`, 'danger');
+      error = true;
+    }
+  }
+  
+  if (error) {
     return;
   }
 
-  const flask_url = "/validateJSON?q=" + encodeURIComponent(url);
+  const params = new URLSearchParams();
+  params.append('isMongo', 'false');
+  params.append('filename', filename + ".json");
+  params.append('q', url);
+
+  const flask_url = `/validateJSON?${params.toString()}`;
+
   fetch(flask_url, {
     method: 'GET',
   })
@@ -167,6 +183,10 @@ function handleRemoteJSON() {
     
     if (res.status === 400) {
       appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
+    }
+
+    if (res.status !== 200) {
+      appendAlert('Error!', 'invalidStatus', 'Invalid Status Code!', 'danger');
     }
     
     if (res.redirected) {
@@ -187,7 +207,7 @@ function handleUploadJSON() {
   const form = new FormData();
   form.append("file", file);
 
-  const flask_url = "/validateJSON?q=";
+  const flask_url = "/validateJSON?isMongo=false";
   fetch(flask_url, {
     method: 'POST',
     body: form

@@ -22,6 +22,13 @@
             <div class="tab-content mt-5" id="tabContent">
               <div class="tab-pane fade show active" id="remote-panel" role="tabpanel">
                 <form class="form-outline d-flex flex-column mt-3">
+                  <div class="d-flex flex-column">
+                    <label for="remoteFilename" class="main-text-regular mt-3" style="color: white;">Filename</label>
+                    <div class="d-flex flex-row align-items-center">
+                      <input class="form-control mt-1 main-text-regular" type="text" id="remoteFilename" name="remoteFilename" placeholder="Enter Filename..." />
+                      <span class="main-text-regular ms-3" style="color: white;">.json</span>
+                    </div>
+                  </div>
                   <label for="jsonRemoteURL" class="main-text-regular mt-3" style="color: white;">URL to JSON File</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="jsonRemoteURL" name="jsonRemoteURL" placeholder="Enter URL..." />
                 </form>

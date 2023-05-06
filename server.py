@@ -6,17 +6,28 @@ from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
 from database import Database
+import requests
+
 import urllib.parse
 import markdown
+
+import mongo_db_api
+import json_api
 
 schema = {}
 with open("schema/schema.json", "r") as f:
     schema = json.load(f)
 
 
+
 database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
 
 
+resources = None
+with open("test_json_endpoint.json", "r") as f:
+    resources = json.load(f)
+
+isMongo = True
 app = Flask(__name__)
 
 
@@ -43,35 +54,48 @@ def validateURI():
     alias = request.args.get('alias')
     if uri == "":
         return {"error" : "empty"}, 400
-    return redirect(url_for("editor", uri=uri, collection=collection, database=database, alias=alias), 302)
+    return redirect(url_for("editor", isMongo="true", uri=uri, collection=collection, database=database, alias=alias), 302)
 
 
 @app.route("/validateJSON", methods=["GET", "POST"]) 
 def validateJSON():
     if request.method == 'GET':
         url = request.args.get('q')
-        if url == "":
+        if not url:
             return {"error" : "empty"}, 400
+        response = requests.get(url)
+        if response.status_code != 200:
+            return {"error" : "invalid status"}, response.status_code
+        filename = request.args.get('filename')
+        with open(f"database/{filename}", 'wb') as f:
+            f.write(response.content)
+        with open(f"database/{filename}", 'r') as f:
+            isMongo = False
+            resources = json.load(f)
+            return redirect(url_for("editor", isMongo="false", filename=filename), 302)
     else:
         if 'file' not in request.files:
             return {"error" : "empty"}, 400
         file = request.files['file']
-
+        
 
 @app.route("/editor")
 def editor():
+    global isMongo
     if not request.args:
         return render_template("404.html"), 404
-    else:
+    elif request.args.get('isMongo') == 'true':
+        isMongo = True
         mongo_uri = urllib.parse.unquote(request.args.get('uri'))
-        collection = request.args.get('collection')
-        database_name = request.args.get('database')
         alias = request.args.get('alias')
         global database
-        # database = Database(mongo_uri, "gem5-vision", "versions_test")
-        database.change_database(mongo_uri, database_name, collection)
+        database.change_database(mongo_uri, request.args.get('database'), request.args.get('collection'))
         return render_template("editor.html", editor_type="MongoDB", tagline=(mongo_uri if alias == "" else alias))
-    
+    elif request.args.get('isMongo') == 'false':
+        isMongo = False
+        return render_template("editor.html", editor_type="JSON", tagline=request.args.get('filename'))
+    else:
+        return render_template("404.html"), 404
 
 @app.route("/help")
 def help():
@@ -79,35 +103,33 @@ def help():
         return render_template("help.html", rendered_html=markdown.markdown(f.read()))
 
 
+@app.route("/toggleIsMongo", methods=["POST"])
+def toggleIsMongo():
+    # input is a json object with a single key "isMongo"
+    # {"isMongo": true/false}
+    isMongo = request.json["isMongo"]
+    return {"isMongo": isMongo}
+
 @app.route("/find", methods=["POST"])
 def find():
-    if request.json["resource_version"] == "":
-        resource = database.get_collection().find({"id": request.json["id"]}, {"_id": 0}).sort(
-            "resource_version", -1).limit(1)
-    else:
-        resource = database.get_collection().find({"id": request.json["id"], "resource_version": request.json["resource_version"]}, {"_id": 0}).sort(
-            "resource_version", -1).limit(1)
-    # check if resource is empty list
-    json_resource = json_util.dumps(resource)
-    if json_resource == "[]":
-        return {"exists": False}
-    return json_resource
+    print("resource before find:\n", resources)
+    if isMongo:
+        return mongo_db_api.findResource(database, request.json)
+    return json_api.findResource(resources, request.json)
 
 
 @app.route("/update", methods=["POST"])
 def update():
-    # remove all keys that are not in the request
-    database.get_collection().replace_one(
-        {"id": request.json["id"], "resource_version": request.json["resource"]["resource_version"]}, request.json["resource"])
-    return {"status": "Updated"}
+    if isMongo:
+        return mongo_db_api.updateResource(database, request.json)
+    return json_api.updateResource(resources, request.json)
 
 
 @app.route("/versions", methods=["POST"])
 def getVersions():
-    versions = database.get_collection().find({"id": request.json["id"]}, {
-        "resource_version": 1, "_id": 0}).sort("resource_version", -1)
-    json_resource = json_util.dumps(versions)
-    return json_resource
+    if isMongo:
+        return mongo_db_api.getVersions(database, request.json)
+    return json_api.getVersions(resources, request.json)
 
 
 @ app.route("/categories", methods=["GET"])
@@ -147,28 +169,29 @@ def getFields():
 
 @ app.route("/delete", methods=["POST"])
 def delete():
-    database.get_collection().delete_one(
-        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
-    return {"status": "Deleted"}
+    if isMongo:
+        return mongo_db_api.deleteResource(database, request.json)
+    return json_api.deleteResource(resources, request.json)
 
 
 @app.route("/insert", methods=["POST"])
 def insert():
-    database.get_collection().insert_one(request.json)
-    return {"status": "Inserted"}
+    print("resource before insert:\n", resources)
+    if isMongo:
+        return mongo_db_api.insertResource(database, request.json)
+    return json_api.insertResource(resources, request.json)
+
 
 
 @app.errorhandler(404)
 def handle404(error):
     return render_template('404.html'), 404
+
 @app.route("/checkExists", methods=["POST"])
 def checkExists():
-    resource = database.get_collection().find_one(
-        {"id": request.json["id"], "resource_version": request.json["resource_version"]})
-    if resource == None:
-        return {"exists": False}
-    else:
-        return {"exists": True}
+    if isMongo:
+        return mongo_db_api.checkResourceExists(database, request.json)
+    return json_api.checkResourceExists(resources, request.json)
 
 
 if __name__ == "__main__":

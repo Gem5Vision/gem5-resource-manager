@@ -13,7 +13,7 @@ require(["vs/editor/editor.main"], () => {
   editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
     theme: "vs-dark",
     language: "json",
-    automaticLayout: true
+    automaticLayout: true,
   });
   editor.setModel({
     original: originalModel,
@@ -100,6 +100,7 @@ function addVersion(e) {
   if (checkErrors()) {
     return;
   }
+  addVersions();
   let json = JSON.parse(modifiedModel.getValue());
   console.log(json["resource_version"]);
   fetch("/checkExists", {
@@ -196,6 +197,8 @@ function find(e) {
     didChange = false;
   }
 
+  editor.getEditorType() === "vs.editor.ICodeEditor" ? closeSchema() : null;
+
   fetch("/find", {
     method: "POST",
     headers: {
@@ -281,4 +284,66 @@ function showModal(event, callback) {
     callback(event);
     myModal.hide();
   };
+}
+
+const schemaButton = document.getElementById('loadSchema');
+
+function openSchema() {
+  fetch('/schema', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(data);
+
+    editor.dispose();
+
+    editor = monaco.editor.create(document.getElementById("editor"), {
+      theme: "vs-dark",
+      language: "json",
+      automaticLayout: true,
+      readOnly: true
+    });
+
+    model = monaco.editor.createModel(`{\n}`, "json");
+    editor.setModel(model);
+
+    model.setValue(JSON.stringify(data, null, 4));
+    document.getElementById("update").disabled = true;
+    document.getElementById("add").disabled = true;
+    document.getElementById("delete").disabled = true;
+    document.getElementById("add_version").disabled = true;
+
+    schemaButton.textContent = "Close Schema";
+    schemaButton.onclick = closeSchema;
+
+    const editorTitle = document.getElementById("editor-title");
+    editorTitle.children[0].style.display = 'none';
+    editorTitle.children[1].textContent = 'Schema (Read Only)';
+  });
+} 
+
+function closeSchema() {
+  schemaButton.textContent = "Load Schema";
+  
+  editor.dispose();
+
+  editor = monaco.editor.createDiffEditor(document.getElementById("editor"), {
+    theme: "vs-dark",
+    language: "json",
+    automaticLayout: true,
+  });
+  editor.setModel({
+    original: originalModel,
+    modified: modifiedModel,
+  });
+
+  const editorTitle = document.getElementById("editor-title");
+  editorTitle.children[0].style.display = 'unset';
+  editorTitle.children[1].textContent = 'Edited';
+
+  schemaButton.onclick = openSchema;
 }
