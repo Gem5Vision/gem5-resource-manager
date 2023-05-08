@@ -85,10 +85,10 @@ def validate_json_get():
     app.config['FILEPATH'] = Path(app.config['UPLOAD_FOLDER']) / filename
     if (Path(app.config['UPLOAD_FOLDER']) / filename).is_file():
         app.config['TEMP_FILEPATH'] = Path(app.config['TEMP_UPLOAD_FOLDER']) / filename
-        with open(app.config['TEMP_FILEPATH'], 'wb') as f:
+        with Path(app.config['TEMP_FILEPATH']).open('wb') as f:
             f.write(response.content)
         return {"conflict" : "existing file in server"}, 409
-    with open(app.config['FILEPATH'], 'wb') as f:
+    with Path(app.config['FILEPATH']).open('wb') as f:
         f.write(response.content)
     return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=filename), 302)
 
@@ -112,7 +112,7 @@ def validate_json_post():
         file.save(app.config['TEMP_FILEPATH'])
         return {"conflict" : "exisitng file in server"}, 409
     file.save(app.config['FILEPATH'])
-    with open(app.config['FILEPATH'], 'r') as f:
+    with Path(app.config['FILEPATH']).open('r') as f:
         resources = json.load(f)
         return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=Path(app.config['FILEPATH']).name), 302)
 
@@ -143,7 +143,7 @@ def resolve_conflict():
     if Path(app.config['TEMP_FILEPATH']).is_file(): 
         Path(app.config['TEMP_FILEPATH']).unlink()
     app.config['TEMP_FILEPATH'] = None
-    with open(app.config['FILEPATH'], 'r') as f:
+    with Path(app.config['FILEPATH']).open('r') as f:
         resources = json.load(f)
     return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=filename), 302) 
 
@@ -170,14 +170,14 @@ def editor():
         if not (Path(app.config['UPLOAD_FOLDER']) / filename).is_file():
             return render_template("404.html"), 404
         filepath = Path(app.config['UPLOAD_FOLDER']) / filename
-        with open(filepath, 'r') as f:
+        with filepath.open('r') as f:
             resources = json.load(f)
         return render_template("editor.html", editor_type=app.config['DATABASE_TYPES'][1], tagline=filename)
 
 
 @app.route("/help")
 def help():
-    with open('static/help.md', 'r') as f:
+    with Path('static/help.md').open('r') as f:
         return render_template("help.html", rendered_html=markdown.markdown(f.read()))
 
 
