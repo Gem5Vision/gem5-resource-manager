@@ -29,8 +29,8 @@ database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mo
 with open("test_json_endpoint.json", "r") as f:
     resources = json.load(f)
 
-UPLOAD_FOLDER = 'database/'
-TEMP_UPLOAD_FOLDER = 'database/.tmp/'
+UPLOAD_FOLDER = Path('database/')
+TEMP_UPLOAD_FOLDER = Path('database/.tmp/')
 ALLOWED_EXTENSIONS = {'json'}
 
 resources = None
@@ -45,6 +45,14 @@ app.config['FILEPATH'] = None
 app.config['TEMP_FILEPATH'] = None
 
 app.config['DATABASE_TYPES'] = ["mongodb", "json"]
+
+
+with app.app_context():
+    if not Path(app.config['UPLOAD_FOLDER']).is_dir():
+        Path(app.config['UPLOAD_FOLDER']).mkdir()
+    if not Path(app.config['TEMP_UPLOAD_FOLDER']).is_dir():
+        Path(app.config['TEMP_UPLOAD_FOLDER']).mkdir()
+
 
 @app.route("/")
 def index():
