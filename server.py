@@ -14,8 +14,9 @@ import markdown
 import mongo_db_api
 import json_api
 
-import shutil
 from werkzeug.utils import secure_filename
+
+from pathlib import Path
 
 schema = {}
 with open("schema/test.json", "r") as f:
@@ -81,9 +82,9 @@ def validate_json_get():
     if response.status_code != 200:
         return {"error" : "invalid status"}, response.status_code
     filename = secure_filename(request.args.get('filename'))
-    app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
-        app.config['TEMP_FILEPATH'] = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], filename)
+    app.config['FILEPATH'] = Path(app.config['UPLOAD_FOLDER']) / filename
+    if (Path(app.config['UPLOAD_FOLDER']) / filename).is_file():
+        app.config['TEMP_FILEPATH'] = Path(app.config['TEMP_UPLOAD_FOLDER']) / filename
         with open(app.config['TEMP_FILEPATH'], 'wb') as f:
             f.write(response.content)
         return {"conflict" : "existing file in server"}, 409
@@ -93,8 +94,8 @@ def validate_json_get():
 
 
 @app.route('/existingFiles', methods=['GET'])
-def get_exisitng_files():
-    files = [f for f in os.listdir(app.config['UPLOAD_FOLDER']) if os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], f))]
+def get_existing_files():
+    files = [f.name for f in Path(app.config['UPLOAD_FOLDER']).iterdir() if f.is_file()]
     return json.dumps(files)
 
 
@@ -105,15 +106,15 @@ def validate_json_post():
         return {"error" : "empty"}, 400
     file = request.files['file']
     filename = secure_filename(file.filename)
-    app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    if os.path.isfile(app.config['FILEPATH']): 
-        app.config['TEMP_FILEPATH'] = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], filename)
+    app.config['FILEPATH'] = Path(app.config['UPLOAD_FOLDER']) / filename
+    if Path(app.config['FILEPATH']).is_file(): 
+        app.config['TEMP_FILEPATH'] = Path(app.config['TEMP_UPLOAD_FOLDER']) / filename
         file.save(app.config['TEMP_FILEPATH'])
         return {"conflict" : "exisitng file in server"}, 409
     file.save(app.config['FILEPATH'])
     with open(app.config['FILEPATH'], 'r') as f:
         resources = json.load(f)
-        return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=os.path.basename(app.config['FILEPATH'])), 302)
+        return redirect(url_for("editor", type=app.config['DATABASE_TYPES'][1], filename=Path(app.config['FILEPATH']).name), 302)
 
 
 @app.route("/resolveConflict", methods=["GET"])
@@ -127,25 +128,20 @@ def resolve_conflict():
     if resolution not in resolution_options:
         return {"error" : "invalid resolution"}, 400
     if resolution == resolution_options[0]:
-        os.remove(app.config['TEMP_FILEPATH'])
+        Path(app.config['TEMP_FILEPATH']).unlink()
         app.config['TEMP_FILEPATH'] = None
         resources = None
         return {"success" : "input cleared"}, 204
     elif resolution == resolution_options[1]:
-        filename = os.path.basename(app.config['FILEPATH'])
+        filename = Path(app.config['FILEPATH']).name
     elif resolution == resolution_options[2]:
-        os.remove(app.config['FILEPATH'])
-        shutil.move(app.config['TEMP_FILEPATH'], app.config['UPLOAD_FOLDER'])
-        app.config['FILEPATH'] = os.path.join(app.config['UPLOAD_FOLDER'], os.path.basename(app.config['TEMP_FILEPATH']))
-        filename = os.path.basename(app.config['FILEPATH'])
+        app.config['FILEPATH'] = Path(app.config['TEMP_FILEPATH']).replace(app.config['FILEPATH'])
+        filename = Path(app.config['FILEPATH']).name
     elif resolution == resolution_options[3]:
-        new_filename = secure_filename(request.args.get("filename"))
-        new_temp_filepath = os.path.join(app.config['TEMP_UPLOAD_FOLDER'], new_filename)
-        os.rename(app.config['TEMP_FILEPATH'], new_temp_filepath)
-        app.config['FILEPATH'] = shutil.move(new_temp_filepath, app.config['UPLOAD_FOLDER'])
-        filename = new_filename
-    if os.path.isfile(app.config['TEMP_FILEPATH']): 
-        os.remove(app.config['TEMP_FILEPATH'])
+        filename = secure_filename(request.args.get("filename"))
+        app.config['FILEPATH'] = Path(app.config['TEMP_FILEPATH']).replace(Path(app.config['UPLOAD_FOLDER']) / filename)
+    if Path(app.config['TEMP_FILEPATH']).is_file(): 
+        Path(app.config['TEMP_FILEPATH']).unlink()
     app.config['TEMP_FILEPATH'] = None
     with open(app.config['FILEPATH'], 'r') as f:
         resources = json.load(f)
@@ -171,9 +167,9 @@ def editor():
     if type == app.config['DATABASE_TYPES'][1]:
         isMongo = False
         filename = request.args.get('filename')
-        if not os.path.isfile(os.path.join(app.config['UPLOAD_FOLDER'], filename)): 
+        if not (Path(app.config['UPLOAD_FOLDER']) / filename).is_file():
             return render_template("404.html"), 404
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        filepath = Path(app.config['UPLOAD_FOLDER']) / filename
         with open(filepath, 'r') as f:
             resources = json.load(f)
         return render_template("editor.html", editor_type=app.config['DATABASE_TYPES'][1], tagline=filename)
