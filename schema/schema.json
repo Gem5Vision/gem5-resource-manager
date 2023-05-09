@@ -229,7 +229,7 @@
                 "additional_params": {
                     "type": "object",
                     "description": "The additional parameters of the workload",
-                    "default": []
+                    "default": {}
                 },
                 "resources": {
                     "type": "object",
