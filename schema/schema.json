@@ -226,9 +226,9 @@
                     "description": "The function of the workload",
                     "default": ""
                 },
-                "arguments": {
-                    "type": "array",
-                    "description": "The arguments of the workload",
+                "additional_params": {
+                    "type": "objects",
+                    "description": "The additional parameters of the workload",
                     "default": []
                 },
                 "resources": {
