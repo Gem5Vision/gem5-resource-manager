@@ -43,7 +43,7 @@ def insertResource(database, json):
     return {"status": "Inserted"}
 
 def checkResourceExists(database, json):
-    resource = database.get_collection().find({"id": json["id"]}, {"_id": 0}).sort(
+    resource = database.get_collection().find({"id": json["id"], "resource_version": json["resource_version"]}, {"_id": 0}).sort(
         "resource_version", -1).limit(1)
     json_resource = json_util.dumps(resource)
     if json_resource == "[]":

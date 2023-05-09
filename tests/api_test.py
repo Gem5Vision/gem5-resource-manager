@@ -1,7 +1,7 @@
 import flask
 import contextlib
 import unittest
-from server import app, database
+from server import app, app.config['DATABSE']
 import json
 from bson import json_util
 
@@ -26,13 +26,13 @@ class TestApi(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls._collection_name = database.collection_name
-        database.change_collection("test_test")
+        cls._collection_name = app.config['DATABSE'].collection_name
+        app.config['DATABSE'].change_collection("test_test")
 
     @classmethod
     def tearDownClass(cls):
-        database.delete_collection()
-        database.change_collection(cls._collection_name)
+        app.config['DATABSE'].delete_collection()
+        app.config['DATABSE'].change_collection(cls._collection_name)
 
     def setUp(self):
         """This method sets up the test environment."""
@@ -156,11 +156,11 @@ class TestApi(unittest.TestCase):
         response = self.test_client.post("/insert", json=test_resource)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {"status": "Inserted"})
-        resource = database.get_collection().find(
+        resource = app.config['DATABSE'].get_collection().find(
             {"id": "test-resource"}, {"_id": 0})
         json_resource = json.loads(json_util.dumps(resource[0]))
         self.assertTrue(json_resource == test_resource)
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": "test-resource", "resource_version": "1.0.0"})
 
     def test_find_no_version(self):
@@ -185,13 +185,13 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0"
         }
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         response = self.test_client.post(
             "/find", json={"id": test_id, "resource_version": ""})
         self.assertEqual(response.status_code, 200)
         return_json = json.loads(response.data)[0]
         self.assertTrue(return_json == test_resource)
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
 
     def test_find_not_exist(self):
@@ -224,19 +224,19 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0"
         }
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         test_resource["resource_version"] = "1.0.1"
         test_resource["description"] = "test-description2"
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         response = self.test_client.post(
             "/find", json={"id": test_id, "resource_version": "1.0.1"})
         self.assertEqual(response.status_code, 200)
         return_json = json.loads(response.data)[0]
         self.assertTrue(return_json["description"] == "test-description2")
         self.assertTrue(return_json["resource_version"] == "1.0.1")
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.1"})
 
     def test_delete(self):
@@ -262,12 +262,12 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0"
         }
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         response = self.test_client.post("/delete", json={
             "id": test_id, "resource_version": test_version})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {"status": "Deleted"})
-        resource = database.get_collection().find(
+        resource = app.config['DATABSE'].get_collection().find(
             {"id": "test-resource"}, {"_id": 0})
         json_resource = json.loads(json_util.dumps(resource))
         self.assertTrue(json_resource == [])
@@ -295,12 +295,12 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0"
         }
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         response = self.test_client.post(
             "/checkExists", json={"id": test_id, "resource_version": test_version})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {"exists": True})
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
 
     def test_if_resource_exists_false(self):
@@ -334,18 +334,18 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0"
         }
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         test_resource["resource_version"] = "1.0.1"
         test_resource["description"] = "test-description2"
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         response = self.test_client.post("/versions", json={"id": test_id})
         return_json = json.loads(response.data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(return_json, [{'resource_version': '1.0.1'}, {
                          'resource_version': '1.0.0'}])
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.1"})
 
     def test_update_resource(self):
@@ -370,18 +370,18 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0"
         }
-        database.get_collection().insert_one(test_resource.copy())
+        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
         test_resource["description"] = "test-description2"
         test_resource["example_usage"] = "test-usage2"
         response = self.test_client.post(
             "/update", json={"id": test_id, "resource": test_resource})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {"status": "Updated"})
-        resource = database.get_collection().find(
+        resource = app.config['DATABSE'].get_collection().find(
             {"id": "test-resource"}, {"_id": 0})
         json_resource = json.loads(json_util.dumps(resource))
         self.assertTrue(json_resource == [test_resource])
-        database.get_collection().delete_one(
+        app.config['DATABSE'].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
 
     def test_keys_1(self):

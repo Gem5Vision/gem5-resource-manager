@@ -7,8 +7,10 @@ const schemaEditorContainer = document.getElementById("schema-editor");
 var schemaEditor;
 var schemaModel;
 
-const schemaButton = document.getElementById('schema-toggle');
-const editingActionsButtons = Array.from(document.querySelectorAll('#editing-actions button'));
+const schemaButton = document.getElementById("schema-toggle");
+const editingActionsButtons = Array.from(
+  document.querySelectorAll("#editing-actions button")
+);
 var editingActionsState;
 
 require.config({
@@ -50,10 +52,10 @@ require(["vs/editor/editor.main"], () => {
         automaticLayout: true,
         readOnly: true,
       });
-  
+
       schemaModel = monaco.editor.createModel(`{\n}`, "json");
-      schemaEditor.setModel(schemaModel);  
-      schemaModel.setValue(JSON.stringify(data, null, 4));  
+      schemaEditor.setModel(schemaModel);
+      schemaModel.setValue(JSON.stringify(data, null, 4));
 
       schemaEditorContainer.style.display = "none";
     });
@@ -72,6 +74,7 @@ function checkErrors() {
   }
   return false;
 }
+let didChange = false;
 
 function update(e) {
   e.preventDefault();
@@ -122,7 +125,6 @@ function addVersion(e) {
   if (checkErrors()) {
     return;
   }
-  addVersions();
   let json = JSON.parse(modifiedModel.getValue());
   console.log(json["resource_version"]);
   fetch("/checkExists", {
@@ -149,8 +151,14 @@ function addVersion(e) {
           body: JSON.stringify(json),
         })
           .then((res) => res.json())
-          .then((data) => {
+          .then(async (data) => {
+            console.log("added version");
             console.log(data);
+            await addVersions();
+            //Select last option
+            document.getElementById("version-dropdown").value =
+              json["resource_version"];
+            console.log(document.getElementById("version-dropdown").value);
             find(e);
           });
       }
@@ -179,16 +187,15 @@ function deleteRes(e) {
     });
 }
 
-let didChange = false;
 document.getElementById("id").onchange = function () {
   console.log("id changed");
   didChange = true;
 };
 
-function addVersions() {
+async function addVersions() {
   let select = document.getElementById("version-dropdown");
   select.innerHTML = "Latest";
-  fetch("/versions", {
+  await fetch("/versions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -292,11 +299,15 @@ window.onload = () => {
       });
     });
 
-    const resetInstance = document.getElementById("update-instance");
-    resetInstance.addEventListener("click", () => {
-      localStorage.removeItem("savedSession");
-      window.location = `/login/${(new URL(window.location)).searchParams.get("type") === "mongodb" ? 'mongodb' : 'json'}`;
-    })
+  const resetInstance = document.getElementById("update-instance");
+  resetInstance.addEventListener("click", () => {
+    localStorage.removeItem("savedSession");
+    window.location = `/login/${
+      new URL(window.location).searchParams.get("type") === "mongodb"
+        ? "mongodb"
+        : "json"
+    }`;
+  });
 };
 
 const myModal = new bootstrap.Modal("#ConfirmModal", {
@@ -318,23 +329,25 @@ function showSchema() {
   if (diffEditorContainer.style.display !== "none") {
     diffEditorContainer.style.display = "none";
     schemaEditorContainer.classList.add("editor-sizing");
-    schemaEditor.setPosition({column: 1, lineNumber: 1});
-    schemaEditor.revealPosition({column: 1, lineNumber: 1});
+    schemaEditor.setPosition({ column: 1, lineNumber: 1 });
+    schemaEditor.revealPosition({ column: 1, lineNumber: 1 });
     schemaEditorContainer.style.display = "block";
 
-    editingActionsState = editingActionsButtons.map(button => button.disabled);
+    editingActionsState = editingActionsButtons.map(
+      (button) => button.disabled
+    );
 
     editingActionsButtons.forEach((btn) => {
       btn.disabled = true;
-    })
+    });
 
     const editorTitle = document.getElementById("editor-title");
-    editorTitle.children[0].style.display = 'none';
-    editorTitle.children[1].textContent = 'Schema (Read Only)';
+    editorTitle.children[0].style.display = "none";
+    editorTitle.children[1].textContent = "Schema (Read Only)";
 
     schemaButton.textContent = "Close Schema";
     schemaButton.onclick = closeSchema;
-  } 
+  }
 }
 
 function closeSchema() {
@@ -344,13 +357,13 @@ function closeSchema() {
 
     editingActionsButtons.forEach((btn, i) => {
       btn.disabled = editingActionsState[i];
-    })
+    });
 
     const editorTitle = document.getElementById("editor-title");
-    editorTitle.children[0].style.display = 'unset';
-    editorTitle.children[1].textContent = 'Edited';
+    editorTitle.children[0].style.display = "unset";
+    editorTitle.children[1].textContent = "Edited";
 
     schemaButton.textContent = "Show Schema";
     schemaButton.onclick = showSchema;
-  } 
+  }
 }

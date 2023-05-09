@@ -23,9 +23,6 @@ with open("schema/test.json", "r") as f:
     schema = json.load(f)
 
 
-
-database = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
-
 with open("test_json_endpoint.json", "r") as f:
     resources = json.load(f)
 
@@ -37,6 +34,7 @@ resources = None
 isMongo = True
 
 app = Flask(__name__)
+app.config['DATABASE'] = Database("mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority", "gem5-vision", "versions_test")
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['TEMP_UPLOAD_FOLDER'] = TEMP_UPLOAD_FOLDER
@@ -161,7 +159,6 @@ def editor():
     if not request.args:
         return render_template("404.html"), 404
     global isMongo
-    global database
     global resources
     type = request.args.get("type")
     if type not in app.config['DATABASE_TYPES']:
@@ -170,7 +167,7 @@ def editor():
         isMongo = True
         mongo_uri = urllib.parse.unquote(request.args.get('uri'))
         alias = request.args.get('alias')
-        database.change_database(mongo_uri, request.args.get('database'), request.args.get('collection'))
+        app.config['DATABASE'].change_database(mongo_uri, request.args.get('database'), request.args.get('collection'))
         return render_template("editor.html", editor_type=app.config['DATABASE_TYPES'][0], tagline=(mongo_uri if alias == "" else alias))
     if type == app.config['DATABASE_TYPES'][1]:
         isMongo = False
@@ -180,6 +177,9 @@ def editor():
         filepath = Path(app.config['UPLOAD_FOLDER']) / filename
         with filepath.open('r') as f:
             resources = json.load(f)
+        #Set FILEPATH if editor accessed directly w/o login 
+        if not app.config['FILEPATH'] or not filepath.samefile(Path(app.config['FILEPATH'])):
+            app.config['FILEPATH'] = filepath
         return render_template("editor.html", editor_type=app.config['DATABASE_TYPES'][1], tagline=filename)
 
 
@@ -201,21 +201,21 @@ def toggleIsMongo():
 def find():
     print("resource before find:\n", resources)
     if isMongo:
-        return mongo_db_api.findResource(database, request.json)
+        return mongo_db_api.findResource(app.config['DATABASE'], request.json)
     return json_api.findResource(resources, request.json)
 
 
 @app.route("/update", methods=["POST"])
 def update():
     if isMongo:
-        return mongo_db_api.updateResource(database, request.json)
-    return json_api.updateResource(resources, request.json)
+        return mongo_db_api.updateResource(app.config['DATABASE'], request.json)
+    return json_api.updateResource(resources, request.json,app.config['FILEPATH'])
 
 
 @app.route("/versions", methods=["POST"])
 def getVersions():
     if isMongo:
-        return mongo_db_api.getVersions(database, request.json)
+        return mongo_db_api.getVersions(app.config['DATABASE'], request.json)
     return json_api.getVersions(resources, request.json)
 
 
@@ -257,16 +257,16 @@ def getFields():
 @ app.route("/delete", methods=["POST"])
 def delete():
     if isMongo:
-        return mongo_db_api.deleteResource(database, request.json)
-    return json_api.deleteResource(resources, request.json)
+        return mongo_db_api.deleteResource(app.config['DATABASE'], request.json)
+    return json_api.deleteResource(resources, request.json, app.config['FILEPATH'])
 
 
 @app.route("/insert", methods=["POST"])
 def insert():
-    print("resource before insert:\n", resources)
+    # print("resource before insert:\n", resources)
     if isMongo:
-        return mongo_db_api.insertResource(database, request.json)
-    return json_api.insertResource(resources, request.json)
+        return mongo_db_api.insertResource(app.config['DATABASE'], request.json)
+    return json_api.insertResource(resources, request.json, app.config['FILEPATH'])
 
 
 @app.errorhandler(404)
@@ -277,7 +277,7 @@ def handle404(error):
 @app.route("/checkExists", methods=["POST"])
 def checkExists():
     if isMongo:
-        return mongo_db_api.checkResourceExists(database, request.json)
+        return mongo_db_api.checkResourceExists(app.config['DATABASE'], request.json)
     return json_api.checkResourceExists(resources, request.json)
 
 
