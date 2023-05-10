@@ -199,7 +199,7 @@ def toggleIsMongo():
 
 @app.route("/find", methods=["POST"])
 def find():
-    print("resource before find:\n", resources)
+    # print("resource before find:\n", resources)
     if isMongo:
         return mongo_db_api.findResource(app.config['DATABASE'], request.json)
     return json_api.findResource(resources, request.json)

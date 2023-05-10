@@ -2,31 +2,26 @@ from bson import json_util
 from server import app
 from pathlib import Path
 import json
+
 def findResource(resources, query):
-    # print(resources)
-    # print("query:\n",query)
+    found_resources = []
     for resource in resources:
         if query["resource_version"] == "" or query["resource_version"] == "Latest":
             if resource["id"] == query["id"]:
-                print("Found resource")
-                print(resource)
-
-                return json_util.dumps([resource])
-        else:
-            
+                found_resources.append(resource)
+        else:            
             if resource["id"] == query["id"] and resource["resource_version"] == query["resource_version"]:
-                print("found resource with version")
-                print(resource)
                 return json_util.dumps([resource])
-    
-    return {"exists": False}
+    if not found_resources:
+        return {"exists": False}
+    return json_util.dumps([max(found_resources, key=lambda resource: tuple(map(int, resource["resource_version"].split("."))))])
 
 def getVersions(resources, query):
     versions = []
     for resource in resources:
         if resource["id"] == query["id"]:
             versions.append({"resource_version": resource["resource_version"]})
-            print("Found version")
+    versions.sort(key=lambda resource: tuple(map(int, resource["resource_version"].split("."))), reverse=True)
     return json_util.dumps(versions)
 
 def updateResource(resources, query, file_path):
