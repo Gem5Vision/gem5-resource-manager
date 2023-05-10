@@ -16,22 +16,22 @@
         <form class="form-outline d-flex flex-column mt-3">
           <label for="id" class="main-text-regular">Resource ID</label>
           <div class="d-flex flex-row align-items-center gap-1">
-            <input class="form-control" type="text" id="id" placeholder="Enter ID..." />
-            <select id="version-dropdown" class="form-select main-text-regular" aria-label="Default select example" style="width: auto;"></select>
+            <input class="form-control input-shadow" type="text" id="id" placeholder="Enter ID..." />
+            <select id="version-dropdown" class="form-select main-text-regular input-shadow" aria-label="Default select example" style="width: auto;"></select>
           </div>
           <label for="category" class="main-text-regular mt-3">Category</label>
-          <select id="category" class="form-select mt-1" aria-label="Default select example"></select>
-          <input class="btn btn-outline-primary main-text-regular align-self-end mt-2" type="submit" onclick="find(event)" value="Find" />
+          <select id="category" class="form-select mt-1 input-shadow" aria-label="Default select example"></select>
+          <input class="btn btn-outline-primary main-text-regular align-self-end btn-box-shadow mt-3" type="submit" onclick="find(event)" value="Find" />
         </form>
         
         <div class="mt-3">
           <div class="main-text-regular">View Schema</div>
-          <button type="button" class="btn btn-outline-primary main-text-regular mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
+          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
         </div>
 
         <div class="mt-3">
           <div class="main-text-regular">Change Instance</div>
-          <button type="button" class="btn btn-outline-primary main-text-regular mt-1" id="update-instance">Reset Instance</button>
+          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="update-instance">Reset Instance</button>
         </div>
 
       </div>
@@ -40,7 +40,7 @@
           Database Actions
         </button>
         <div class="d-flex flex-column align-items-center">
-          <h2 class="page-title">{{ editor_type }}</h2>
+          <h2 id="editor-type" class="page-title">{{ editor_type }}</h2>
           <h4 class="secondary-text-semi" style="color: #425469; word-break: break-all; text-align: center;">{{ tagline }}</h4>
         </div>
         <div class="d-flex flex-row justify-content-around mt-3" id="editor-title">
@@ -49,11 +49,11 @@
         </div>
         <div id="diff-editor" class="editor-sizing"></div>
         <div id="schema-editor"></div>
-        <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2">
-          <button type="button" class="btn btn-primary main-text-regular" id="update" onclick="showModal(event, update)">Update</button>
-          <button type="button" class="btn btn-primary main-text-regular" id="add" onclick="showModal(event, add)" disabled>Add</button>
-          <button type="button" class="btn btn-danger main-text-regular" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
-          <button type="button" class="btn btn-primary main-text-regular" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>
+        <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
+          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)">Update</button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add" onclick="showModal(event, add)" disabled>Add</button>
+          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>
         </div>
       </div>
     </div>

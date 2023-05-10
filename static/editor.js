@@ -61,6 +61,9 @@ require(["vs/editor/editor.main"], () => {
     });
 });
 
+let editorType = document.getElementById('editor-type');
+editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB": editorType.textContent.toUpperCase();
+
 function checkErrors() {
   let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri });
   if (errors.length > 0) {
