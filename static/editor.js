@@ -92,8 +92,13 @@ function update(e) {
     body: JSON.stringify({ id: id, resource: json }),
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then(async (data) => {
       console.log(data);
+      await addVersions();
+      //Select last option
+      document.getElementById("version-dropdown").value =
+        json["resource_version"];
+      console.log(document.getElementById("version-dropdown").value);
       find(e);
     });
 }
@@ -113,8 +118,13 @@ function add(e) {
     body: JSON.stringify(json),
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then(async (data) => {
       console.log(data);
+      await addVersions();
+      //Select last option
+      document.getElementById("version-dropdown").value =
+        json["resource_version"];
+      console.log(document.getElementById("version-dropdown").value);
       find(e);
     });
 }
@@ -181,8 +191,13 @@ function deleteRes(e) {
     body: JSON.stringify({ id: id, resource_version: resource_version }),
   })
     .then((res) => res.json())
-    .then((data) => {
+    .then(async (data) => {
       console.log(data);
+      await addVersions();
+      //Select first option
+      document.getElementById("version-dropdown").value =
+        document.getElementById("version-dropdown").options[0].value;
+      console.log(document.getElementById("version-dropdown").value);
       find(e);
     });
 }

@@ -1,7 +1,7 @@
 import flask
 import contextlib
 import unittest
-from server import app, app.config['DATABSE']
+from server import app
 import json
 from bson import json_util
 import copy
@@ -9,13 +9,13 @@ import copy
 class TestComprehensive(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls._collection_name = app.config['DATABSE'].collection_name
-        app.config['DATABSE'].change_collection("test_test")
+        cls._collection_name = app.config["DATABASE"].collection_name
+        app.config["DATABASE"].change_collection("test_test")
 
     @classmethod
     def tearDownClass(cls):
-        app.config['DATABSE'].delete_collection()
-        app.config['DATABSE'].change_collection(cls._collection_name)
+        app.config["DATABASE"].delete_collection()
+        app.config["DATABASE"].change_collection(cls._collection_name)
 
     def setUp(self):
         """This method sets up the test environment."""
@@ -104,7 +104,7 @@ class TestComprehensive(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {"status": "Inserted"})
         # delete resource
-        app.config['DATABSE'].get_collection().delete_one(
+        app.config["DATABASE"].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
 
     def test_insert_find_new_version_find_older(self):
@@ -163,9 +163,9 @@ class TestComprehensive(unittest.TestCase):
         return_json = json.loads(response.data)[0]
         self.assertTrue(return_json == test_resource)
         #delete resource
-        app.config['DATABSE'].get_collection().delete_one(
+        app.config["DATABASE"].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.0"})
-        app.config['DATABSE'].get_collection().delete_one(
+        app.config["DATABASE"].get_collection().delete_one(
             {"id": test_id, "resource_version": "1.0.1"})
         
     def test_find_add_new_version_delete_older(self):
@@ -191,7 +191,7 @@ class TestComprehensive(unittest.TestCase):
         test_id = test_resource["id"]
         test_resource_version = test_resource["resource_version"]
         # insert resource
-        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
+        app.config["DATABASE"].get_collection().insert_one(test_resource.copy())
         # find resource
         response = self.test_client.post("/find", json={"id": test_id, "resource_version": test_resource_version})
         self.assertEqual(response.status_code, 200)
@@ -226,7 +226,7 @@ class TestComprehensive(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(return_json, [{'resource_version': '1.0.1'}])
         #delete resource
-        app.config['DATABSE'].get_collection().delete_one({"id": test_id, "resource_version": "1.0.1"})
+        app.config["DATABASE"].get_collection().delete_one({"id": test_id, "resource_version": "1.0.1"})
 
     def test_find_add_new_version_update_older(self):
         test_resource = {
@@ -251,7 +251,7 @@ class TestComprehensive(unittest.TestCase):
         test_id = test_resource["id"]
         test_resource_version = test_resource["resource_version"]
         # insert resource
-        app.config['DATABSE'].get_collection().insert_one(test_resource.copy())
+        app.config["DATABASE"].get_collection().insert_one(test_resource.copy())
         # find resource
         response = self.test_client.post("/find", json={"id": test_id, "resource_version": test_resource_version})
         self.assertEqual(response.status_code, 200)
@@ -291,5 +291,5 @@ class TestComprehensive(unittest.TestCase):
         self.assertTrue(return_json == test_resource)
 
         #delete resource
-        app.config['DATABSE'].get_collection().delete_one({"id": test_id, "resource_version": "1.0.1"})
-        app.config['DATABSE'].get_collection().delete_one({"id": test_id, "resource_version": "1.0.0"})
+        app.config["DATABASE"].get_collection().delete_one({"id": test_id, "resource_version": "1.0.1"})
+        app.config["DATABASE"].get_collection().delete_one({"id": test_id, "resource_version": "1.0.0"})

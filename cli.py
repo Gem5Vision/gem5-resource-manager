@@ -3,7 +3,7 @@ import requests
 from pymongo import MongoClient
 import click
 import click_spinner
-from create_resources_json import ResourceJsonCreator
+from api.create_resources_json import ResourceJsonCreator
 import os
 from dotenv import load_dotenv
 
