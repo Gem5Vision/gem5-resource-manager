@@ -14,6 +14,9 @@ MONGO_URI = os.getenv("MONGO_URI")
 
 
 def get_database():
+    """
+    Retrieves the MongoDB database for gem5-vision.
+    """
     CONNECTION_STRING = MONGO_URI
     client = MongoClient(CONNECTION_STRING)
     return client["gem5-vision"]["versions_test"]
@@ -30,6 +33,11 @@ def cli():
 @cli.command()
 @click.argument("id")
 def getResource(id):
+    """
+    Retrieves a resource from the collection based on the given ID.
+
+    :param id: The ID of the resource to retrieve.
+    """
     with click_spinner.spinner():
         resource = collection.find_one({"id": id})
         print(resource)
@@ -39,6 +47,12 @@ def getResource(id):
 @click.argument("id")
 @click.argument("tags", nargs=-1)
 def addTags(id, tags):
+    """
+    Adds tags to a resource in the collection based on the given ID.
+
+    :param id: The ID of the resource to add tags to.
+    :param tags: The tags to add to the resource. Accepts multiple tags as arguments.
+    """
     with click_spinner.spinner():
         collection.update_one({"id": id}, {"$push": {"tags": {"$each": list(tags)}}})
         print("Added ", tags, " to ", id)
@@ -48,16 +62,32 @@ def addTags(id, tags):
 @click.argument("id")
 @click.argument("tags", nargs=-1)
 def removeTags(id, tags):
+    """
+    Removes tags from a resource in the collection based on the given ID.
+
+    :param id: The ID of the resource to remove tags from.
+    :param tags: The tags to remove from the resource. Accepts multiple tags as arguments.
+    """
     with click_spinner.spinner():
         collection.update_one({"id": id}, {"$pull": {"tags": {"$in": list(tags)}}})
         print("Removed ", tags, " from ", id)
 
 
 @cli.command()
-def updateMongoDB():
+@click.argument("file")
+def updateMongoDB(file):
+    """
+    Updates the MongoDB collection with new data from a JSON file.
+
+    This function reads the data from a JSON file, clears the collection, and inserts the new data into the collection.
+
+    Note: The JSON file should follow the structure expected by the collection.
+
+    :param file: The JSON file to update MongoDB with.
+    """
     with click_spinner.spinner():
         # read from resources.json
-        with open("kiwi.json") as f:
+        with open(file) as f:
             resources = json.load(f)
             """ res = requests.get(
                 'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json')
@@ -75,6 +105,15 @@ def updateMongoDB():
 @click.option("--debug", "-d", is_flag=True)
 @click.option("--source", "-s", default="")
 def createResourcesJson(versions, output, debug, source):
+    """
+    Creates a JSON file containing resource information based on the provided versions.
+
+    :param versions: The versions of the resources to include in the JSON file. Accepts multiple versions as arguments.
+    :param output: The output file name for the JSON file. By default, it is set to "resources.json".
+    :param debug: If specified, enables debug mode for creating the JSON file.
+    :param source: The source (as in "source code") for the resources. This string should provide information about the
+                   source of the resources. By default, it is an empty string.
+    """
     with click_spinner.spinner():
         creator = ResourceJsonCreator(list(versions), debug)
         creator.create_json(source, output)
