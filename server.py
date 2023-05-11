@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
-from api.database import Database
+from api.database import Database, DatabaseConnectionError
 import requests
 
 import urllib.parse
@@ -30,15 +30,16 @@ resources = None
 isMongo = True
 
 app = Flask(__name__)
-
 # The database configuration for the Flask application.
 
 # DATABASE: An instance of the Database class representing the MongoDB connection details and database/collection names.
-app.config["DATABASE"] = Database(
-    "mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority",
-    "gem5-vision",
-    "versions_test",
-)
+# app.config["DATABASE"] = Database(
+#     "mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority",
+#     "gem5-vision",
+#     "versions_test",
+# )
+
+app.config["DATABASE"] = None
 
 # The folder path where uploaded files will be stored.
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -112,7 +113,7 @@ def validate_mongodb():
     database = request.args.get("database")
     alias = request.args.get("alias")
     if uri == "":
-        return {"error": "empty"}, 400
+        return {"error": "Cannot proceed with empty URI"}, 400
     return redirect(
         url_for(
             "editor",
@@ -310,9 +311,13 @@ def editor():
         isMongo = True
         mongo_uri = urllib.parse.unquote(request.args.get("uri"))
         alias = request.args.get("alias")
-        app.config["DATABASE"].change_database(
-            mongo_uri, request.args.get("database"), request.args.get("collection")
-        )
+        try:
+            app.config["DATABASE"] = Database(
+                mongo_uri, request.args.get("database"), request.args.get("collection")
+            )
+        except DatabaseConnectionError as e:
+            return {"error" : f"{e}"}, 400
+        
         return render_template(
             "editor.html",
             editor_type=app.config["DATABASE_TYPES"][0],

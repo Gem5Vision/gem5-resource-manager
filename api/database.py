@@ -1,4 +1,10 @@
 from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure
+
+
+class DatabaseConnectionError(Exception):
+    "Raised for failure to connect to MongoDB client"
+    pass
 
 
 class Database:
@@ -24,6 +30,7 @@ class Database:
             self.mongo_uri, self.database_name, self.collection_name
         )
 
+
     def __get_database(
         self,
         mongo_uri,
@@ -40,8 +47,25 @@ class Database:
         :return: database: MongoDB database object
         """
 
-        client = MongoClient(mongo_uri)
-        return client[database_name][collection_name]
+        try:
+            client = MongoClient(mongo_uri)
+            client.admin.command("ping")
+        except ConnectionFailure:
+            client.close()
+            raise DatabaseConnectionError(
+                "Could not connect to MongoClient with given URI!"
+            )
+        
+        database = client[database_name]
+        if database.name not in client.list_database_names():
+            raise DatabaseConnectionError("Database does not exist!")
+        
+        collection = database[collection_name]
+        if collection.name not in database.list_collection_names():
+            raise DatabaseConnectionError("Collection does not exist!")
+
+        return collection
+
 
     def change_collection(self, collection_name):
         """
@@ -55,6 +79,7 @@ class Database:
         self.collection = self.__get_database(
             self.mongo_uri, self.database_name, self.collection_name
         )
+
 
     def change_database(self, mongo_uri, database_name, collection_name):
         """
@@ -71,6 +96,7 @@ class Database:
         self.collection = self.__get_database(
             self.mongo_uri, self.database_name, self.collection_name
         )
+
 
     def get_collection(self):
         """

@@ -26,7 +26,7 @@ const appendAlert = (errorHeader, id, message, type) => {
 
   setTimeout(function() {
     bootstrap.Alert.getOrCreateInstance(document.getElementById(`${id}`)).close();
-  }, 3000);
+  }, 5000);
 }
 
 function loadPrevSession(event) {
@@ -132,13 +132,15 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   .then((res) => {
     console.log("URI Validation Response Status: " + res.status);
     
-    if (res.status === 400) {
-      appendAlert('Error!', 'emptyURI', 'Cannot Proceed With Empty URI!', 'danger');
+    if (!res.ok) {
+      res.json()
+      .then(error => {
+        appendAlert('Error!', 'mongodbValidationError', `${error.error}`,'danger');
+      });
+      return;
     }
-    
-    if (res.redirected) {
-      window.location = res.url;
-    }
+
+    res.redirected ? window.location = res.url : appendAlert('Error!', 'invalidRes', 'Invalid Server Response!','danger');
   })
 }
 
