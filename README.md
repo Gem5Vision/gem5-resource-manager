@@ -39,7 +39,7 @@ python3 app.py
 
 Then, you can access the server at `http://localhost:5000`.
 
-## Selecting a database
+## Selecting a Database
 
 The Resource Manager currently supports 2 database options: MongoDB and JSON file.
 
