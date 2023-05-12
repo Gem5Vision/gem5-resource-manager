@@ -50,10 +50,22 @@
         <div id="diff-editor" class="editor-sizing"></div>
         <div id="schema-editor"></div>
         <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
-          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)">Update</button>
-          <button type="button" class="btn btn-primary btn-box-shadow" id="add" onclick="showModal(event, add)" disabled>Add</button>
-          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
-          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)" 
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications">
+            Update
+          </button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add" onclick="showModal(event, add)" disabled 
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Insert New Resource">
+            Add
+          </button>
+          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled 
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">
+            Delete
+          </button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled 
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create New Version of Resource">
+            Add New Version
+          </button>
         </div>
       </div>
     </div>

@@ -179,6 +179,11 @@ code {
   border-radius: 3px;
 }
 
+.editorButton-tooltip {
+  --bs-tooltip-bg: #0095AF;
+  --bs-tooltip-opacity: 1;
+}
+
 @media (max-width: 991px) {
   .editorContainer {
     width: 95%;
