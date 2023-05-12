@@ -388,3 +388,13 @@ function closeSchema() {
     schemaButton.onclick = showSchema;
   }
 }
+
+function saveSession() {
+  localStorage.setItem("URL", `${window.location.pathname + window.location.search}`);
+  const savedConfirmation = document.getElementById("saved-confirmation");
+  savedConfirmation.style.opacity = 1;
+
+  setTimeout(function() {
+    savedConfirmation.style.opacity = 0;
+  }, 3000);
+}

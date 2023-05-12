@@ -199,6 +199,11 @@ code {
   border-right-color: transparent;
 }
 
+#saved-confirmation {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
 @media (max-width: 991px) {
   .editorContainer {
     width: 95%;
