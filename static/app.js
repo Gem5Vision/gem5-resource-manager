@@ -362,3 +362,8 @@ window.onload = () => {
     });
   }
 }
+
+function handleReset() {
+  localStorage.removeItem("URL");
+  window.location = '/';
+}

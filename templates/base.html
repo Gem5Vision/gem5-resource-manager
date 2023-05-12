@@ -9,7 +9,7 @@
     {% block head %}{% endblock %}
   </head>
   <body>
-    <nav class="navbar bg-body-tertiary navbar-expand-lg shadow-sm">
+    <nav class="navbar bg-body-tertiary navbar-expand-lg shadow-sm base-nav">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">
           <img src="/static/images/gem5ColorLong.gif" alt="gem5" height="55">
@@ -27,7 +27,7 @@
               <div class="navbar-nav main-text-regular">
                 <a class="nav-link" href="https://gem5vision.github.io/gem5-resources-website/">gem5 Resources</a>
                 <a class="nav-link" href="{{ url_for('help') }}">Help</a>
-                <a class="nav-link" href="/">Reset</a>
+                <a class="nav-link" href="javascript:handleReset()">Reset</a>
               </div>
           </div>
         </div>
