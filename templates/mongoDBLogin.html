@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block main %}
+  <div id="loading-container" class="align-items-center justify-content-center">
+    <span class="main-text-semi me-3">Processing...</span>
+    <div class="spinner-border spinner" role="status">
+      <span class="visually-hidden">Processing...</span>
+    </div>
+  </div>
   <div style="height: inherit;">
     <div class="container-fluid d-flex justify-content-center main-panel-container">
       <div class="d-flex flex-column align-items-center justify-content-around panel-container h-auto">

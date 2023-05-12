@@ -1,3 +1,5 @@
+const loadingContainer = document.getElementById("loading-container");
+const loginButtonGroup = [document.getElementById("saveLogin"), document.getElementById("login")];
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
 const appendAlert = (errorHeader, id, message, type) => {
@@ -122,6 +124,10 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
     localStorage.setItem("URL", url);
   }
 
+  loginButtonGroup.forEach(button => button.classList.add("disabled"));
+
+  loadingContainer.classList.add("d-flex");
+
   fetch(url,
   {
       method: 'GET',
@@ -130,6 +136,10 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
       }
   })
   .then((res) => {
+    loadingContainer.classList.remove("d-flex");
+
+    loginButtonGroup.forEach(button => button.classList.remove("disabled"));
+
     console.log("URI Validation Response Status: " + res.status);
     
     if (!res.ok) {

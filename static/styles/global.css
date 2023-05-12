@@ -18,9 +18,9 @@ html, body {
   --bs-btn-active-bg: #0095AF;
   --bs-btn-active-border-color: #0095AF;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #0095AF;
-  --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #0095AF;
+  --bs-btn-disabled-color: white;
+  --bs-btn-disabled-bg: grey;
+  --bs-btn-disabled-border-color: grey;
   --bs-gradient: none;
 }
 
@@ -182,6 +182,21 @@ code {
 .editorButton-tooltip {
   --bs-tooltip-bg: #0095AF;
   --bs-tooltip-opacity: 1;
+}
+
+#loading-container {
+  display: none;
+  position: absolute;
+  right: 2rem;
+  margin-top: 1rem;
+}
+
+.spinner {
+  --bs-spinner-width: 2.25rem;
+  --bs-spinner-height: 2.25rem;
+  --bs-spinner-border-width: 0.45em;
+  border-color: #0095AF;
+  border-right-color: transparent;
 }
 
 @media (max-width: 991px) {
