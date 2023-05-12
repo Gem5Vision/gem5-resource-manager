@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure
+from pymongo.errors import ConnectionFailure, ConfigurationError
 
 
 class DatabaseConnectionError(Exception):
@@ -55,14 +55,16 @@ class Database:
             raise DatabaseConnectionError(
                 "Could not connect to MongoClient with given URI!"
             )
-        
+        except ConfigurationError as e:
+            raise DatabaseConnectionError(e) 
+
         database = client[database_name]
         if database.name not in client.list_database_names():
-            raise DatabaseConnectionError("Database does not exist!")
+            raise DatabaseConnectionError("Database Does not Exist!")
         
         collection = database[collection_name]
         if collection.name not in database.list_collection_names():
-            raise DatabaseConnectionError("Collection does not exist!")
+            raise DatabaseConnectionError("Collection Does not Exist!")
 
         return collection
 

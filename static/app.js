@@ -7,6 +7,7 @@ const appendAlert = (errorHeader, id, message, type) => {
   alertDiv.classList.add("alert", `alert-${type}`, "alert-dismissible", "fade", "show", "d-flex", "flex-column", "shadow-sm");
   alertDiv.setAttribute("role", "alert");
   alertDiv.setAttribute("id", id);
+  alertDiv.style.maxWidth = "320px";
 
   alertDiv.innerHTML = [
     `  <div class="d-flex align-items-center main-text-semi">`,
