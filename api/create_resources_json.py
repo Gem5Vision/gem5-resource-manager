@@ -113,13 +113,26 @@ class ResourceJsonCreator:
             resource["architecture"] = (
                 resource["name"].split("-")[0].replace("64", "").upper()
             )
+            resources = {}
+            if "resources" in resource:
+                for key in resource["resources"]:
+                    if "disk_image" in key:
+                        resources["diskimage"] = resource["resources"][key]
+                    else:
+                        resources[key] = resource["resources"][key]
+            resource["resources"] = resources
+
             return resource
         if "kernel" in resource["name"]:
             resource["type"] = "kernel"
         elif "bootloader" in resource["name"]:
             resource["type"] = "bootloader"
         elif "benchmark" in resource["documentation"]:
-            resource["type"] = "benchmark"
+            resource["type"] = "diskimage"
+            # if tags not in resource:
+            if "tags" not in resource:
+                resource["tags"] = []
+            resource["tags"].append("benchmark")
             if (
                 "additional_metadata" in resource
                 and "root_partition" in resource["additional_metadata"]
@@ -180,7 +193,8 @@ class ResourceJsonCreator:
                     resource["size"] = self.__getSize(download_url)
                 else:
                     resource["size"] = 0
-                resource["tags"] = []
+                if "tags" not in resource:
+                    resource["tags"] = []
                 new_resources.append(resource)
                 if self.debug:
                     print(len(new_resources))
@@ -190,10 +204,12 @@ class ResourceJsonCreator:
     def __merge_dataframes(self, dfs):
         fin_df = dfs[0]
         for df in dfs[1:]:
-            fin_df = pd.merge(fin_df, df, on="name", how="outer", suffixes=("", "_y"))
+            fin_df = pd.merge(fin_df, df, on="name",
+                              how="outer", suffixes=("", "_y"))
             fin_df = fin_df.loc[:, ~fin_df.columns.str.endswith("_y")]
         keys = list(self.link_map.keys())
-        fin_df[keys[0]] = fin_df[keys].apply(lambda x: list(x.dropna()), axis=1)
+        fin_df[keys[0]] = fin_df[keys].apply(
+            lambda x: list(x.dropna()), axis=1)
         fin_df["versions"] = fin_df[keys[0]]
         fin_df.drop(keys, axis=1, inplace=True)
         fin_df = fin_df.dropna(axis=1, how="all")
@@ -218,7 +234,8 @@ class ResourceJsonCreator:
         for index, resource in resources.iterrows():
             id = resource["id"]
             # search for files in the folder tree that contain the 'id' value
-            matching_files = self.__search_folder(source + "/configs", '"' + id + '"')
+            matching_files = self.__search_folder(
+                source + "/configs", '"' + id + '"')
             filenames = [os.path.basename(path) for path in matching_files]
             tested_files = []
             for file in filenames:
@@ -227,8 +244,10 @@ class ResourceJsonCreator:
                     if len(self.__search_folder(source + "/tests/gem5", file)) > 0
                     else False
                 )
-            matching_files = [file.replace(source + "/", "") for file in matching_files]
-            matching_files = [self.base_url + "/" + file for file in matching_files]
+            matching_files = [file.replace(source + "/", "")
+                              for file in matching_files]
+            matching_files = [self.base_url + "/" +
+                              file for file in matching_files]
             if self.debug and len(matching_files) > 0:
                 print("Files containing id {}:".format(id))
                 print(matching_files)
@@ -238,7 +257,8 @@ class ResourceJsonCreator:
             # Loop through matching_files and tested_files, and
             # create a new JSON object for each element
             for i in range(len(matching_files)):
-                json_obj = {"example": matching_files[i], "tested": tested_files[i]}
+                json_obj = {
+                    "example": matching_files[i], "tested": tested_files[i]}
                 code_examples.append(json_obj)
             json_result = json.dumps(code_examples)
 
@@ -254,7 +274,8 @@ class ResourceJsonCreator:
         if self.debug:
             print(categories)
 
-        archs = resources[resources["architecture"].notnull()]["architecture"].unique()
+        archs = resources[resources["architecture"].notnull()
+                          ]["architecture"].unique()
         if self.debug:
             print(archs)
             print(resources[resources["type"] == "resource"]["name"])
@@ -262,7 +283,8 @@ class ResourceJsonCreator:
         resources.rename(columns={"name": "id"}, inplace=True)
         resources.rename(columns={"type": "category"}, inplace=True)
         # resources.rename(columns={"url": "download_url"}, inplace=True)
-        resources.rename(columns={"documentation": "description"}, inplace=True)
+        resources.rename(
+            columns={"documentation": "description"}, inplace=True)
         # resources["name"] = resources["id"].str.replace("-", " ")
 
         # initialize code_examples to empty list
@@ -305,7 +327,8 @@ class ResourceJsonCreator:
                             tags = content.split("tags:\n")[1]
                             tags = tags.split(":")[0]
                             tags = tags.split("\n")[:-1]
-                            tags = [tag.strip().replace("- ", "") for tag in tags]
+                            tags = [tag.strip().replace("- ", "")
+                                    for tag in tags]
                             if tags == [""] or tags == None:
                                 tags = []
                             if resource["tags"] is None:
@@ -324,7 +347,8 @@ class ResourceJsonCreator:
                             author = [a.strip() for a in author]
                             resources.at[index, "author"] = author
                         if "license:" in content:
-                            license = content.split("license:")[1].split("\n")[0]
+                            license = content.split("license:")[
+                                1].split("\n")[0]
                             resources.at[index, "license"] = license
                     except:
                         pass
@@ -345,10 +369,18 @@ class ResourceJsonCreator:
         # replace nan with None
         resources = resources.where((pd.notnull(resources)), None)
         resources = resources.to_dict("records")
-        # avoid dict changing size during iteration
+        # remove NaN values
         for resource in resources:
+            if "additional_metadata" in resource and resource["additional_metadata"] is not None:
+                for k, v in resource["additional_metadata"].items():
+                    resource[k] = v
+                del resource["additional_metadata"]
+            """ if "additional_params" in resource and resource["additional_params"] is not None:
+                for k, v in resource["additional_params"].items():
+                    resource[k] = v
+                del resource["additional_params"] """
             for key in list(resource.keys()):
-                if resource[key] is None:
+                if resource[key] is None or str(resource[key]) == "nan":
                     resource.pop(key)
         with open(output, "w") as f:
             json.dump(resources, f, indent=4)

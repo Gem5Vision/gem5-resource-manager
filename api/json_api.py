@@ -34,7 +34,7 @@ def findResource(resources, query):
                 return json_util.dumps([resource])
     if not found_resources:
         return {"exists": False}
-    return json_util.dumps(
+    return json.dumps(
         [
             max(
                 found_resources,
@@ -86,7 +86,6 @@ def updateResource(resources, query, file_path):
     :param file_path: The file path to save the updated resources.
     :return: A dictionary indicating the status of the update.
     """
-    print("before update:\n", resources)
 
     for resource in resources:
         if (
@@ -96,7 +95,6 @@ def updateResource(resources, query, file_path):
             resources.remove(resource)
             resources.append(query["resource"])
 
-    print("after update:\n", resources)
     writeToFile(file_path, resources)
     return {"status": "Updated"}
 
@@ -134,9 +132,7 @@ def insertResource(resources, query, file_path):
     :param file_path: The file path to write the updated resources to.
     :return: A dictionary indicating the status of the insertion.
     """
-    print("before insert:\n", resources)
     resources.append(query)
-    print("after insert:\n", resources)
     writeToFile(file_path, resources)
     return {"status": "Inserted"}
 

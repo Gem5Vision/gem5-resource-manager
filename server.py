@@ -27,7 +27,7 @@ TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
 ALLOWED_EXTENSIONS = {"json"}
 
 resources = None
-isMongo = True
+isMongo = False
 
 app = Flask(__name__)
 # The database configuration for the Flask application.
@@ -152,14 +152,16 @@ def validate_json_get():
     filename = secure_filename(request.args.get("filename"))
     app.config["FILEPATH"] = Path(app.config["UPLOAD_FOLDER"]) / filename
     if (Path(app.config["UPLOAD_FOLDER"]) / filename).is_file():
-        app.config["TEMP_FILEPATH"] = Path(app.config["TEMP_UPLOAD_FOLDER"]) / filename
+        app.config["TEMP_FILEPATH"] = Path(
+            app.config["TEMP_UPLOAD_FOLDER"]) / filename
         with Path(app.config["TEMP_FILEPATH"]).open("wb") as f:
             f.write(response.content)
         return {"conflict": "existing file in server"}, 409
     with Path(app.config["FILEPATH"]).open("wb") as f:
         f.write(response.content)
     return redirect(
-        url_for("editor", type=app.config["DATABASE_TYPES"][1], filename=filename), 302
+        url_for(
+            "editor", type=app.config["DATABASE_TYPES"][1], filename=filename), 302
     )
 
 
@@ -173,7 +175,8 @@ def get_existing_files():
 
     :return: A JSON response with the list of existing files.
     """
-    files = [f.name for f in Path(app.config["UPLOAD_FOLDER"]).iterdir() if f.is_file()]
+    files = [f.name for f in Path(
+        app.config["UPLOAD_FOLDER"]).iterdir() if f.is_file()]
     return json.dumps(files)
 
 
@@ -186,7 +189,8 @@ def validate_json_post():
     filename = secure_filename(file.filename)
     app.config["FILEPATH"] = Path(app.config["UPLOAD_FOLDER"]) / filename
     if Path(app.config["FILEPATH"]).is_file():
-        app.config["TEMP_FILEPATH"] = Path(app.config["TEMP_UPLOAD_FOLDER"]) / filename
+        app.config["TEMP_FILEPATH"] = Path(
+            app.config["TEMP_UPLOAD_FOLDER"]) / filename
         file.save(app.config["TEMP_FILEPATH"])
         return {"conflict": "exisiting file in server"}, 409
     file.save(app.config["FILEPATH"])
@@ -238,7 +242,8 @@ def resolve_conflict():
     global resources
     filename = None
     resolution = request.args.get("resolution")
-    resolution_options = ["clearInput", "openExisting", "overwrite", "newFilename"]
+    resolution_options = ["clearInput",
+                          "openExisting", "overwrite", "newFilename"]
     if not resolution:
         return {"error": "empty"}, 400
     if resolution not in resolution_options:
@@ -266,7 +271,8 @@ def resolve_conflict():
     with Path(app.config["FILEPATH"]).open("r") as f:
         resources = json.load(f)
     return redirect(
-        url_for("editor", type=app.config["DATABASE_TYPES"][1], filename=filename), 302
+        url_for(
+            "editor", type=app.config["DATABASE_TYPES"][1], filename=filename), 302
     )
 
 
@@ -313,11 +319,12 @@ def editor():
         alias = request.args.get("alias")
         try:
             app.config["DATABASE"] = Database(
-                mongo_uri, request.args.get("database"), request.args.get("collection")
+                mongo_uri, request.args.get(
+                    "database"), request.args.get("collection")
             )
         except DatabaseConnectionError as e:
-            return {"error" : f"{e}"}, 400
-        
+            return {"error": f"{e}"}, 400
+
         return render_template(
             "editor.html",
             editor_type=app.config["DATABASE_TYPES"][0],
@@ -381,7 +388,6 @@ def find():
 
     :return: A JSON response containing the result of the find operation.
     """
-    # print("resource before find:\n", resources)
     if isMongo:
         return mongo_db_api.findResource(app.config["DATABASE"], request.json)
     return json_api.findResource(resources, request.json)
@@ -483,7 +489,8 @@ def getFields():
 
     :return: A JSON response containing the `empty_object` with the required fields for the specified category.
     """
-    empty_object = {"category": request.json["category"], "id": request.json["id"]}
+    empty_object = {
+        "category": request.json["category"], "id": request.json["id"]}
     validator = jsonschema.Draft7Validator(schema)
     errors = list(validator.iter_errors(empty_object))
     for error in errors:
@@ -547,7 +554,6 @@ def insert():
 
     :return: A JSON response containing the result of the insert operation.
     """
-    # print("resource before insert:\n", resources)
     if isMongo:
         return mongo_db_api.insertResource(app.config["DATABASE"], request.json)
     return json_api.insertResource(resources, request.json, app.config["FILEPATH"])
