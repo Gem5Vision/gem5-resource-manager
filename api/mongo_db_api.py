@@ -66,7 +66,7 @@ def getVersions(database, json):
         .find({"id": json["id"]}, {"resource_version": 1, "_id": 0})
         .sort("resource_version", -1)
     )
-    json_resource = json_util.dumps(versions)
+    json_resource = json.dumps(versions)
     return json_resource
 
 
