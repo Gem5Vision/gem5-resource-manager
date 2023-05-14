@@ -56,23 +56,41 @@ def index():
     """
     return render_template("index.html")
 
-
-@app.route("/login/<string:database_type>")
-def login(database_type):
+@app.route("/login/mongodb")
+def login_mongodb():
     """
-    Renders the login HTML template based on the provided database type.
+    Renders the MongoDB login HTML template.
 
-    :param database_type: The type of the database for login. Must be one of the supported database types defined in the
-                          Flask application configuration.
-    :return: The rendered login HTML template corresponding to the database type. Returns a 404 error template if the
-             database type is not supported.
+    :return: The rendered MongoDB login HTML template.
     """
-    if database_type not in DATABASE_TYPES:
-        return render_template("404.html")
-    if database_type == DATABASE_TYPES[0]:
-        return render_template("mongoDBLogin.html")
-    if database_type == DATABASE_TYPES[1]:
-        return render_template("jsonLogin.html")
+    return render_template("mongoDBLogin.html")
+
+@app.route("/login/json")
+def login_json():
+    """
+    Renders the JSON login HTML template.
+
+    :return: The rendered JSON login HTML template.
+    """
+    return render_template("jsonLogin.html")
+
+
+# @app.route("/login/<string:database_type>")
+# def login(database_type):
+#     """
+#     Renders the login HTML template based on the provided database type.
+
+#     :param database_type: The type of the database for login. Must be one of the supported database types defined in the
+#                           Flask application configuration.
+#     :return: The rendered login HTML template corresponding to the database type. Returns a 404 error template if the
+#              database type is not supported.
+#     """
+#     if database_type not in DATABASE_TYPES:
+#         return render_template("404.html")
+#     if database_type == DATABASE_TYPES[0]:
+#         return render_template("mongoDBLogin.html")
+#     if database_type == DATABASE_TYPES[1]:
+#         return render_template("jsonLogin.html")
 
 
 @app.route("/validateMongoDB", methods=["POST"])
