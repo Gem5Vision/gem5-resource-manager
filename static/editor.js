@@ -67,6 +67,34 @@ require(["vs/editor/editor.main"], () => {
 let editorType = document.getElementById('editor-type');
 editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB" : editorType.textContent.toUpperCase();
 
+const loadingContainer = document.getElementById("loading-container");
+
+function toggleInteractables(isBlocking) {
+  const editorGroupIds = [];
+  
+  const interactiveElems = document.querySelectorAll('button, input, select');
+  document.querySelectorAll(".editorButtonGroup button").forEach(btn => {
+    editorGroupIds.push(btn.id)
+  });
+
+  if (isBlocking) {
+    diffEditor.updateOptions({ readOnly: true });
+    loadingContainer.classList.add("d-flex");
+    interactiveElems.forEach(elems => {
+      elems.disabled = true;
+    });
+  } else {
+    setTimeout(() => {
+    diffEditor.updateOptions({ readOnly: false })
+    loadingContainer.classList.remove("d-flex");
+      interactiveElems.forEach(elems => {
+        !editorGroupIds.includes(elems.id) ? elems.disabled = false : null;
+      });
+    }, 250);
+  }
+
+}
+
 function checkErrors() {
   let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri });
   if (errors.length > 0) {
@@ -264,6 +292,9 @@ function find(e) {
   }
 
   closeSchema();
+
+  toggleInteractables(true);
+
   fetch("/find", {
     method: "POST",
     headers: {
@@ -277,6 +308,9 @@ function find(e) {
   })
     .then((res) => res.json())
     .then((data) => {
+
+      toggleInteractables(false);
+
       if (data["exists"] == false) {
         fetch("/keys", {
           method: "POST",

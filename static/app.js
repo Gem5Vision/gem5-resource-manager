@@ -33,6 +33,23 @@ const appendAlert = (errorHeader, id, message, type) => {
   }, 5000);
 }
 
+function toggleInteractables(isBlocking) {
+  const interactiveElems = document.querySelectorAll('button, input, select');
+  if (isBlocking) {
+    loadingContainer.classList.add("d-flex");
+    interactiveElems.forEach(elems => {
+      elems.disabled = true;
+    });
+  } else {
+    setTimeout(() => {
+      loadingContainer.classList.remove("d-flex");
+      interactiveElems.forEach(elems => {
+        elems.disabled = false;
+      });
+    }, 250);
+  }
+}
+
 function loadPrevSession(event) {
   event.preventDefault();
   const prevSession = localStorage.getItem("URL");
@@ -127,9 +144,11 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   // }
 
   // loginButtonGroup.forEach(button => button.classList.add("disabled"));
-  loginButton.classList.add("disabled");
+  // loginButton.classList.add("disabled");
 
-  loadingContainer.classList.add("d-flex");
+  // loadingContainer.classList.add("d-flex");
+
+  toggleInteractables(true);
 
   /* fetch(url,
   {
@@ -153,10 +172,12 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
       })
     })
     .then((res) => {
-      loadingContainer.classList.remove("d-flex");
+      // loadingContainer.classList.remove("d-flex");
 
       // loginButtonGroup.forEach(button => button.classList.remove("disabled"));
-      loginButton.classList.remove("disabled");
+      // loginButton.classList.remove("disabled");
+
+      toggleInteractables(false);
 
       console.log("URI Validation Response Status: " + res.status);
 
@@ -180,6 +201,9 @@ function handleJSONLogin(event, saveStatus) {
   } else if (activeTab === "existing-tab") {
     const filename = document.getElementById("existing-dropdown").value;
     if (filename !== "No Existing Files") {
+
+      toggleInteractables(true);
+
       fetch(`/existingJSON?filename=${filename}`,
         {
           method: 'GET',
@@ -189,6 +213,9 @@ function handleJSONLogin(event, saveStatus) {
         })
         .then((res) => {
           console.log("Existing JSON Response Status: " + res.status);
+
+          toggleInteractables(false);
+
           if (res.status !== 200) {
             appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
           }
@@ -228,11 +255,15 @@ function handleRemoteJSON() {
 
   const flask_url = `/validateJSON?${params.toString()}`;
 
+  toggleInteractables(true);
+
   fetch(flask_url, {
     method: 'GET',
   })
     .then((res) => {
       console.log("JSON Remote Response Status: " + res.status);
+
+      toggleInteractables(false);
 
       if (res.status === 400) {
         appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
@@ -267,12 +298,17 @@ function handleUploadJSON() {
   form.append("file", file);
 
   const flask_url = "/validateJSON?isMongo=false";
+
+  toggleInteractables(true);
+
   fetch(flask_url, {
     method: 'POST',
     body: form
   })
     .then((res) => {
       console.log("JSON Upload Response Status: " + res.status);
+
+      toggleInteractables(false);
 
       if (res.status === 400) {
         appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
@@ -352,6 +388,8 @@ function handleConflictResolution(resolution, filename) {
   params.append('filename', filename !== "" ? filename + ".json" : "");
 
   const flask_url = `/resolveConflict?${params.toString()}`;
+  
+  toggleInteractables(true);
 
   fetch(flask_url, {
     method: 'GET',
@@ -361,6 +399,8 @@ function handleConflictResolution(resolution, filename) {
   })
     .then((res) => {
       console.log("JSON Upload Response Status: " + res.status);
+
+      toggleInteractables(false);
 
       if (res.status === 204) {
         console.log("Input Cleared, Cached File Deleted, Resources Unset");
