@@ -51,7 +51,7 @@ function toggleInteractables(isBlocking) {
 
 function loadPrevSession(event) {
   event.preventDefault();
-  const prevSession = localStorage.getItem("URL");
+  const prevSession = localStorage.getItem("savedSession");
   if (!prevSession) {
     appendAlert('Error!', 'prevSession', 'No Saved Session!', 'danger');
   } else {
@@ -59,16 +59,16 @@ function loadPrevSession(event) {
   }
 }
 
-function handleMongoDBLogin(event, saveStatus) {
+function handleMongoDBLogin(event) {
   event.preventDefault();
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
 
-  activeTab === "enter-uri-tab" ? handleEnteredURI(saveStatus) : handleGenerateURI(saveStatus);
+  activeTab === "enter-uri-tab" ? handleEnteredURI() : handleGenerateURI();
 
   return;
 }
 
-function handleEnteredURI(saveStatus) {
+function handleEnteredURI() {
   const uri = document.getElementById('uri').value;
   const collection = document.getElementById('collection').value;
   const database = document.getElementById('database').value;
@@ -87,10 +87,10 @@ function handleEnteredURI(saveStatus) {
     return;
   }
 
-  handleMongoURLFetch(saveStatus, uri, collection, database, alias);
+  handleMongoURLFetch(uri, collection, database, alias);
 }
 
-function handleGenerateURI(saveStatus) {
+function handleGenerateURI() {
   const connection = document.getElementById('connection').checked;
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -125,10 +125,10 @@ function handleGenerateURI(saveStatus) {
     generatedURI += `/?${options.join("&")}`;
   }
 
-  handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
+  handleMongoURLFetch(generatedURI, collection, database, alias);
 }
 
-function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
+function handleMongoURLFetch(uri, collection, database, alias) {
   toggleInteractables(true);
 
   fetch("/validateMongoDB",
@@ -161,7 +161,7 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
     })
 }
 
-function handleJSONLogin(event, saveStatus) {
+function handleJSONLogin(event) {
   event.preventDefault();
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
   if (activeTab === "remote-tab") {

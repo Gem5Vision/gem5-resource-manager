@@ -439,7 +439,7 @@ function closeSchema() {
 }
 
 function saveSession() {
-  localStorage.setItem("URL", `${window.location.pathname + window.location.search}`);
+  localStorage.setItem("savedSession", `${window.location.pathname + window.location.search}`);
   const savedConfirmation = document.getElementById("saved-confirmation");
   savedConfirmation.style.opacity = 1;
 
