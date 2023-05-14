@@ -141,7 +141,7 @@ function update(e) {
     });
 }
 
-function add(e) {
+function addNewResource(e) {
   e.preventDefault();
   if (checkErrors()) {
     return;
@@ -329,10 +329,11 @@ function find(e) {
             data["category"] = document.getElementById("category").value;
             originalModel.setValue(JSON.stringify(data, null, 4));
             modifiedModel.setValue(JSON.stringify(data, null, 4));
-            document.getElementById("update").disabled = true;
-            document.getElementById("add").disabled = false;
+            
+            document.getElementById("add_new_resource").disabled = false;
             document.getElementById("add_version").disabled = true;
-            document.getElementById("delete").disabled = true;
+            document.getElementById("delete").disabled = true;            
+            document.getElementById("update").disabled = true;
           });
       } else {
         data = data[0];
@@ -340,13 +341,15 @@ function find(e) {
         delete data._id;
         originalModel.setValue(JSON.stringify(data, null, 4));
         modifiedModel.setValue(JSON.stringify(data, null, 4));
-        document.getElementById("update").disabled = false;
-        document.getElementById("add").disabled = true;
-        document.getElementById("delete").disabled = false;
-        document.getElementById("add_version").disabled = false;
-        document.getElementById("category").value = data.category;
+        
         document.getElementById("version-dropdown").value =
           data.resource_version;
+        document.getElementById("category").value = data.category;
+
+        document.getElementById("add_new_resource").disabled = true;
+        document.getElementById("add_version").disabled = false;
+        document.getElementById("delete").disabled = false;
+        document.getElementById("update").disabled = false;
       }
     });
 }
