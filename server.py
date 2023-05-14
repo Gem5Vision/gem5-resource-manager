@@ -56,6 +56,7 @@ def index():
     """
     return render_template("index.html")
 
+
 @app.route("/login/mongodb")
 def login_mongodb():
     """
@@ -64,6 +65,7 @@ def login_mongodb():
     :return: The rendered MongoDB login HTML template.
     """
     return render_template("mongoDBLogin.html")
+
 
 @app.route("/login/json")
 def login_json():
@@ -177,6 +179,37 @@ def validate_json_get():
     )
 
 
+@ app.route("/validateJSON", methods=["POST"])
+def validate_json_post():
+    global resources
+    temp_path = None
+    if "file" not in request.files:
+        return {"error": "empty"}, 400
+    file = request.files["file"]
+    filename = secure_filename(file.filename)
+    path = Path(UPLOAD_FOLDER) / filename
+    if Path(path).is_file():
+        temp_path = Path(
+            TEMP_UPLOAD_FOLDER) / filename
+        file.save(temp_path)
+        return {"conflict": "exisiting file in server"}, 409
+    file.save(path)
+    global databases
+    if filename in databases:
+        return {"error": "alias already exists"}, 409
+    try:
+        databases[filename] = JSONClient(filename)
+    except Exception as e:
+        return {"error": str(e)}, 400
+    return redirect(
+        url_for(
+            "editor",
+            type=DATABASE_TYPES[1],
+            filename=filename,
+            alias=filename
+        ), 302)
+
+
 @app.route("/existingJSON", methods=["GET"])
 def existing_json():
     filename = request.args.get("filename")
@@ -212,37 +245,6 @@ def get_existing_files():
     return json.dumps(files)
 
 
-@ app.route("/validateJSON", methods=["POST"])
-def validate_json_post():
-    global resources
-    temp_path = None
-    if "file" not in request.files:
-        return {"error": "empty"}, 400
-    file = request.files["file"]
-    filename = secure_filename(file.filename)
-    path = Path(UPLOAD_FOLDER) / filename
-    if Path(path).is_file():
-        temp_path = Path(
-            TEMP_UPLOAD_FOLDER) / filename
-        file.save(temp_path)
-        return {"conflict": "exisiting file in server"}, 409
-    file.save(path)
-    global databases
-    if filename in databases:
-        return {"error": "alias already exists"}, 409
-    try:
-        databases[filename] = JSONClient(filename)
-    except Exception as e:
-        return {"error": str(e)}, 400
-    return redirect(
-        url_for(
-            "editor",
-            type=DATABASE_TYPES[1],
-            filename=filename,
-            alias=filename
-        ), 302)
-
-
 @app.route("/resolveConflict", methods=["GET"])
 def resolve_conflict():
     filename = request.args.get("filename")
@@ -262,7 +264,6 @@ def resolve_conflict():
         return {"success": "input cleared"}, 204
     elif resolution == resolution_options[3]:
         filename = secure_filename(request.args.get("filename"))
-        path = Path(UPLOAD_FOLDER) / filename
     if Path(temp_path).is_file():
         Path(temp_path).unlink()
     global databases
@@ -319,7 +320,7 @@ def editor():
     """ if not (Path(UPLOAD_FOLDER) / alias).is_file():
         return render_template("404.html"), 404 """
 
-    database_type = "mongo"
+    database_type = ""
     if isinstance(databases[alias], JSONClient):
         database_type = "json"
     elif isinstance(databases[alias], MongoDBClient):
@@ -343,14 +344,6 @@ def help():
     """
     with Path("static/help.md").open("r") as f:
         return render_template("help.html", rendered_html=markdown.markdown(f.read()))
-
-
-@app.route("/toggleIsMongo", methods=["POST"])
-def toggleIsMongo():
-    # input is a json object with a single key "isMongo"
-    # {"isMongo": true/false}
-    isMongo = request.json["isMongo"]
-    return {"isMongo": isMongo}
 
 
 @app.route("/find", methods=["POST"])
