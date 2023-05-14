@@ -10,7 +10,7 @@
     <div class="row" style="height: inherit;">
       <div id="databaseActions" class="col-lg-3 offcanvas-lg offcanvas-start shadow-sm overflow-y-auto" style="background-color: #f8f9fa!important; height: initial;">
         <div class="d-flex flex-row justify-content-between mt-2">
-          <h5 class="secondary-text-bold" style="color: #0095AF;">Database Actions</h5>
+          <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Database Actions</h5>
           <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#databaseActions" aria-label="Close"></button>
         </div>
         <form class="form-outline d-flex flex-column mt-3">
@@ -23,20 +23,20 @@
           <select id="category" class="form-select mt-1 input-shadow" aria-label="Default select example"></select>
           <input class="btn btn-outline-primary main-text-regular align-self-end btn-box-shadow mt-3" type="submit" onclick="find(event)" value="Find" />
         </form>
-        <div class="mt-3">
-          <!-- <div class="main-text-regular">View Schema</div> -->
-          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
-        </div>
-        <div class="mt-3">
-          <!-- <div class="main-text-regular">Save Session</div> -->
-          <div class="d-flex align-items-center">
-            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="save-session" onclick="saveSession()">Save Session</button>
-            <span id="saved-confirmation" class="ms-3 main-text-semi" style="color: #0095AF;">&#x2713; Saved!</span>
+        <div class="btn-group-vertical gap-3 mt-3 mb-3" role="group" aria-label="Other Database Actions">
+          <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Other Actions</h5>
+          <div>
+            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
           </div>
-        </div>
-        <div class="mt-3">
-          <!-- <div class="main-text-regular">Change Instance</div> -->
-          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="update-instance">Logout</button>
+          <div>
+            <div class="d-flex align-items-center">
+              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="save-session" onclick="saveSession()">Save Session</button>
+              <span id="saved-confirmation" class="ms-3 main-text-semi" style="color: #0095AF;">&#x2713; Saved!</span>
+            </div>
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="update-instance">Logout</button>
+          </div>
         </div>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
@@ -52,10 +52,22 @@
         <div id="diff-editor" class="editor-sizing"></div>
         <div id="schema-editor"></div>
         <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
-          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications">Update</button>
-          <button type="button" class="btn btn-primary btn-box-shadow" id="add" onclick="showModal(event, add)" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Insert New Resource">Add</button>
-          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">Delete</button>
-          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create New Version of Resource">Add New Version</button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add_new_resource" onclick="showModal(event, addNewResource)" disabled 
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Add a New Resource to Database">
+            Add New Resource
+          </button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled 
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create a New Version of Resource">
+            Add New Version
+          </button>
+          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">
+            Delete
+          </button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)"
+            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications">
+            Update
+          </button>
         </div>
       </div>
     </div>

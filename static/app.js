@@ -1,5 +1,4 @@
 const loadingContainer = document.getElementById("loading-container");
-// const loginButtonGroup = [document.getElementById("saveLogin"), document.getElementById("login")];
 const loginButton = document.getElementById("login");
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
@@ -33,9 +32,26 @@ const appendAlert = (errorHeader, id, message, type) => {
   }, 5000);
 }
 
+function toggleInteractables(isBlocking) {
+  const interactiveElems = document.querySelectorAll('button, input, select');
+  if (isBlocking) {
+    loadingContainer.classList.add("d-flex");
+    interactiveElems.forEach(elems => {
+      elems.disabled = true;
+    });
+  } else {
+    setTimeout(() => {
+      loadingContainer.classList.remove("d-flex");
+      interactiveElems.forEach(elems => {
+        elems.disabled = false;
+      });
+    }, 250);
+  }
+}
+
 function loadPrevSession(event) {
   event.preventDefault();
-  const prevSession = localStorage.getItem("URL");
+  const prevSession = localStorage.getItem("savedSession");
   if (!prevSession) {
     appendAlert('Error!', 'prevSession', 'No Saved Session!', 'danger');
   } else {
@@ -43,16 +59,16 @@ function loadPrevSession(event) {
   }
 }
 
-function handleMongoDBLogin(event, saveStatus) {
+function handleMongoDBLogin(event) {
   event.preventDefault();
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
 
-  activeTab === "enter-uri-tab" ? handleEnteredURI(saveStatus) : handleGenerateURI(saveStatus);
+  activeTab === "enter-uri-tab" ? handleEnteredURI() : handleGenerateURI();
 
   return;
 }
 
-function handleEnteredURI(saveStatus) {
+function handleEnteredURI() {
   const uri = document.getElementById('uri').value;
   const collection = document.getElementById('collection').value;
   const database = document.getElementById('database').value;
@@ -71,10 +87,10 @@ function handleEnteredURI(saveStatus) {
     return;
   }
 
-  handleMongoURLFetch(saveStatus, uri, collection, database, alias);
+  handleMongoURLFetch(uri, collection, database, alias);
 }
 
-function handleGenerateURI(saveStatus) {
+function handleGenerateURI() {
   const connection = document.getElementById('connection').checked;
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -109,35 +125,12 @@ function handleGenerateURI(saveStatus) {
     generatedURI += `/?${options.join("&")}`;
   }
 
-  handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
+  handleMongoURLFetch(generatedURI, collection, database, alias);
 }
 
-function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
-  const params = new URLSearchParams();
-  params.append('isMongo', 'true');
-  params.append('uri', encodeURIComponent(uri));
-  params.append('collection', collection);
-  params.append('database', database);
-  params.append('alias', alias);
+function handleMongoURLFetch(uri, collection, database, alias) {
+  toggleInteractables(true);
 
-  // const url = `/validateMongoDB?${params.toString()}`;
-
-  // if (saveStatus) {
-  //   localStorage.setItem("URL", url);
-  // }
-
-  // loginButtonGroup.forEach(button => button.classList.add("disabled"));
-  loginButton.classList.add("disabled");
-
-  loadingContainer.classList.add("d-flex");
-
-  /* fetch(url,
-  {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json'
-      }
-  }) */
   fetch("/validateMongoDB",
     {
       method: 'POST',
@@ -153,12 +146,8 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
       })
     })
     .then((res) => {
-      loadingContainer.classList.remove("d-flex");
-
-      // loginButtonGroup.forEach(button => button.classList.remove("disabled"));
-      loginButton.classList.remove("disabled");
-
       console.log("URI Validation Response Status: " + res.status);
+      toggleInteractables(false);
 
       if (!res.ok) {
         res.json()
@@ -172,7 +161,7 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
     })
 }
 
-function handleJSONLogin(event, saveStatus) {
+function handleJSONLogin(event) {
   event.preventDefault();
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
   if (activeTab === "remote-tab") {
@@ -180,6 +169,8 @@ function handleJSONLogin(event, saveStatus) {
   } else if (activeTab === "existing-tab") {
     const filename = document.getElementById("existing-dropdown").value;
     if (filename !== "No Existing Files") {
+      toggleInteractables(true);
+
       fetch(`/existingJSON?filename=${filename}`,
         {
           method: 'GET',
@@ -189,6 +180,8 @@ function handleJSONLogin(event, saveStatus) {
         })
         .then((res) => {
           console.log("Existing JSON Response Status: " + res.status);
+          toggleInteractables(false);
+
           if (res.status !== 200) {
             appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
           }
@@ -196,7 +189,6 @@ function handleJSONLogin(event, saveStatus) {
             window.location = res.url;
           }
         })
-      // window.location = `/editor?type=json&filename=${filename}`
     }
   } else {
     handleUploadJSON();
@@ -228,11 +220,14 @@ function handleRemoteJSON() {
 
   const flask_url = `/validateJSON?${params.toString()}`;
 
+  toggleInteractables(true);
+
   fetch(flask_url, {
     method: 'GET',
   })
     .then((res) => {
       console.log("JSON Remote Response Status: " + res.status);
+      toggleInteractables(false);
 
       if (res.status === 400) {
         appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
@@ -267,12 +262,16 @@ function handleUploadJSON() {
   form.append("file", file);
 
   const flask_url = "/validateJSON?isMongo=false";
+
+  toggleInteractables(true);
+
   fetch(flask_url, {
     method: 'POST',
     body: form
   })
     .then((res) => {
       console.log("JSON Upload Response Status: " + res.status);
+      toggleInteractables(false);
 
       if (res.status === 400) {
         appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
@@ -352,6 +351,8 @@ function handleConflictResolution(resolution, filename) {
   params.append('filename', filename !== "" ? filename + ".json" : "");
 
   const flask_url = `/resolveConflict?${params.toString()}`;
+  
+  toggleInteractables(true);
 
   fetch(flask_url, {
     method: 'GET',
@@ -361,6 +362,7 @@ function handleConflictResolution(resolution, filename) {
   })
     .then((res) => {
       console.log("JSON Upload Response Status: " + res.status);
+      toggleInteractables(false);
 
       if (res.status === 204) {
         console.log("Input Cleared, Cached File Deleted, Resources Unset");
