@@ -1,5 +1,4 @@
 const loadingContainer = document.getElementById("loading-container");
-// const loginButtonGroup = [document.getElementById("saveLogin"), document.getElementById("login")];
 const loginButton = document.getElementById("login");
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
@@ -130,33 +129,8 @@ function handleGenerateURI(saveStatus) {
 }
 
 function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
-  const params = new URLSearchParams();
-  params.append('isMongo', 'true');
-  params.append('uri', encodeURIComponent(uri));
-  params.append('collection', collection);
-  params.append('database', database);
-  params.append('alias', alias);
-
-  // const url = `/validateMongoDB?${params.toString()}`;
-
-  // if (saveStatus) {
-  //   localStorage.setItem("URL", url);
-  // }
-
-  // loginButtonGroup.forEach(button => button.classList.add("disabled"));
-  // loginButton.classList.add("disabled");
-
-  // loadingContainer.classList.add("d-flex");
-
   toggleInteractables(true);
 
-  /* fetch(url,
-  {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json'
-      }
-  }) */
   fetch("/validateMongoDB",
     {
       method: 'POST',
@@ -172,14 +146,8 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
       })
     })
     .then((res) => {
-      // loadingContainer.classList.remove("d-flex");
-
-      // loginButtonGroup.forEach(button => button.classList.remove("disabled"));
-      // loginButton.classList.remove("disabled");
-
-      toggleInteractables(false);
-
       console.log("URI Validation Response Status: " + res.status);
+      toggleInteractables(false);
 
       if (!res.ok) {
         res.json()
@@ -201,7 +169,6 @@ function handleJSONLogin(event, saveStatus) {
   } else if (activeTab === "existing-tab") {
     const filename = document.getElementById("existing-dropdown").value;
     if (filename !== "No Existing Files") {
-
       toggleInteractables(true);
 
       fetch(`/existingJSON?filename=${filename}`,
@@ -213,7 +180,6 @@ function handleJSONLogin(event, saveStatus) {
         })
         .then((res) => {
           console.log("Existing JSON Response Status: " + res.status);
-
           toggleInteractables(false);
 
           if (res.status !== 200) {
@@ -223,7 +189,6 @@ function handleJSONLogin(event, saveStatus) {
             window.location = res.url;
           }
         })
-      // window.location = `/editor?type=json&filename=${filename}`
     }
   } else {
     handleUploadJSON();
@@ -262,7 +227,6 @@ function handleRemoteJSON() {
   })
     .then((res) => {
       console.log("JSON Remote Response Status: " + res.status);
-
       toggleInteractables(false);
 
       if (res.status === 400) {
@@ -307,7 +271,6 @@ function handleUploadJSON() {
   })
     .then((res) => {
       console.log("JSON Upload Response Status: " + res.status);
-
       toggleInteractables(false);
 
       if (res.status === 400) {
@@ -399,7 +362,6 @@ function handleConflictResolution(resolution, filename) {
   })
     .then((res) => {
       console.log("JSON Upload Response Status: " + res.status);
-
       toggleInteractables(false);
 
       if (res.status === 204) {

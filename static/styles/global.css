@@ -140,6 +140,7 @@ main {
   margin-top: 1rem;
   right: 2rem;
   margin-left: 2rem;
+  z-index: 1040;
 }
 
 .alert-dismissible {

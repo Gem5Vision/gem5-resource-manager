@@ -40,7 +40,13 @@
       });
     </script>
     <main>
-      <div id="liveAlertPlaceholder" style="z-index: 9999;"></div>
+      <div id="liveAlertPlaceholder"></div>
+      <div id="loading-container" class="align-items-center justify-content-center">
+        <span class="main-text-semi me-3">Processing...</span>
+        <div class="spinner-border spinner" role="status">
+          <span class="visually-hidden">Processing...</span>
+        </div>
+      </div>
       {% block main %}{% endblock %}
     </main>
     {% block body %}{% endblock %}
