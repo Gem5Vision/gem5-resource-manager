@@ -40,12 +40,10 @@
         </div>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
-        <button class="btn btn-outline-primary d-lg-none align-self-start main-text-regular mt-2 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#databaseActions" aria-controls="sidebar">
-          Database Actions
-        </button>
+        <button class="btn btn-outline-primary d-lg-none align-self-start main-text-regular mt-2 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#databaseActions" aria-controls="sidebar">Database Actions</button>
         <div class="d-flex flex-column align-items-center">
           <h2 id="editor-type" class="page-title">{{ editor_type }}</h2>
-          <h4 class="secondary-text-semi" style="color: #425469; word-break: break-all; text-align: center;">{{ tagline }}</h4>
+          <h4 id="alias" class="secondary-text-semi" style="color: #425469; word-break: break-all; text-align: center;">{{ tagline }}</h4>
         </div>
         <div class="d-flex flex-row justify-content-around mt-3" id="editor-title">
           <h4 class="secondary-text-semi" style="color: #425469;">Current</h4>
@@ -54,22 +52,10 @@
         <div id="diff-editor" class="editor-sizing"></div>
         <div id="schema-editor"></div>
         <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
-          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)" 
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications">
-            Update
-          </button>
-          <button type="button" class="btn btn-primary btn-box-shadow" id="add" onclick="showModal(event, add)" disabled 
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Insert New Resource">
-            Add
-          </button>
-          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled 
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">
-            Delete
-          </button>
-          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled 
-            data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create New Version of Resource">
-            Add New Version
-          </button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications">Update</button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add" onclick="showModal(event, add)" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Insert New Resource">Add</button>
+          <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">Delete</button>
+          <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create New Version of Resource">Add New Version</button>
         </div>
       </div>
     </div>
@@ -82,9 +68,7 @@
           <h5 class="modal-title" id="ConfirmModalLabel">Confirm Changes</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          These changes can not be undone. Are you sure you want to continue?
-        </div>
+        <div class="modal-body">These changes can not be undone. Are you sure you want to continue?</div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button id="confirm" type="button" class="btn btn-primary">Save changes</button>
@@ -92,7 +76,7 @@
       </div>
     </div>
   </div>
-  {% endblock %}
-  {% block body %}
+{% endblock %}
+{% block body %}
   <script src="/static/editor.js"></script>
 {% endblock %}

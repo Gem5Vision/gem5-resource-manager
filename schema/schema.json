@@ -98,7 +98,7 @@
         "resource_version": {
             "type": "string",
             "description": "The version of the resource",
-            "default": "",
+            "default": "1.0.0",
             "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
         },
         "size": {

@@ -28,7 +28,7 @@ const appendAlert = (errorHeader, id, message, type) => {
 
   alertPlaceholder.append(alertDiv);
 
-  setTimeout(function() {
+  setTimeout(function () {
     bootstrap.Alert.getOrCreateInstance(document.getElementById(`${id}`)).close();
   }, 5000);
 }
@@ -50,14 +50,14 @@ function handleMongoDBLogin(event, saveStatus) {
   activeTab === "enter-uri-tab" ? handleEnteredURI(saveStatus) : handleGenerateURI(saveStatus);
 
   return;
-} 
+}
 
 function handleEnteredURI(saveStatus) {
   const uri = document.getElementById('uri').value;
   const collection = document.getElementById('collection').value;
   const database = document.getElementById('database').value;
   const alias = document.getElementById('alias').value;
-  const emptyInputs = [{type : "Collection", value : collection}, { type : "Database", value : database}, {type : "URI", value : uri}];
+  const emptyInputs = [{ type: "Collection", value: collection }, { type: "Database", value: database }, { type: "URI", value: uri }];
   let error = false;
 
   for (let i = 0; i < emptyInputs.length; i++) {
@@ -84,7 +84,7 @@ function handleGenerateURI(saveStatus) {
   const alias = document.getElementById('aliasGenerate').value;
   const options = document.getElementById('options').value.split(",");
   let generatedURI = "";
-  const emptyInputs = [{type : "Host", value : host}, {type : "Collection", value : collection}, { type : "Database", value : database}];
+  const emptyInputs = [{ type: "Host", value: host }, { type: "Collection", value: collection }, { type: "Database", value: database }];
   let error = false;
 
   for (let i = 0; i < emptyInputs.length; i++) {
@@ -93,7 +93,7 @@ function handleGenerateURI(saveStatus) {
       error = true;
     }
   }
-  
+
   if (error) {
     return;
   }
@@ -107,7 +107,7 @@ function handleGenerateURI(saveStatus) {
 
   if (options.length) {
     generatedURI += `/?${options.join("&")}`;
-  }  
+  }
 
   handleMongoURLFetch(saveStatus, generatedURI, collection, database, alias);
 }
@@ -120,7 +120,7 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
   params.append('database', database);
   params.append('alias', alias);
 
-  const url = `/validateMongoDB?${params.toString()}`;
+  // const url = `/validateMongoDB?${params.toString()}`;
 
   // if (saveStatus) {
   //   localStorage.setItem("URL", url);
@@ -131,31 +131,45 @@ function handleMongoURLFetch(saveStatus, uri, collection, database, alias) {
 
   loadingContainer.classList.add("d-flex");
 
-  fetch(url,
+  /* fetch(url,
   {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json'
       }
-  })
-  .then((res) => {
-    loadingContainer.classList.remove("d-flex");
+  }) */
+  fetch("/validateMongoDB",
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        isMongo: true,
+        uri: uri,
+        collection: collection,
+        database: database,
+        alias: alias
+      })
+    })
+    .then((res) => {
+      loadingContainer.classList.remove("d-flex");
 
-    // loginButtonGroup.forEach(button => button.classList.remove("disabled"));
-    loginButton.classList.remove("disabled");
+      // loginButtonGroup.forEach(button => button.classList.remove("disabled"));
+      loginButton.classList.remove("disabled");
 
-    console.log("URI Validation Response Status: " + res.status);
-    
-    if (!res.ok) {
-      res.json()
-      .then(error => {
-        appendAlert('Error!', 'mongodbValidationError', `${error.error}`,'danger');
-      });
-      return;
-    }
+      console.log("URI Validation Response Status: " + res.status);
 
-    res.redirected ? window.location = res.url : appendAlert('Error!', 'invalidRes', 'Invalid Server Response!','danger');
-  })
+      if (!res.ok) {
+        res.json()
+          .then(error => {
+            appendAlert('Error!', 'mongodbValidationError', `${error.error}`, 'danger');
+          });
+        return;
+      }
+
+      res.redirected ? window.location = res.url : appendAlert('Error!', 'invalidRes', 'Invalid Server Response!', 'danger');
+    })
 }
 
 function handleJSONLogin(event, saveStatus) {
@@ -166,7 +180,23 @@ function handleJSONLogin(event, saveStatus) {
   } else if (activeTab === "existing-tab") {
     const filename = document.getElementById("existing-dropdown").value;
     if (filename !== "No Existing Files") {
-      window.location = `/editor?type=json&filename=${filename}`
+      fetch(`/existingJSON?filename=${filename}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then((res) => {
+          console.log("Existing JSON Response Status: " + res.status);
+          if (res.status !== 200) {
+            appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
+          }
+          if (res.redirected) {
+            window.location = res.url;
+          }
+        })
+      // window.location = `/editor?type=json&filename=${filename}`
     }
   } else {
     handleUploadJSON();
@@ -177,7 +207,7 @@ function handleJSONLogin(event, saveStatus) {
 function handleRemoteJSON() {
   const url = document.getElementById("jsonRemoteURL").value;
   const filename = document.getElementById("remoteFilename").value;
-  const emptyInputs = [{type : "URL", value : url}, {type : "Filename", value : filename}];
+  const emptyInputs = [{ type: "URL", value: url }, { type: "Filename", value: filename }];
   let error = false;
 
   for (let i = 0; i < emptyInputs.length; i++) {
@@ -186,7 +216,7 @@ function handleRemoteJSON() {
       error = true;
     }
   }
-  
+
   if (error) {
     return;
   }
@@ -201,23 +231,23 @@ function handleRemoteJSON() {
   fetch(flask_url, {
     method: 'GET',
   })
-  .then((res) => {
-    console.log("JSON Remote Response Status: " + res.status);
-    
-    if (res.status === 400) {
-      appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
-    }
+    .then((res) => {
+      console.log("JSON Remote Response Status: " + res.status);
 
-    if (res.status === 409) {
-      const myModal = new bootstrap.Modal(document.getElementById('conflictResolutionModal'), {focus: true, keyboard: false});
-      document.getElementById("header-filename").textContent = `"${filename}"`;
-      myModal.show();
-    }
-    
-    if (res.redirected) {
-      window.location = res.url;
-    }
-  })
+      if (res.status === 400) {
+        appendAlert('Error!', 'invalidURL', 'Invalid JSON File URL!', 'danger');
+      }
+
+      if (res.status === 409) {
+        const myModal = new bootstrap.Modal(document.getElementById('conflictResolutionModal'), { focus: true, keyboard: false });
+        document.getElementById("header-filename").textContent = `"${filename}"`;
+        myModal.show();
+      }
+
+      if (res.redirected) {
+        window.location = res.url;
+      }
+    })
 }
 
 var filename;
@@ -225,7 +255,7 @@ var filename;
 function handleUploadJSON() {
   const jsonFile = document.getElementById("jsonFile");
   const file = jsonFile.files[0];
-  
+
   if (jsonFile.value === "") {
     appendAlert('Error!', 'emptyUpload', 'Cannot Proceed Without Uploading a File!', 'danger');
     return;
@@ -241,30 +271,30 @@ function handleUploadJSON() {
     method: 'POST',
     body: form
   })
-  .then((res) => {
-    console.log("JSON Upload Response Status: " + res.status);
-    
-    if (res.status === 400) {
-      appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
-    }
+    .then((res) => {
+      console.log("JSON Upload Response Status: " + res.status);
 
-    if (res.status === 409) {
-      const myModal = new bootstrap.Modal(document.getElementById('conflictResolutionModal'), {focus: true, keyboard: false});
-      document.getElementById("header-filename").textContent = `"${filename}"`;
-      myModal.show();
-    }
-    
-    if (res.redirected) {
-      window.location = res.url;
-    }
-  })
+      if (res.status === 400) {
+        appendAlert('Error!', 'invalidUpload', 'Invalid JSON File Upload!', 'danger');
+      }
+
+      if (res.status === 409) {
+        const myModal = new bootstrap.Modal(document.getElementById('conflictResolutionModal'), { focus: true, keyboard: false });
+        document.getElementById("header-filename").textContent = `"${filename}"`;
+        myModal.show();
+      }
+
+      if (res.redirected) {
+        window.location = res.url;
+      }
+    })
 }
 
 function saveConflictResolution() {
   const conflictResolutionModal = bootstrap.Modal.getInstance(document.getElementById("conflictResolutionModal"));
   const selectedValue = document.querySelector('input[name="conflictRadio"]:checked').id;
   const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
-  
+
   if (selectedValue === null) {
     appendAlert('Error!', 'nullRadio', 'Fatal! Null Radio!', 'danger');
     return;
@@ -281,29 +311,29 @@ function saveConflictResolution() {
     }
 
     conflictResolutionModal.hide();
-    handleConflictResolution("clearInput", "");
+    handleConflictResolution("clearInput", filename.split(".")[0]);
     return;
   }
 
   if (selectedValue === "openExisting") {
     conflictResolutionModal.hide();
-    handleConflictResolution("openExisting", "");
+    handleConflictResolution("openExisting", filename.split(".")[0]);
     return;
   }
 
   if (selectedValue === "overwrite") {
     conflictResolutionModal.hide();
-    handleConflictResolution("overwrite", "");
+    handleConflictResolution("overwrite", filename.split(".")[0]);
     return;
-  } 
+  }
 
   if (selectedValue === "newFilename") {
     const updatedFilename = document.getElementById("updatedFilename").value;
     if (updatedFilename === "") {
       appendAlert('Error!', 'emptyFilename', 'Must Enter A New Name!', 'danger');
       return;
-    } 
-    
+    }
+
     if (`${updatedFilename}.json` === filename) {
       appendAlert('Error!', 'sameFilenames', 'Cannot Have Same Name as Current!', 'danger');
       return;
@@ -319,30 +349,33 @@ function handleConflictResolution(resolution, filename) {
   const params = new URLSearchParams();
   params.append('isMongo', 'false');
   params.append('resolution', resolution);
-  params.append('filename', filename !== "" ? filename + ".json" : ""); 
+  params.append('filename', filename !== "" ? filename + ".json" : "");
 
   const flask_url = `/resolveConflict?${params.toString()}`;
 
   fetch(flask_url, {
     method: 'GET',
-  })
-  .then((res) => {
-    console.log("JSON Upload Response Status: " + res.status);
-
-    if (res.status === 204) {
-      console.log("Input Cleared, Cached File Deleted, Resources Unset");
-      return;
-    }
-
-    if (res.status !== 200) {
-      appendAlert('Error!', 'didNotRedirect', 'Server Did Not Redirect!', 'danger');
-      return;
-    }
-
-    if (res.redirected) {
-      window.location = res.url;
+    headers: {
+      'Content-Type': 'application/json'
     }
   })
+    .then((res) => {
+      console.log("JSON Upload Response Status: " + res.status);
+
+      if (res.status === 204) {
+        console.log("Input Cleared, Cached File Deleted, Resources Unset");
+        return;
+      }
+
+      if (res.status !== 200) {
+        appendAlert('Error!', 'didNotRedirect', 'Server Did Not Redirect!', 'danger');
+        return;
+      }
+
+      if (res.redirected) {
+        window.location = res.url;
+      }
+    })
 }
 
 window.onload = () => {
@@ -350,18 +383,18 @@ window.onload = () => {
     fetch('/existingFiles', {
       method: 'GET',
     })
-    .then((res) => res.json())
-    .then((data) => {
-      let select = document.getElementById("existing-dropdown");
-      if (data.length === 0) {
-        data = ["No Existing Files"];
-      }
-      data.forEach((files) => {
-        let option = document.createElement("option");
-        option.value = files;
-        option.innerHTML = files;
-        select.appendChild(option);
+      .then((res) => res.json())
+      .then((data) => {
+        let select = document.getElementById("existing-dropdown");
+        if (data.length === 0) {
+          data = ["No Existing Files"];
+        }
+        data.forEach((files) => {
+          let option = document.createElement("option");
+          option.value = files;
+          option.innerHTML = files;
+          select.appendChild(option);
+        });
       });
-    });
   }
 }

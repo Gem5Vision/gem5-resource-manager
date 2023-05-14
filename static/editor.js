@@ -65,7 +65,7 @@ require(["vs/editor/editor.main"], () => {
 });
 
 let editorType = document.getElementById('editor-type');
-editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB": editorType.textContent.toUpperCase();
+editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB" : editorType.textContent.toUpperCase();
 
 function checkErrors() {
   let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri });
@@ -95,7 +95,11 @@ function update(e) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id: id, resource: json }),
+    body: JSON.stringify({
+      id: id,
+      resource: json,
+      alias: document.getElementById("alias").innerText,
+    }),
   })
     .then((res) => res.json())
     .then(async (data) => {
@@ -121,7 +125,10 @@ function add(e) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(json),
+    body: JSON.stringify({
+      resource: json,
+      alias: document.getElementById("alias").innerText,
+    }),
   })
     .then((res) => res.json())
     .then(async (data) => {
@@ -151,6 +158,7 @@ function addVersion(e) {
     body: JSON.stringify({
       id: json["id"],
       resource_version: json["resource_version"],
+      alias: document.getElementById("alias").innerText,
     }),
   })
     .then((res) => res.json())
@@ -164,7 +172,10 @@ function addVersion(e) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(json),
+          body: JSON.stringify({
+            resource: json,
+            alias: document.getElementById("alias").innerText,
+          }),
         })
           .then((res) => res.json())
           .then(async (data) => {
@@ -194,7 +205,11 @@ function deleteRes(e) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id: id, resource_version: resource_version }),
+    body: JSON.stringify({
+      id: id,
+      resource_version: resource_version,
+      alias: document.getElementById("alias").innerText,
+    }),
   })
     .then((res) => res.json())
     .then(async (data) => {
@@ -223,6 +238,7 @@ async function addVersions() {
     },
     body: JSON.stringify({
       id: document.getElementById("id").value,
+      alias: document.getElementById("alias").innerText,
     }),
   })
     .then((res) => res.json())
@@ -248,7 +264,6 @@ function find(e) {
   }
 
   closeSchema();
-
   fetch("/find", {
     method: "POST",
     headers: {
@@ -257,6 +272,7 @@ function find(e) {
     body: JSON.stringify({
       id: document.getElementById("id").value,
       resource_version: document.getElementById("version-dropdown").value,
+      alias: document.getElementById("alias").innerText,
     }),
   })
     .then((res) => res.json())
@@ -323,11 +339,10 @@ window.onload = () => {
   const resetInstance = document.getElementById("update-instance");
   resetInstance.addEventListener("click", () => {
     localStorage.removeItem("savedSession");
-    window.location = `/login/${
-      new URL(window.location).searchParams.get("type") === "mongodb"
-        ? "mongodb"
-        : "json"
-    }`;
+    window.location = `/login/${new URL(window.location).searchParams.get("type") === "mongodb"
+      ? "mongodb"
+      : "json"
+      }`;
   });
 };
 
@@ -394,7 +409,7 @@ function saveSession() {
   const savedConfirmation = document.getElementById("saved-confirmation");
   savedConfirmation.style.opacity = 1;
 
-  setTimeout(function() {
+  setTimeout(function () {
     savedConfirmation.style.opacity = 0;
   }, 3000);
 }

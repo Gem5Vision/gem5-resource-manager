@@ -1,21 +1,21 @@
 import json
 from flask import render_template, Flask, request, redirect, url_for, Response
-from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 from bson import json_util
 import jsonschema
-from api.database import Database, DatabaseConnectionError
 import requests
+from api.json_client import JSONClient
+from api.mongo_client import MongoDBClient
 
 import urllib.parse
 import markdown
 
-from api import mongo_db_api, json_api
-
 from werkzeug.utils import secure_filename
 
 from pathlib import Path
+
+databases = {}
 
 schema = {}
 with open("schema/schema.json", "r") as f:
@@ -25,6 +25,7 @@ with open("schema/schema.json", "r") as f:
 UPLOAD_FOLDER = Path("database/")
 TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
 ALLOWED_EXTENSIONS = {"json"}
+DATABASE_TYPES = ["mongodb", "json"]
 
 resources = None
 isMongo = False
@@ -39,29 +40,11 @@ app = Flask(__name__)
 #     "versions_test",
 # )
 
-app.config["DATABASE"] = None
-
-# The folder path where uploaded files will be stored.
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-# The temporary folder path where uploaded files will be temporarily stored before processing.
-app.config["TEMP_UPLOAD_FOLDER"] = TEMP_UPLOAD_FOLDER
-
-# The file path used in the application. Currently set to None.
-app.config["FILEPATH"] = None
-
-# The temporary file path used in the application. Currently set to None.
-app.config["TEMP_FILEPATH"] = None
-
-# The supported types of databases for login in the application.
-app.config["DATABASE_TYPES"] = ["mongodb", "json"]
-
-
 with app.app_context():
-    if not Path(app.config["UPLOAD_FOLDER"]).is_dir():
-        Path(app.config["UPLOAD_FOLDER"]).mkdir()
-    if not Path(app.config["TEMP_UPLOAD_FOLDER"]).is_dir():
-        Path(app.config["TEMP_UPLOAD_FOLDER"]).mkdir()
+    if not Path(UPLOAD_FOLDER).is_dir():
+        Path(UPLOAD_FOLDER).mkdir()
+    if not Path(TEMP_UPLOAD_FOLDER).is_dir():
+        Path(TEMP_UPLOAD_FOLDER).mkdir()
 
 
 @app.route("/")
@@ -84,15 +67,15 @@ def login(database_type):
     :return: The rendered login HTML template corresponding to the database type. Returns a 404 error template if the
              database type is not supported.
     """
-    if database_type not in app.config["DATABASE_TYPES"]:
+    if database_type not in DATABASE_TYPES:
         return render_template("404.html")
-    if database_type == app.config["DATABASE_TYPES"][0]:
+    if database_type == DATABASE_TYPES[0]:
         return render_template("mongoDBLogin.html")
-    if database_type == app.config["DATABASE_TYPES"][1]:
+    if database_type == DATABASE_TYPES[1]:
         return render_template("jsonLogin.html")
 
 
-@app.route("/validateMongoDB", methods=["GET"])
+@app.route("/validateMongoDB", methods=["POST"])
 def validate_mongodb():
     """
     Validates the MongoDB connection parameters and redirects to the editor route if successful.
@@ -108,20 +91,21 @@ def validate_mongodb():
 
     :return: A redirect response to the 'editor' route or a JSON response with an error message and status code 400.
     """
-    uri = request.args.get("uri")
-    collection = request.args.get("collection")
-    database = request.args.get("database")
-    alias = request.args.get("alias")
-    if uri == "":
-        return {"error": "Cannot proceed with empty URI"}, 400
+    global databases
+    if request.json["alias"] in databases:
+        return {"error": "alias already exists"}, 409
+    try:
+        databases[request.json["alias"]] = MongoDBClient(
+            mongo_uri=request.json["uri"],
+            database_name=request.json["database"],
+            collection_name=request.json["collection"])
+    except Exception as e:
+        return {"error": str(e)}, 400
     return redirect(
         url_for(
             "editor",
-            type=app.config["DATABASE_TYPES"][0],
-            uri=uri,
-            collection=collection,
-            database=database,
-            alias=alias,
+            type=DATABASE_TYPES[0],
+            alias=request.json["alias"]
         ),
         302,
     )
@@ -142,7 +126,7 @@ def validate_json_get():
 
     :return: A redirect response to the 'editor' route or a JSON response with an error message and status code 400.
     """
-    global resources
+    filename = request.args.get("filename")
     url = request.args.get("q")
     if not url:
         return {"error": "empty"}, 400
@@ -150,22 +134,52 @@ def validate_json_get():
     if response.status_code != 200:
         return {"error": "invalid status"}, response.status_code
     filename = secure_filename(request.args.get("filename"))
-    app.config["FILEPATH"] = Path(app.config["UPLOAD_FOLDER"]) / filename
-    if (Path(app.config["UPLOAD_FOLDER"]) / filename).is_file():
-        app.config["TEMP_FILEPATH"] = Path(
-            app.config["TEMP_UPLOAD_FOLDER"]) / filename
-        with Path(app.config["TEMP_FILEPATH"]).open("wb") as f:
+    path = Path(UPLOAD_FOLDER) / filename
+    if (Path(UPLOAD_FOLDER) / filename).is_file():
+        temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
+        with Path(temp_path).open("wb") as f:
             f.write(response.content)
         return {"conflict": "existing file in server"}, 409
-    with Path(app.config["FILEPATH"]).open("wb") as f:
+    with Path(path).open("wb") as f:
         f.write(response.content)
+    global databases
+    if filename in databases:
+        return {"error": "alias already exists"}, 409
+    try:
+        databases[filename] = JSONClient(filename)
+    except Exception as e:
+        return {"error": str(e)}, 400
     return redirect(
         url_for(
-            "editor", type=app.config["DATABASE_TYPES"][1], filename=filename), 302
+            "editor",
+            type=DATABASE_TYPES[1],
+            filename=filename,
+            alias=filename
+        ), 302
     )
 
 
-@app.route("/existingFiles", methods=["GET"])
+@app.route("/existingJSON", methods=["GET"])
+def existing_json():
+    filename = request.args.get("filename")
+    global databases
+    if filename not in databases:
+        try:
+            databases[filename] = JSONClient(filename)
+        except Exception as e:
+            print(e)
+            return {"error": str(e)}, 400
+    return redirect(
+        url_for(
+            "editor",
+            type=DATABASE_TYPES[1],
+            filename=filename,
+            alias=filename
+        ), 302
+    )
+
+
+@ app.route("/existingFiles", methods=["GET"])
 def get_existing_files():
     """
     Retrieves the list of existing files in the upload folder.
@@ -176,103 +190,75 @@ def get_existing_files():
     :return: A JSON response with the list of existing files.
     """
     files = [f.name for f in Path(
-        app.config["UPLOAD_FOLDER"]).iterdir() if f.is_file()]
+        UPLOAD_FOLDER).iterdir() if f.is_file()]
     return json.dumps(files)
 
 
-@app.route("/validateJSON", methods=["POST"])
+@ app.route("/validateJSON", methods=["POST"])
 def validate_json_post():
     global resources
+    temp_path = None
     if "file" not in request.files:
         return {"error": "empty"}, 400
     file = request.files["file"]
     filename = secure_filename(file.filename)
-    app.config["FILEPATH"] = Path(app.config["UPLOAD_FOLDER"]) / filename
-    if Path(app.config["FILEPATH"]).is_file():
-        app.config["TEMP_FILEPATH"] = Path(
-            app.config["TEMP_UPLOAD_FOLDER"]) / filename
-        file.save(app.config["TEMP_FILEPATH"])
+    path = Path(UPLOAD_FOLDER) / filename
+    if Path(path).is_file():
+        temp_path = Path(
+            TEMP_UPLOAD_FOLDER) / filename
+        file.save(temp_path)
         return {"conflict": "exisiting file in server"}, 409
-    file.save(app.config["FILEPATH"])
-    with Path(app.config["FILEPATH"]).open("r") as f:
-        resources = json.load(f)
-        return redirect(
-            url_for(
-                "editor",
-                type=app.config["DATABASE_TYPES"][1],
-                filename=Path(app.config["FILEPATH"]).name,
-            ),
-            302,
-        )
+    file.save(path)
+    global databases
+    if filename in databases:
+        return {"error": "alias already exists"}, 409
+    try:
+        databases[filename] = JSONClient(filename)
+    except Exception as e:
+        return {"error": str(e)}, 400
+    return redirect(
+        url_for(
+            "editor",
+            type=DATABASE_TYPES[1],
+            filename=filename,
+            alias=filename
+        ), 302)
 
 
 @app.route("/resolveConflict", methods=["GET"])
 def resolve_conflict():
-    """
-    Handles the resolution of conflicts when updating a JSON file.
-
-    This route expects a GET request with specific query parameters:
-    - "resolution": Specifies the resolution option for the conflict. Should be one of the following values:
-        - "clearInput": Clear the input and reset the resources.
-        - "openExisting": Open the existing file.
-        - "overwrite": Overwrite the existing file with the updated content.
-        - "newFilename": Save the updated content with a new filename.
-    - "filename": The new filename to be used. This parameter is required if the resolution is "newFilename".
-
-    The function checks if the "resolution" query parameter is present. If not, it returns a 400 error.
-
-    The function validates the "resolution" against a list of valid resolution options. If the resolution is not valid,
-    it returns a 400 error.
-
-    Based on the resolution option, the function performs the following actions:
-    - If the resolution is "clearInput", it unlinks the temporary file, clears the resources, and returns a success response.
-    - If the resolution is "openExisting", it retrieves the filename from the FILEPATH configuration.
-    - If the resolution is "overwrite", it replaces the FILEPATH configuration with the temporary file path and retrieves the filename.
-    - If the resolution is "newFilename", it retrieves the new filename from the query parameters, replaces the FILEPATH configuration
-      with the temporary file path, and retrieves the new filename.
-
-    If the temporary file exists, it is unlinked. The TEMP_FILEPATH configuration is reset to None.
-
-    The function reads the content of the updated file specified by the FILEPATH configuration and loads it into the resources variable.
-
-    Finally, it redirects to the editor page with the JSON editor type and the resolved filename.
-
-    :return: A redirect response to the editor page with the resolved filename.
-    """
-    global resources
-    filename = None
+    filename = request.args.get("filename")
+    path = Path(UPLOAD_FOLDER) / filename
     resolution = request.args.get("resolution")
     resolution_options = ["clearInput",
                           "openExisting", "overwrite", "newFilename"]
+    temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
     if not resolution:
+        print("no resolution")
         return {"error": "empty"}, 400
     if resolution not in resolution_options:
+        print("invalid resolution")
         return {"error": "invalid resolution"}, 400
     if resolution == resolution_options[0]:
-        Path(app.config["TEMP_FILEPATH"]).unlink()
-        app.config["TEMP_FILEPATH"] = None
-        resources = None
+        temp_path.unlink()
         return {"success": "input cleared"}, 204
-    elif resolution == resolution_options[1]:
-        filename = Path(app.config["FILEPATH"]).name
-    elif resolution == resolution_options[2]:
-        app.config["FILEPATH"] = Path(app.config["TEMP_FILEPATH"]).replace(
-            app.config["FILEPATH"]
-        )
-        filename = Path(app.config["FILEPATH"]).name
     elif resolution == resolution_options[3]:
         filename = secure_filename(request.args.get("filename"))
-        app.config["FILEPATH"] = Path(app.config["TEMP_FILEPATH"]).replace(
-            Path(app.config["UPLOAD_FOLDER"]) / filename
-        )
-    if Path(app.config["TEMP_FILEPATH"]).is_file():
-        Path(app.config["TEMP_FILEPATH"]).unlink()
-    app.config["TEMP_FILEPATH"] = None
-    with Path(app.config["FILEPATH"]).open("r") as f:
-        resources = json.load(f)
+        path = Path(UPLOAD_FOLDER) / filename
+    if Path(temp_path).is_file():
+        Path(temp_path).unlink()
+    global databases
+    if filename in databases:
+        return {"error": "alias already exists"}, 409
+    try:
+        databases[filename] = JSONClient(filename)
+    except Exception as e:
+        return {"error": str(e)}, 400
     return redirect(
         url_for(
-            "editor", type=app.config["DATABASE_TYPES"][1], filename=filename), 302
+            "editor", type=DATABASE_TYPES[1], filename=filename,
+            alias=filename
+        ), 302
     )
 
 
@@ -306,46 +292,25 @@ def editor():
 
     :return: The rendered editor template based on the specified database type.
     """
+    global databases
     if not request.args:
         return render_template("404.html"), 404
-    global isMongo
-    global resources
-    type = request.args.get("type")
-    if type not in app.config["DATABASE_TYPES"]:
+    alias = request.args.get("alias")
+    if alias not in databases:
         return render_template("404.html"), 404
-    if type == app.config["DATABASE_TYPES"][0]:
-        isMongo = True
-        mongo_uri = urllib.parse.unquote(request.args.get("uri"))
-        alias = request.args.get("alias")
-        try:
-            app.config["DATABASE"] = Database(
-                mongo_uri, request.args.get(
-                    "database"), request.args.get("collection")
-            )
-        except DatabaseConnectionError as e:
-            return {"error": f"{e}"}, 400
+    """ if not (Path(UPLOAD_FOLDER) / alias).is_file():
+        return render_template("404.html"), 404 """
 
-        return render_template(
-            "editor.html",
-            editor_type=app.config["DATABASE_TYPES"][0],
-            tagline=(mongo_uri if alias == "" else alias),
-        )
-    if type == app.config["DATABASE_TYPES"][1]:
-        isMongo = False
-        filename = request.args.get("filename")
-        if not (Path(app.config["UPLOAD_FOLDER"]) / filename).is_file():
-            return render_template("404.html"), 404
-        filepath = Path(app.config["UPLOAD_FOLDER"]) / filename
-        with filepath.open("r") as f:
-            resources = json.load(f)
-        # Set FILEPATH if editor accessed directly w/o login
-        if not app.config["FILEPATH"] or not filepath.samefile(
-            Path(app.config["FILEPATH"])
-        ):
-            app.config["FILEPATH"] = filepath
-        return render_template(
-            "editor.html", editor_type=app.config["DATABASE_TYPES"][1], tagline=filename
-        )
+    database_type = "mongo"
+    if isinstance(databases[alias], JSONClient):
+        database_type = "json"
+    elif isinstance(databases[alias], MongoDBClient):
+        database_type = "mongo"
+    else:
+        return render_template("404.html"), 404
+    return render_template(
+        "editor.html", editor_type=database_type, tagline=alias
+    )
 
 
 @app.route("/help")
@@ -388,9 +353,11 @@ def find():
 
     :return: A JSON response containing the result of the find operation.
     """
-    if isMongo:
-        return mongo_db_api.findResource(app.config["DATABASE"], request.json)
-    return json_api.findResource(resources, request.json)
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.findResource(request.json)
 
 
 @app.route("/update", methods=["POST"])
@@ -411,9 +378,11 @@ def update():
 
     :return: A JSON response containing the result of the update operation.
     """
-    if isMongo:
-        return mongo_db_api.updateResource(app.config["DATABASE"], request.json)
-    return json_api.updateResource(resources, request.json, app.config["FILEPATH"])
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.updateResource(request.json["resource"])
 
 
 @app.route("/versions", methods=["POST"])
@@ -434,9 +403,11 @@ def getVersions():
 
     :return: A JSON response containing the versions of the resource.
     """
-    if isMongo:
-        return mongo_db_api.getVersions(app.config["DATABASE"], request.json)
-    return json_api.getVersions(resources, request.json)
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.getVersions(request.json)
 
 
 @app.route("/categories", methods=["GET"])
@@ -531,9 +502,11 @@ def delete():
 
     :return: A JSON response containing the result of the delete operation.
     """
-    if isMongo:
-        return mongo_db_api.deleteResource(app.config["DATABASE"], request.json)
-    return json_api.deleteResource(resources, request.json, app.config["FILEPATH"])
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.deleteResource(request.json)
 
 
 @app.route("/insert", methods=["POST"])
@@ -554,9 +527,11 @@ def insert():
 
     :return: A JSON response containing the result of the insert operation.
     """
-    if isMongo:
-        return mongo_db_api.insertResource(app.config["DATABASE"], request.json)
-    return json_api.insertResource(resources, request.json, app.config["FILEPATH"])
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.insertResource(request.json["resource"])
 
 
 @app.errorhandler(404)
@@ -591,9 +566,11 @@ def checkExists():
 
     :return: A JSON response containing the result of the existence check.
     """
-    if isMongo:
-        return mongo_db_api.checkResourceExists(app.config["DATABASE"], request.json)
-    return json_api.checkResourceExists(resources, request.json)
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.checkResourceExists(request.json)
 
 
 if __name__ == "__main__":
