@@ -13,7 +13,6 @@ class DatabaseConnectionError(Exception):
 class MongoDBClient(Client):
 
     def __init__(self, mongo_uri, database_name, collection_name):
-        print(mongo_uri, database_name, collection_name)
         self.mongo_uri = mongo_uri
         self.collection_name = collection_name
         self.database_name = database_name
@@ -66,7 +65,7 @@ class MongoDBClient(Client):
         :param: json: JSON object with id and resource_version[optional]
         :return: json_resource: JSON object with request resource or error message
         """
-        if request.json["resource_version"] == "":
+        if "resource_version" not in query or query["resource_version"] == "":
             resource = (
                 self.collection
                 .find({"id": query["id"]}, {"_id": 0})

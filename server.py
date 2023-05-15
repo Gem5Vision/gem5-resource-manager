@@ -31,14 +31,6 @@ resources = None
 isMongo = False
 
 app = Flask(__name__)
-# The database configuration for the Flask application.
-
-# DATABASE: An instance of the Database class representing the MongoDB connection details and database/collection names.
-# app.config["DATABASE"] = Database(
-#     "mongodb+srv://admin:gem5vision_admin@gem5-vision.wp3weei.mongodb.net/?retryWrites=true&w=majority",
-#     "gem5-vision",
-#     "versions_test",
-# )
 
 with app.app_context():
     if not Path(UPLOAD_FOLDER).is_dir():
@@ -112,6 +104,7 @@ def validate_mongodb():
     :return: A redirect response to the 'editor' route or a JSON response with an error message and status code 400.
     """
     global databases
+    print(request.json)
     if request.json["alias"] in databases:
         return {"error": "alias already exists"}, 409
     try:
@@ -179,7 +172,7 @@ def validate_json_get():
     )
 
 
-@ app.route("/validateJSON", methods=["POST"])
+@app.route("/validateJSON", methods=["POST"])
 def validate_json_post():
     global resources
     temp_path = None
