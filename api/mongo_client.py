@@ -12,14 +12,11 @@ class DatabaseConnectionError(Exception):
 
 
 class MongoDBClient(Client):
-
     def __init__(self, mongo_uri, database_name, collection_name):
         self.mongo_uri = mongo_uri
         self.collection_name = collection_name
         self.database_name = database_name
-        self.collection = self.__get_database(
-            mongo_uri, database_name, collection_name
-        )
+        self.collection = self.__get_database(mongo_uri, database_name, collection_name)
 
     def __get_database(
         self,
@@ -68,16 +65,14 @@ class MongoDBClient(Client):
         """
         if "resource_version" not in query or query["resource_version"] == "":
             resource = (
-                self.collection
-                .find({"id": query["id"]}, {"_id": 0})
+                self.collection.find({"id": query["id"]}, {"_id": 0})
                 .sort("resource_version", -1)
                 .limit(1)
             )
         else:
             resource = (
                 self.collection.find(
-                    {"id": query["id"],
-                        "resource_version": query["resource_version"]},
+                    {"id": query["id"], "resource_version": query["resource_version"]},
                     {"_id": 0},
                 )
                 .sort("resource_version", -1)
@@ -115,11 +110,9 @@ class MongoDBClient(Client):
         :param: json: JSON object with id
         :return: json_resource: JSON object with all resource versions
         """
-        versions = (
-            self.collection
-            .find({"id": query["id"]}, {"resource_version": 1, "_id": 0})
-            .sort("resource_version", -1)
-        )
+        versions = self.collection.find(
+            {"id": query["id"]}, {"resource_version": 1, "_id": 0}
+        ).sort("resource_version", -1)
         # convert to json
         res = json_util.dumps(versions)
         return json_util.loads(res)
@@ -164,8 +157,8 @@ class MongoDBClient(Client):
         """
         resource = (
             self.collection.find(
-                {"id": query["id"], "resource_version": query["resource_version"]}, {
-                    "_id": 0}
+                {"id": query["id"], "resource_version": query["resource_version"]},
+                {"_id": 0},
             )
             .sort("resource_version", -1)
             .limit(1)

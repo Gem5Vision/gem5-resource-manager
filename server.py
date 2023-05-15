@@ -111,15 +111,12 @@ def validate_mongodb():
         databases[request.json["alias"]] = MongoDBClient(
             mongo_uri=request.json["uri"],
             database_name=request.json["database"],
-            collection_name=request.json["collection"])
+            collection_name=request.json["collection"],
+        )
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for(
-            "editor",
-            type=DATABASE_TYPES[0],
-            alias=request.json["alias"]
-        ),
+        url_for("editor", type=DATABASE_TYPES[0], alias=request.json["alias"]),
         302,
     )
 
@@ -163,12 +160,8 @@ def validate_json_get():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for(
-            "editor",
-            type=DATABASE_TYPES[1],
-            filename=filename,
-            alias=filename
-        ), 302
+        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        302,
     )
 
 
@@ -182,8 +175,7 @@ def validate_json_post():
     filename = secure_filename(file.filename)
     path = Path(UPLOAD_FOLDER) / filename
     if Path(path).is_file():
-        temp_path = Path(
-            TEMP_UPLOAD_FOLDER) / filename
+        temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
         file.save(temp_path)
         return {"conflict": "exisiting file in server"}, 409
     file.save(path)
@@ -195,12 +187,9 @@ def validate_json_post():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for(
-            "editor",
-            type=DATABASE_TYPES[1],
-            filename=filename,
-            alias=filename
-        ), 302)
+        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        302,
+    )
 
 
 @app.route("/existingJSON", methods=["GET"])
@@ -214,16 +203,12 @@ def existing_json():
             print(e)
             return {"error": str(e)}, 400
     return redirect(
-        url_for(
-            "editor",
-            type=DATABASE_TYPES[1],
-            filename=filename,
-            alias=filename
-        ), 302
+        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        302,
     )
 
 
-@ app.route("/existingFiles", methods=["GET"])
+@app.route("/existingFiles", methods=["GET"])
 def get_existing_files():
     """
     Retrieves the list of existing files in the upload folder.
@@ -233,8 +218,7 @@ def get_existing_files():
 
     :return: A JSON response with the list of existing files.
     """
-    files = [f.name for f in Path(
-        UPLOAD_FOLDER).iterdir() if f.is_file()]
+    files = [f.name for f in Path(UPLOAD_FOLDER).iterdir() if f.is_file()]
     return json.dumps(files)
 
 
@@ -242,8 +226,7 @@ def get_existing_files():
 def resolve_conflict():
     filename = request.args.get("filename")
     resolution = request.args.get("resolution")
-    resolution_options = ["clearInput",
-                          "openExisting", "overwrite", "newFilename"]
+    resolution_options = ["clearInput", "openExisting", "overwrite", "newFilename"]
     temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
     if not resolution:
         print("no resolution")
@@ -267,10 +250,8 @@ def resolve_conflict():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for(
-            "editor", type=DATABASE_TYPES[1], filename=filename,
-            alias=filename
-        ), 302
+        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        302,
     )
 
 
@@ -320,9 +301,7 @@ def editor():
         database_type = "mongo"
     else:
         return render_template("404.html"), 404
-    return render_template(
-        "editor.html", editor_type=database_type, tagline=alias
-    )
+    return render_template("editor.html", editor_type=database_type, tagline=alias)
 
 
 @app.route("/help")
@@ -464,8 +443,7 @@ def getFields():
 
     :return: A JSON response containing the `empty_object` with the required fields for the specified category.
     """
-    empty_object = {
-        "category": request.json["category"], "id": request.json["id"]}
+    empty_object = {"category": request.json["category"], "id": request.json["id"]}
     validator = jsonschema.Draft7Validator(schema)
     errors = list(validator.iter_errors(empty_object))
     for error in errors:

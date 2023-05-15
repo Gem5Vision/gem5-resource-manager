@@ -19,7 +19,7 @@ def get_json():
 
 
 def mockinit(self, file_path):
-    self.file_path = Path("test/refs/")/file_path
+    self.file_path = Path("test/refs/") / file_path
     with open(self.file_path, "r") as f:
         self.resources = json.load(f)
 
@@ -82,9 +82,7 @@ class TestJson(unittest.TestCase):
             "source": "src/x86-ubuntu",
             "root_partition": "1",
             "resource_version": "1.0.0",
-            "gem5_versions": [
-                "23.0"
-            ]
+            "gem5_versions": ["23.0"],
         }
         response = self.json_client.insertResource(test_resource)
         self.assertEqual(response, {"status": "Resource already exists"})
@@ -101,12 +99,9 @@ class TestJson(unittest.TestCase):
             "source": "src/x86-ubuntu",
             "root_partition": "1",
             "resource_version": "1.0.0",
-            "gem5_versions": [
-                "23.0"
-            ]
+            "gem5_versions": ["23.0"],
         }
-        response = self.json_client.findResource(
-            {"id": expected_response["id"]})
+        response = self.json_client.findResource({"id": expected_response["id"]})
         self.assertEqual(response, expected_response)
 
     def test_find_with_version(self):
@@ -120,80 +115,84 @@ class TestJson(unittest.TestCase):
             "url": "http://dist.gem5.org/dist/develop/kernels/x86/static/vmlinux-5.4.49",
             "source": "src/linux-kernel",
             "resource_version": "1.0.0",
-            "gem5_versions": [
-                "23.0"
-            ]
+            "gem5_versions": ["23.0"],
         }
         response = self.json_client.findResource(
-            {"id": expected_response["id"], "resource_version": expected_response["resource_version"]})
+            {
+                "id": expected_response["id"],
+                "resource_version": expected_response["resource_version"],
+            }
+        )
         self.assertEqual(response, expected_response)
 
     def test_find_not_found(self):
-        response = self.json_client.findResource(
-            {"id": "not-found"})
+        response = self.json_client.findResource({"id": "not-found"})
         self.assertEqual(response, {"exists": False})
 
     def test_deleteResource(self):
         deleted_resource = {
-        "category": "diskimage",
-        "id": "disk-image-example",
-        "description": "disk-image documentation.",
-        "architecture": "X86",
-        "is_zipped": True,
-        "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
-        "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
-        "source": "src/x86-ubuntu",
-        "root_partition": "1",
-        "resource_version": "1.0.0",
-        "gem5_versions": [
-            "23.0"
-        ]
+            "category": "diskimage",
+            "id": "disk-image-example",
+            "description": "disk-image documentation.",
+            "architecture": "X86",
+            "is_zipped": True,
+            "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
+            "source": "src/x86-ubuntu",
+            "root_partition": "1",
+            "resource_version": "1.0.0",
+            "gem5_versions": ["23.0"],
         }
         response = self.json_client.deleteResource(
-            {"id": deleted_resource["id"], "resource_version": deleted_resource["resource_version"]})
+            {
+                "id": deleted_resource["id"],
+                "resource_version": deleted_resource["resource_version"],
+            }
+        )
         self.assertEqual(response, {"status": "Deleted"})
         json_data = get_json()
         self.assertNotEqual(json_data, self.orignal_json)
-        self.assertNotIn(
-            deleted_resource, json_data)
-        
+        self.assertNotIn(deleted_resource, json_data)
+
     def test_updateResource(self):
         updated_resource = {
-        "category": "diskimage",
-        "id": "disk-image-example",
-        "description": "disk-image documentation.",
-        "architecture": "X86",
-        "is_zipped": True,
-        "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
-        "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
-        "source": "src/x86-ubuntu",
-        "root_partition": "1",
-        "resource_version": "1.0.0",
-        "gem5_versions": [
-            "23.0"
-        ]
+            "category": "diskimage",
+            "id": "disk-image-example",
+            "description": "disk-image documentation.",
+            "architecture": "X86",
+            "is_zipped": True,
+            "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
+            "source": "src/x86-ubuntu",
+            "root_partition": "1",
+            "resource_version": "1.0.0",
+            "gem5_versions": ["23.0"],
         }
         response = self.json_client.updateResource(updated_resource)
         self.assertEqual(response, {"status": "Updated"})
         json_data = get_json()
         self.assertNotEqual(json_data, self.orignal_json)
-        self.assertIn(
-            updated_resource, json_data)
-        
-    
+        self.assertIn(updated_resource, json_data)
+
     def test_getVersions(self):
         resource_id = "kernel-example"
         response = self.json_client.getVersions({"id": resource_id})
-        self.assertEqual(response, [{"resource_version": "2.0.0"},{"resource_version": "1.0.0"}])
-        
+        self.assertEqual(
+            response, [{"resource_version": "2.0.0"}, {"resource_version": "1.0.0"}]
+        )
+
     def test_checkResourceExists_True(self):
         resource_id = "kernel-example"
         resource_version = "1.0.0"
-        response = self.json_client.checkResourceExists({"id": resource_id, "resource_version": resource_version})
+        response = self.json_client.checkResourceExists(
+            {"id": resource_id, "resource_version": resource_version}
+        )
         self.assertEqual(response, {"exists": True})
 
     def test_checkResourceExists_False(self):
         resource_id = "kernel-example"
         resource_version = "3.0.0"
-        response = self.json_client.checkResourceExists({"id": resource_id, "resource_version": resource_version})
+        response = self.json_client.checkResourceExists(
+            {"id": resource_id, "resource_version": resource_version}
+        )
         self.assertEqual(response, {"exists": False})

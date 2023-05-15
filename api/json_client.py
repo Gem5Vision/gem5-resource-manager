@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 
 class JSONClient(Client):
     def __init__(self, file_path):
-        self.file_path = Path('database/') / file_path
+        self.file_path = Path("database/") / file_path
         self.resources = self.__get_resources(self.file_path)
 
     def __get_resources(self, path):
@@ -35,7 +35,11 @@ class JSONClient(Client):
         """
         found_resources = []
         for resource in self.resources:
-            if "resource_version" not in query or query["resource_version"] == "" or query["resource_version"] == "Latest":
+            if (
+                "resource_version" not in query
+                or query["resource_version"] == ""
+                or query["resource_version"] == "Latest"
+            ):
                 if resource["id"] == query["id"]:
                     found_resources.append(resource)
             else:
@@ -71,11 +75,11 @@ class JSONClient(Client):
         versions = []
         for resource in self.resources:
             if resource["id"] == query["id"]:
-                versions.append(
-                    {"resource_version": resource["resource_version"]})
+                versions.append({"resource_version": resource["resource_version"]})
         versions.sort(
             key=lambda resource: tuple(
-                map(int, resource["resource_version"].split("."))),
+                map(int, resource["resource_version"].split("."))
+            ),
             reverse=True,
         )
         return versions
@@ -106,7 +110,7 @@ class JSONClient(Client):
         self.writeToFile()
         return {"status": "Updated"}
 
-    def checkResourceExists(self,  query):
+    def checkResourceExists(self, query):
         """
         Checks if a resource exists within a list of resources based on the provided query.
 
@@ -144,7 +148,7 @@ class JSONClient(Client):
         self.writeToFile()
         return {"status": "Inserted"}
 
-    def deleteResource(self,  query):
+    def deleteResource(self, query):
         """
         This function deletes a resource from the list of resources based on the provided query.
 
