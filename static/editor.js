@@ -324,7 +324,8 @@ function find(e) {
         })
           .then((res) => res.json())
           .then((data) => {
-            delete data._id;
+            console.log(data)
+            // delete data._id;
             data["id"] = document.getElementById("id").value;
             data["category"] = document.getElementById("category").value;
             originalModel.setValue(JSON.stringify(data, null, 4));
@@ -336,9 +337,9 @@ function find(e) {
             document.getElementById("update").disabled = true;
           });
       } else {
-        data = data[0];
+        // data = data[0];
         console.log(data);
-        delete data._id;
+        // delete data._id;
         originalModel.setValue(JSON.stringify(data, null, 4));
         modifiedModel.setValue(JSON.stringify(data, null, 4));
 

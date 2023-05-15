@@ -83,7 +83,7 @@ class MongoDBClient(Client):
         print(res)
         if res == []:
             return {"exists": False}
-        return res[0]
+        return json.dumps(res[0], sort_keys=False)
 
     def updateResource(self, query):
         """
