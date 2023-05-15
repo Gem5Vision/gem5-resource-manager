@@ -113,14 +113,14 @@ class ResourceJsonCreator:
             resource["architecture"] = (
                 resource["name"].split("-")[0].replace("64", "").upper()
             )
-            resources = {}
+            """ resources = {}
             if "resources" in resource:
                 for key in resource["resources"]:
                     if "disk_image" in key:
                         resources["diskimage"] = resource["resources"][key]
                     else:
                         resources[key] = resource["resources"][key]
-            resource["resources"] = resources
+            resource["resources"] = resources """
 
             return resource
         if "kernel" in resource["name"]:
@@ -128,7 +128,7 @@ class ResourceJsonCreator:
         elif "bootloader" in resource["name"]:
             resource["type"] = "bootloader"
         elif "benchmark" in resource["documentation"]:
-            resource["type"] = "diskimage"
+            resource["type"] = "disk_image"
             # if tags not in resource:
             if "tags" not in resource:
                 resource["tags"] = []
@@ -144,7 +144,7 @@ class ResourceJsonCreator:
             else:
                 resource["root_partition"] = ""
         elif resource["url"] is not None and ".img.gz" in resource["url"]:
-            resource["type"] = "diskimage"
+            resource["type"] = "disk_image"
             if (
                 "additional_metadata" in resource
                 and "root_partition" in resource["additional_metadata"]
