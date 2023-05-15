@@ -1,3 +1,4 @@
+import json
 from flask import request
 from bson import json_util
 from api.client import Client
@@ -82,12 +83,12 @@ class MongoDBClient(Client):
                 .sort("resource_version", -1)
                 .limit(1)
             )
-        # check if resource is empty list
         json_resource = json_util.dumps(resource)
-        if json_resource == "[]":
+        res = json.loads(json_resource)
+        print(res)
+        if res == []:
             return {"exists": False}
-        # print(json_resource)
-        return json_resource
+        return res[0]
 
     def updateResource(self, query):
         """
@@ -119,8 +120,9 @@ class MongoDBClient(Client):
             .find({"id": query["id"]}, {"resource_version": 1, "_id": 0})
             .sort("resource_version", -1)
         )
-        json_resource = json_util.dumps(versions)
-        return json_resource
+        # convert to json
+        res = json_util.dumps(versions)
+        return json_util.loads(res)
 
     def deleteResource(self, query):
         """
@@ -145,7 +147,11 @@ class MongoDBClient(Client):
         :param: json: JSON object representing the new resource to be inserted
         :return: json_response: JSON object with status message
         """
-        self.collection.insert_one(query)
+        try:
+            self.collection.insert_one(query)
+        except Exception as e:
+            print(e)
+            return {"status": "Resource already exists"}
         return {"status": "Inserted"}
 
     def checkResourceExists(self, query):
@@ -165,6 +171,7 @@ class MongoDBClient(Client):
             .limit(1)
         )
         json_resource = json_util.dumps(resource)
-        if json_resource == "[]":
+        res = json.loads(json_resource)
+        if res == []:
             return {"exists": False}
         return {"exists": True}

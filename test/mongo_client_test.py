@@ -112,8 +112,8 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0",
         }
-        self.collection.insert_one(test_resource)
-        ret_value = self.mongo_client.findResource({"id": "test-resource"})[0]
+        self.collection.insert_one(test_resource.copy())
+        ret_value = self.mongo_client.findResource({"id": "test-resource"})
         self.assertEqual(ret_value, test_resource)
         self.collection.delete_one({"id": "test-resource"})
 
@@ -137,7 +137,7 @@ class TestApi(unittest.TestCase):
         test_resource["description"] = "test-description2"
         self.collection.insert_one(test_resource.copy())
         ret_value = self.mongo_client.findResource(
-            {"id": "test-resource", "resource_version": "2.0.0"})[0]
+            {"id": "test-resource", "resource_version": "2.0.0"})
         self.assertEqual(ret_value, test_resource)
 
     def test_findResource_not_found(self):

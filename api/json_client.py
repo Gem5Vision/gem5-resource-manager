@@ -9,8 +9,11 @@ from werkzeug.utils import secure_filename
 class JSONClient(Client):
     def __init__(self, file_path):
         self.file_path = Path('database/') / file_path
-        with open(self.file_path) as f:
-            self.resources = json.load(f)
+        self.resources = self.__get_resources(self.file_path)
+
+    def __get_resources(self, path):
+        with open(path) as f:
+            return json.load(f)
 
     def findResource(self, query):
         """
@@ -32,7 +35,7 @@ class JSONClient(Client):
         """
         found_resources = []
         for resource in self.resources:
-            if query["resource_version"] == "" or query["resource_version"] == "Latest":
+            if "resource_version" not in query or query["resource_version"] == "" or query["resource_version"] == "Latest":
                 if resource["id"] == query["id"]:
                     found_resources.append(resource)
             else:
@@ -40,18 +43,14 @@ class JSONClient(Client):
                     resource["id"] == query["id"]
                     and resource["resource_version"] == query["resource_version"]
                 ):
-                    return json_util.dumps([resource])
+                    return resource
         if not found_resources:
             return {"exists": False}
-        return json.dumps(
-            [
-                max(
-                    found_resources,
-                    key=lambda resource: tuple(
-                        map(int, resource["resource_version"].split("."))
-                    ),
-                )
-            ]
+        return max(
+            found_resources,
+            key=lambda resource: tuple(
+                map(int, resource["resource_version"].split("."))
+            ),
         )
 
     def getVersions(self, query):
@@ -79,7 +78,7 @@ class JSONClient(Client):
                 map(int, resource["resource_version"].split("."))),
             reverse=True,
         )
-        return json_util.dumps(versions)
+        return versions
 
     def updateResource(self, query):
         """
@@ -139,6 +138,8 @@ class JSONClient(Client):
         :param file_path: The file path to write the updated resources to.
         :return: A dictionary indicating the status of the insertion.
         """
+        if self.checkResourceExists(query)["exists"]:
+            return {"status": "Resource already exists"}
         self.resources.append(query)
         self.writeToFile()
         return {"status": "Inserted"}
@@ -159,7 +160,6 @@ class JSONClient(Client):
             ):
                 self.resources.remove(resource)
         self.writeToFile()
-
         return {"status": "Deleted"}
 
     def writeToFile(self):
@@ -172,7 +172,7 @@ class JSONClient(Client):
         with Path(self.file_path).open("w") as outfile:
             json.dump(self.resources, outfile, indent=4)
 
-    def validateFilePath(self, upload_folder):
+    """ def validateFilePath(self, upload_folder):
         if not self.file_path:
             return {"error": "empty"}
         response = requests.get(self.file_path)
@@ -181,4 +181,4 @@ class JSONClient(Client):
         filename = secure_filename(self.file_path)
         self.file_path = Path(upload_folder) / filename
         with Path(self.file_path).open("wb") as f:
-            f.write(response.content)
+            f.write(response.content) """

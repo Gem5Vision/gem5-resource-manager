@@ -71,7 +71,7 @@ const loadingContainer = document.getElementById("loading-container");
 
 function toggleInteractables(isBlocking) {
   const editorGroupIds = [];
-  
+
   const interactiveElems = document.querySelectorAll('button, input, select');
   document.querySelectorAll(".editorButtonGroup button").forEach(btn => {
     editorGroupIds.push(btn.id)
@@ -85,8 +85,8 @@ function toggleInteractables(isBlocking) {
     });
   } else {
     setTimeout(() => {
-    diffEditor.updateOptions({ readOnly: false })
-    loadingContainer.classList.remove("d-flex");
+      diffEditor.updateOptions({ readOnly: false })
+      loadingContainer.classList.remove("d-flex");
       interactiveElems.forEach(elems => {
         !editorGroupIds.includes(elems.id) ? elems.disabled = false : null;
       });
@@ -308,7 +308,7 @@ function find(e) {
   })
     .then((res) => res.json())
     .then((data) => {
-
+      console.log(data);
       toggleInteractables(false);
 
       if (data["exists"] == false) {
@@ -329,10 +329,10 @@ function find(e) {
             data["category"] = document.getElementById("category").value;
             originalModel.setValue(JSON.stringify(data, null, 4));
             modifiedModel.setValue(JSON.stringify(data, null, 4));
-            
+
             document.getElementById("add_new_resource").disabled = false;
             document.getElementById("add_version").disabled = true;
-            document.getElementById("delete").disabled = true;            
+            document.getElementById("delete").disabled = true;
             document.getElementById("update").disabled = true;
           });
       } else {
@@ -341,7 +341,7 @@ function find(e) {
         delete data._id;
         originalModel.setValue(JSON.stringify(data, null, 4));
         modifiedModel.setValue(JSON.stringify(data, null, 4));
-        
+
         document.getElementById("version-dropdown").value =
           data.resource_version;
         document.getElementById("category").value = data.category;
