@@ -50,11 +50,14 @@ class JSONClient(Client):
                     return resource
         if not found_resources:
             return {"exists": False}
-        return max(
-            found_resources,
-            key=lambda resource: tuple(
-                map(int, resource["resource_version"].split("."))
-            ),
+        return json.dumps(
+            max(
+                found_resources,
+                key=lambda resource: tuple(
+                    map(int, resource["resource_version"].split("."))
+                ),
+            ), 
+            sort_keys=False
         )
 
     def getVersions(self, query):

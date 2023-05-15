@@ -27,10 +27,12 @@ TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
 ALLOWED_EXTENSIONS = {"json"}
 DATABASE_TYPES = ["mongodb", "json"]
 
-resources = None
+# resources = None
 isMongo = False
 
 app = Flask(__name__)
+
+# app.config['JSON_SORT_KEYS'] = False
 
 with app.app_context():
     if not Path(UPLOAD_FOLDER).is_dir():
@@ -167,7 +169,7 @@ def validate_json_get():
 
 @app.route("/validateJSON", methods=["POST"])
 def validate_json_post():
-    global resources
+    # global resources
     temp_path = None
     if "file" not in request.files:
         return {"error": "empty"}, 400
