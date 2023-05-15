@@ -241,7 +241,6 @@ def get_existing_files():
 @app.route("/resolveConflict", methods=["GET"])
 def resolve_conflict():
     filename = request.args.get("filename")
-    path = Path(UPLOAD_FOLDER) / filename
     resolution = request.args.get("resolution")
     resolution_options = ["clearInput",
                           "openExisting", "overwrite", "newFilename"]
@@ -255,8 +254,9 @@ def resolve_conflict():
     if resolution == resolution_options[0]:
         temp_path.unlink()
         return {"success": "input cleared"}, 204
-    elif resolution == resolution_options[3]:
+    if resolution in resolution_options[-2:]:
         filename = secure_filename(request.args.get("filename"))
+        next(TEMP_UPLOAD_FOLDER.glob("*")).replace(Path(UPLOAD_FOLDER) / filename)
     if Path(temp_path).is_file():
         Path(temp_path).unlink()
     global databases
