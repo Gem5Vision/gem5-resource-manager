@@ -47,7 +47,7 @@ class JSONClient(Client):
                     resource["id"] == query["id"]
                     and resource["resource_version"] == query["resource_version"]
                 ):
-                    return resource
+                    return json.dumps(resource, sort_keys=False)
         if not found_resources:
             return {"exists": False}
         return json.dumps(

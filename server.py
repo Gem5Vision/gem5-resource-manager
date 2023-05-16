@@ -1,5 +1,5 @@
 import json
-from flask import render_template, Flask, request, redirect, url_for, Response
+from flask import render_template, Flask, request, redirect, url_for
 import os
 from dotenv import load_dotenv
 from bson import json_util
@@ -27,12 +27,8 @@ TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
 ALLOWED_EXTENSIONS = {"json"}
 DATABASE_TYPES = ["mongodb", "json"]
 
-# resources = None
-isMongo = False
 
 app = Flask(__name__)
-
-# app.config['JSON_SORT_KEYS'] = False
 
 with app.app_context():
     if not Path(UPLOAD_FOLDER).is_dir():
@@ -69,24 +65,6 @@ def login_json():
     :return: The rendered JSON login HTML template.
     """
     return render_template("jsonLogin.html")
-
-
-# @app.route("/login/<string:database_type>")
-# def login(database_type):
-#     """
-#     Renders the login HTML template based on the provided database type.
-
-#     :param database_type: The type of the database for login. Must be one of the supported database types defined in the
-#                           Flask application configuration.
-#     :return: The rendered login HTML template corresponding to the database type. Returns a 404 error template if the
-#              database type is not supported.
-#     """
-#     if database_type not in DATABASE_TYPES:
-#         return render_template("404.html")
-#     if database_type == DATABASE_TYPES[0]:
-#         return render_template("mongoDBLogin.html")
-#     if database_type == DATABASE_TYPES[1]:
-#         return render_template("jsonLogin.html")
 
 
 @app.route("/validateMongoDB", methods=["POST"])
@@ -169,7 +147,6 @@ def validate_json_get():
 
 @app.route("/validateJSON", methods=["POST"])
 def validate_json_post():
-    # global resources
     temp_path = None
     if "file" not in request.files:
         return {"error": "empty"}, 400
@@ -300,7 +277,7 @@ def editor():
     if isinstance(databases[alias], JSONClient):
         database_type = "json"
     elif isinstance(databases[alias], MongoDBClient):
-        database_type = "mongo"
+        database_type = "mongodb"
     else:
         return render_template("404.html"), 404
     return render_template("editor.html", editor_type=database_type, tagline=alias)

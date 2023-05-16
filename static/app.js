@@ -32,21 +32,24 @@ const appendAlert = (errorHeader, id, message, type) => {
   }, 5000);
 }
 
+const interactiveElems = document.querySelectorAll('button, input, select');
+
 function toggleInteractables(isBlocking) {
-  const interactiveElems = document.querySelectorAll('button, input, select');
   if (isBlocking) {
     loadingContainer.classList.add("d-flex");
     interactiveElems.forEach(elems => {
       elems.disabled = true;
     });
-  } else {
-    setTimeout(() => {
-      loadingContainer.classList.remove("d-flex");
-      interactiveElems.forEach(elems => {
-        elems.disabled = false;
-      });
-    }, 250);
-  }
+    window.scrollTo(0, 0);
+    return;
+  } 
+
+  setTimeout(() => {
+    loadingContainer.classList.remove("d-flex");
+    interactiveElems.forEach(elems => {
+      elems.disabled = false;
+    });
+  }, 250);
 }
 
 function loadPrevSession(event) {
@@ -138,7 +141,6 @@ function handleMongoURLFetch(uri, collection, database, alias) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        isMongo: true,
         uri: uri,
         collection: collection,
         database: database,
@@ -214,7 +216,6 @@ function handleRemoteJSON() {
   }
 
   const params = new URLSearchParams();
-  params.append('isMongo', 'false');
   params.append('filename', filename + ".json");
   params.append('q', url);
 
@@ -261,11 +262,9 @@ function handleUploadJSON() {
   const form = new FormData();
   form.append("file", file);
 
-  const flask_url = "/validateJSON?isMongo=false";
-
   toggleInteractables(true);
 
-  fetch(flask_url, {
+  fetch("/validateJSON", {
     method: 'POST',
     body: form
   })
@@ -346,7 +345,6 @@ function saveConflictResolution() {
 
 function handleConflictResolution(resolution, filename) {
   const params = new URLSearchParams();
-  params.append('isMongo', 'false');
   params.append('resolution', resolution);
   params.append('filename', filename !== "" ? filename + ".json" : "");
 

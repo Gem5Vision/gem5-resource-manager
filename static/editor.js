@@ -68,31 +68,32 @@ let editorType = document.getElementById('editor-type');
 editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB" : editorType.textContent.toUpperCase();
 
 const loadingContainer = document.getElementById("loading-container");
+const interactiveElems = document.querySelectorAll('button, input, select');
 
-function toggleInteractables(isBlocking) {
-  const editorGroupIds = [];
-
-  const interactiveElems = document.querySelectorAll('button, input, select');
-  document.querySelectorAll(".editorButtonGroup button").forEach(btn => {
-    editorGroupIds.push(btn.id)
+const editorGroupIds = [];
+document.querySelectorAll(".editorButtonGroup button")
+  .forEach(btn => {
+    editorGroupIds.push(btn.id);
   });
 
-  if (isBlocking) {
+function toggleInteractables(isBlocking) {
+  if (isBlocking) {  
     diffEditor.updateOptions({ readOnly: true });
     loadingContainer.classList.add("d-flex");
     interactiveElems.forEach(elems => {
       elems.disabled = true;
     });
-  } else {
-    setTimeout(() => {
-      diffEditor.updateOptions({ readOnly: false })
-      loadingContainer.classList.remove("d-flex");
-      interactiveElems.forEach(elems => {
-        !editorGroupIds.includes(elems.id) ? elems.disabled = false : null;
-      });
-    }, 250);
+    window.scrollTo(0, 0);
+    return;
   }
 
+  setTimeout(() => {
+    diffEditor.updateOptions({ readOnly: false })
+    loadingContainer.classList.remove("d-flex");
+    interactiveElems.forEach(elems => {
+      !editorGroupIds.includes(elems.id) ? elems.disabled = false : null;
+    });
+  }, 250);
 }
 
 function checkErrors() {
@@ -399,6 +400,8 @@ function showModal(event, callback) {
   };
 }
 
+let editorTitle = document.getElementById("editor-title");
+
 function showSchema() {
   if (diffEditorContainer.style.display !== "none") {
     diffEditorContainer.style.display = "none";
@@ -415,7 +418,6 @@ function showSchema() {
       btn.disabled = true;
     });
 
-    const editorTitle = document.getElementById("editor-title");
     editorTitle.children[0].style.display = "none";
     editorTitle.children[1].textContent = "Schema (Read Only)";
 
@@ -433,7 +435,6 @@ function closeSchema() {
       btn.disabled = editingActionsState[i];
     });
 
-    const editorTitle = document.getElementById("editor-title");
     editorTitle.children[0].style.display = "unset";
     editorTitle.children[1].textContent = "Edited";
 
