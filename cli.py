@@ -54,7 +54,8 @@ def addTags(id, tags):
     :param tags: The tags to add to the resource. Accepts multiple tags as arguments.
     """
     with click_spinner.spinner():
-        collection.update_one({"id": id}, {"$push": {"tags": {"$each": list(tags)}}})
+        collection.update_one(
+            {"id": id}, {"$push": {"tags": {"$each": list(tags)}}})
         print("Added ", tags, " to ", id)
 
 
@@ -69,7 +70,8 @@ def removeTags(id, tags):
     :param tags: The tags to remove from the resource. Accepts multiple tags as arguments.
     """
     with click_spinner.spinner():
-        collection.update_one({"id": id}, {"$pull": {"tags": {"$in": list(tags)}}})
+        collection.update_one(
+            {"id": id}, {"$pull": {"tags": {"$in": list(tags)}}})
         print("Removed ", tags, " from ", id)
 
 

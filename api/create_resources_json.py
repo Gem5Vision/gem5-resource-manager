@@ -298,7 +298,7 @@ class ResourceJsonCreator:
                 else:
                     resources.at[
                         index, "example_usage"
-                    ] = f"get_resource(resource_name=\"{resource['id']}\")"
+                    ] = f"obtain_resource(resource_id=\"{resource['id']}\")"
                 if resource["source"] is not None and str(resource["source"]) != "nan":
                     try:
                         if str(resource["source"]) == "nan":
