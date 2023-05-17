@@ -13,10 +13,12 @@ class DatabaseConnectionError(Exception):
 
 class MongoDBClient(Client):
     def __init__(self, mongo_uri, database_name, collection_name):
+        super().__init__()
         self.mongo_uri = mongo_uri
         self.collection_name = collection_name
         self.database_name = database_name
-        self.collection = self.__get_database(mongo_uri, database_name, collection_name)
+        self.collection = self.__get_database(
+            mongo_uri, database_name, collection_name)
 
     def __get_database(
         self,
@@ -72,7 +74,8 @@ class MongoDBClient(Client):
         else:
             resource = (
                 self.collection.find(
-                    {"id": query["id"], "resource_version": query["resource_version"]},
+                    {"id": query["id"],
+                        "resource_version": query["resource_version"]},
                     {"_id": 0},
                 )
                 .sort("resource_version", -1)
@@ -80,11 +83,9 @@ class MongoDBClient(Client):
             )
         json_resource = json_util.dumps(resource)
         res = json.loads(json_resource)
-        print(res)
         if res == []:
             return {"exists": False}
         return res[0]
-
 
     def updateResource(self, query):
         """
@@ -95,11 +96,18 @@ class MongoDBClient(Client):
         :param: json: JSON object with id, resource object, and resource_version
         :return: json_response: JSON object with status message
         """
-        # remove all keys that are not in the request
-        self.collection.replace_one(
-            {"id": query["id"], "resource_version": query["resource_version"]},
-            query,
-        )
+        original_resource = query["original_resource"]
+        modified_resource = query["resource"]
+        try:
+            self.collection.replace_one({
+                "id": original_resource["id"],
+                "resource_version": original_resource["resource_version"]
+            },
+                modified_resource,
+            )
+        except Exception as e:
+            print(e)
+            return {"status": "Resource does not exist"}
         return {"status": "Updated"}
 
     def getVersions(self, query):
@@ -112,7 +120,8 @@ class MongoDBClient(Client):
         :return: json_resource: JSON object with all resource versions
         """
         versions = self.collection.find(
-            {"id": query["id"]}, {"resource_version": 1, "_id": 0}
+            {"id": query["id"]},
+            {"resource_version": 1, "_id": 0}
         ).sort("resource_version", -1)
         # convert to json
         res = json_util.dumps(versions)
@@ -127,9 +136,11 @@ class MongoDBClient(Client):
         :param: json: JSON object with id and resource_version
         :return: json_response: JSON object with status message
         """
-        self.collection.delete_one(
-            {"id": query["id"], "resource_version": query["resource_version"]}
-        )
+        self.collection.delete_one({
+            "id": query["id"],
+            "resource_version": query["resource_version"]
+        })
+        # self._addToStack({"operation": "delete", "resource": query})
         return {"status": "Deleted"}
 
     def insertResource(self, query):
@@ -158,7 +169,8 @@ class MongoDBClient(Client):
         """
         resource = (
             self.collection.find(
-                {"id": query["id"], "resource_version": query["resource_version"]},
+                {"id": query["id"],
+                    "resource_version": query["resource_version"]},
                 {"_id": 0},
             )
             .sort("resource_version", -1)

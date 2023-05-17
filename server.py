@@ -32,14 +32,14 @@ app = Flask(__name__)
 
 
 # Warning: Deprecated in Flask Version 2.3
-# Use app.json.sort_keys = False if using default JSONProvider 
-# else if using custom JSONProvider, use 
+# Use app.json.sort_keys = False if using default JSONProvider
+# else if using custom JSONProvider, use
 # sort_key = False in custom JSONProvider class definition
-# Sorts keys in any serialized dict 
-# Default = True 
-# Set False to persevere JSON key order 
+# Sorts keys in any serialized dict
+# Default = True
+# Set False to persevere JSON key order
 app.config["JSON_SORT_KEYS"] = False
-
+app.json.sort_keys = False
 
 with app.app_context():
     if not Path(UPLOAD_FOLDER).is_dir():
@@ -151,7 +151,8 @@ def validate_json_get():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        url_for("editor", type=DATABASE_TYPES[1],
+                filename=filename, alias=filename),
         302,
     )
 
@@ -177,7 +178,8 @@ def validate_json_post():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        url_for("editor", type=DATABASE_TYPES[1],
+                filename=filename, alias=filename),
         302,
     )
 
@@ -193,7 +195,8 @@ def existing_json():
             print(e)
             return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        url_for("editor", type=DATABASE_TYPES[1],
+                filename=filename, alias=filename),
         302,
     )
 
@@ -216,7 +219,8 @@ def get_existing_files():
 def resolve_conflict():
     filename = request.args.get("filename")
     resolution = request.args.get("resolution")
-    resolution_options = ["clearInput", "openExisting", "overwrite", "newFilename"]
+    resolution_options = ["clearInput",
+                          "openExisting", "overwrite", "newFilename"]
     temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
     if not resolution:
         print("no resolution")
@@ -240,7 +244,8 @@ def resolve_conflict():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1], filename=filename, alias=filename),
+        url_for("editor", type=DATABASE_TYPES[1],
+                filename=filename, alias=filename),
         302,
     )
 
@@ -355,7 +360,19 @@ def update():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.updateResource(request.json["resource"])
+    original_resource = request.json["original_resource"]
+    modified_resource = request.json["resource"]
+    status = database.updateResource({
+        "original_resource": original_resource,
+        "resource": modified_resource,
+    })
+    database._addToStack({
+        "operation": "update",
+        "resource": {
+            "original_resource": modified_resource,
+            "resource": original_resource
+        }})
+    return status
 
 
 @app.route("/versions", methods=["POST"])
@@ -433,7 +450,8 @@ def getFields():
 
     :return: A JSON response containing the `empty_object` with the required fields for the specified category.
     """
-    empty_object = {"category": request.json["category"], "id": request.json["id"]}
+    empty_object = {
+        "category": request.json["category"], "id": request.json["id"]}
     validator = jsonschema.Draft7Validator(schema)
     errors = list(validator.iter_errors(empty_object))
     for error in errors:
@@ -478,7 +496,13 @@ def delete():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.deleteResource(request.json)
+    resource = request.json["resource"]
+    status = database.deleteResource(resource)
+    database._addToStack({
+        "operation": "delete",
+        "resource": resource
+    })
+    return status
 
 
 @app.route("/insert", methods=["POST"])
@@ -503,7 +527,36 @@ def insert():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.insertResource(request.json["resource"])
+    resource = request.json["resource"]
+    status = database.insertResource(resource)
+    database._addToStack({"operation": "insert", "resource": resource})
+    return status
+
+
+@app.route("/undo", methods=["POST"])
+def undo():
+    """
+    Performs an undo operation on database for resource at the top of the stack.
+
+    Database actions add operation to undo stack and when undo is called, stack is popped and opposite of operation is
+    performed.
+
+    If original action was "insert" then "delete" is called on 
+    """
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.undoOperation()
+
+
+@app.route("/redo", methods=["POST"])
+def redo():
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.redoOperation()
 
 
 @app.errorhandler(404)
@@ -546,4 +599,4 @@ def checkExists():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)

@@ -117,6 +117,8 @@ function update(e) {
     return;
   }
   let json = JSON.parse(modifiedModel.getValue());
+  let original_json = JSON.parse(originalModel.getValue());
+
   let id = document.getElementById("id").value;
   console.log(json);
   fetch("/update", {
@@ -125,8 +127,8 @@ function update(e) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: id,
       resource: json,
+      original_resource: original_json,
       alias: document.getElementById("alias").innerText,
     }),
   })
@@ -228,6 +230,7 @@ function deleteRes(e) {
   let resource_version = JSON.parse(originalModel.getValue())[
     "resource_version"
   ];
+  let json = JSON.parse(originalModel.getValue());
   console.log(resource_version);
   fetch("/delete", {
     method: "POST",
@@ -235,8 +238,7 @@ function deleteRes(e) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: id,
-      resource_version: resource_version,
+      resource: json,
       alias: document.getElementById("alias").innerText,
     }),
   })
@@ -451,4 +453,30 @@ function saveSession() {
   setTimeout(function () {
     savedConfirmation.style.opacity = 0;
   }, 3000);
+}
+
+function changes(event, op) {
+  console.log(`OPERATION: ${op}`);
+
+  toggleInteractables(true);
+
+  if (!["undo", "redo"].includes(op)) {
+    alert("INVALID OP!");
+    return;
+  }
+
+  fetch(`/${op}`, {
+    method: "POST", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      alias: document.getElementById("alias").innerText,
+    }),
+  })
+  .then((res) => {
+    toggleInteractables(false);
+    console.log(res);
+    find(event);
+  })
 }

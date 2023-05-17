@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 
 class JSONClient(Client):
     def __init__(self, file_path):
+        super().__init__()
         self.file_path = Path("database/") / file_path
         self.resources = self.__get_resources(self.file_path)
 
@@ -75,7 +76,8 @@ class JSONClient(Client):
         versions = []
         for resource in self.resources:
             if resource["id"] == query["id"]:
-                versions.append({"resource_version": resource["resource_version"]})
+                versions.append(
+                    {"resource_version": resource["resource_version"]})
         versions.sort(
             key=lambda resource: tuple(
                 map(int, resource["resource_version"].split("."))
@@ -98,14 +100,17 @@ class JSONClient(Client):
         :param file_path: The file path to save the updated resources.
         :return: A dictionary indicating the status of the update.
         """
-
+        original_resource = query["original_resource"]
+        modified_resource = query["resource"]
+        if original_resource["id"] != modified_resource["id"] and original_resource["resource_version"] != modified_resource["resource_version"]:
+            return {"status": "Cannot change resource id"}
         for resource in self.resources:
             if (
-                resource["id"] == query["id"]
-                and resource["resource_version"] == query["resource_version"]
+                resource["id"] == original_resource["id"]
+                and resource["resource_version"] == original_resource["resource_version"]
             ):
                 self.resources.remove(resource)
-                self.resources.append(query)
+                self.resources.append(modified_resource)
 
         self.writeToFile()
         return {"status": "Updated"}
