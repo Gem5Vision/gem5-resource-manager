@@ -23,12 +23,10 @@
           <select id="category" class="form-select mt-1 input-shadow" aria-label="Default select example"></select>
           <input class="btn btn-outline-primary main-text-regular align-self-end btn-box-shadow mt-3" type="submit" onclick="find(event)" value="Find" />
         </form>
-
-        <div class="d-flex flex-row align-items-center justify-content-center gap-3 mt-3">
-          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="undo-operation" onclick="changes(event, 'undo')">Undo</button>
-          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="redo-operation" onclick="changes(event, 'redo')">Redo</button>
+        <div class="d-flex flex-row align-items-center justify-content-center gap-3 mt-3 revisionButtonGroup">
+          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="undo-operation" onclick="executeRevision(event, 'undo')">Undo</button>
+          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="redo-operation" onclick="executeRevision(event, 'redo')">Redo</button>
         </div>
-
         <div class="btn-group-vertical gap-3 mt-3 mb-3" role="group" aria-label="Other Database Actions">
           <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Other Actions</h5>
           <div>

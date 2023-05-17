@@ -535,14 +535,6 @@ def insert():
 
 @app.route("/undo", methods=["POST"])
 def undo():
-    """
-    Performs an undo operation on database for resource at the top of the stack.
-
-    Database actions add operation to undo stack and when undo is called, stack is popped and opposite of operation is
-    performed.
-
-    If original action was "insert" then "delete" is called on 
-    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -557,6 +549,15 @@ def redo():
         return {"error": "database not found"}, 400
     database = databases[alias]
     return database.redoOperation()
+
+
+@app.route("/getRevisionStatus", methods=["POST"])
+def get_revision_status():
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    return database.get_revision_status()
 
 
 @app.errorhandler(404)
@@ -599,4 +600,4 @@ def checkExists():
 
 
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)

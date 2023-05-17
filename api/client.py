@@ -86,3 +86,10 @@ class Client(ABC):
         self.__undo_stack.append(operation)
         self.__redo_stack.clear()
         return {"status": "Added to stack"}
+    
+    def get_revision_status(self):
+        return {
+            "undo": 1 if len(self.__undo_stack) == 0 else 0,
+            "redo": 1 if len(self.__redo_stack) == 0 else 0    
+        }
+    

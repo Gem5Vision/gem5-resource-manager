@@ -67,11 +67,16 @@ require(["vs/editor/editor.main"], () => {
 let editorType = document.getElementById('editor-type');
 editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB" : editorType.textContent.toUpperCase();
 
+const revisionButtons = [document.getElementById("undo-operation"), document.getElementById("redo-operation")];
+revisionButtons.forEach(btn => {
+  btn.disabled = true;
+});
+
 const loadingContainer = document.getElementById("loading-container");
 const interactiveElems = document.querySelectorAll('button, input, select');
 
 const editorGroupIds = [];
-document.querySelectorAll(".editorButtonGroup button")
+document.querySelectorAll(".editorButtonGroup button, .revisionButtonGroup button")
   .forEach(btn => {
     editorGroupIds.push(btn.id);
   });
@@ -93,6 +98,7 @@ function toggleInteractables(isBlocking) {
     interactiveElems.forEach(elems => {
       !editorGroupIds.includes(elems.id) ? elems.disabled = false : null;
     });
+    updateRevisionBtnsDisabledAttr();
   }, 250);
 }
 
@@ -455,17 +461,14 @@ function saveSession() {
   }, 3000);
 }
 
-function changes(event, op) {
-  console.log(`OPERATION: ${op}`);
-
-  toggleInteractables(true);
-
-  if (!["undo", "redo"].includes(op)) {
-    alert("INVALID OP!");
+function executeRevision(event, operation) {
+  if (!["undo", "redo"].includes(operation)) {
+    alert("INVALID OPERATION!");
     return;
   }
 
-  fetch(`/${op}`, {
+  toggleInteractables(true);
+  fetch(`/${operation}`, {
     method: "POST", 
     headers: {
       "Content-Type": "application/json",
@@ -474,9 +477,26 @@ function changes(event, op) {
       alias: document.getElementById("alias").innerText,
     }),
   })
-  .then((res) => {
+  .then(() => {
     toggleInteractables(false);
-    console.log(res);
     find(event);
+  })
+}
+
+function updateRevisionBtnsDisabledAttr() {
+  fetch("/getRevisionStatus", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      alias: document.getElementById("alias").innerText,
+    }),
+  })
+  .then((res) => res.json())
+  .then((data) => {
+    console.log(`REVISION BUTTON DISABLED STATUS:\n UNDO: ${!!data.undo}, REDO: ${!!data.redo}`);
+    revisionButtons[0].disabled = data.undo;
+    revisionButtons[1].disabled = data.redo;
   })
 }
