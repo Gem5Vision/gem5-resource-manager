@@ -452,13 +452,23 @@ function closeSchema() {
 }
 
 function saveSession() {
-  localStorage.setItem("savedSession", `${window.location.pathname + window.location.search}`);
-  const savedConfirmation = document.getElementById("saved-confirmation");
-  savedConfirmation.style.opacity = 1;
-
-  setTimeout(function () {
-    savedConfirmation.style.opacity = 0;
-  }, 3000);
+  fetch("/saveSession", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      alias: document.getElementById("alias").innerText,
+    }),
+  })
+  .then((res) => res.json())
+  .then((data) => {
+    sessionStorage.setItem("savedSession", JSON.stringify(data));
+    const saveSessionBtn = document.getElementById("save-session");
+  
+    saveSessionBtn.innerText = "Session Saved";
+    saveSessionBtn.disabled = true;
+  })
 }
 
 function executeRevision(event, operation) {

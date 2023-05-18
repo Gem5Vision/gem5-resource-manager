@@ -36,6 +36,10 @@ class Client(ABC):
     def deleteResource(self, query):
         raise NotImplementedError
 
+    @abstractmethod
+    def save_session(self):
+        raise NotImplementedError
+    
     def undoOperation(self):
         """
         This function undoes the last operation performed on the database.

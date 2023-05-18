@@ -191,3 +191,10 @@ class JSONClient(Client):
         self.file_path = Path(upload_folder) / filename
         with Path(self.file_path).open("wb") as f:
             f.write(response.content) """
+
+    def save_session(self):
+        session = {
+            'client': 'json',
+            'filename': self.file_path.name,
+        }
+        return session

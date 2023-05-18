@@ -181,3 +181,12 @@ class MongoDBClient(Client):
         if res == []:
             return {"exists": False}
         return {"exists": True}
+
+    def save_session(self):
+        session = {
+            'client': 'mongodb',
+            'uri': self.mongo_uri,
+            'database': self.database_name,
+            'collection': self.collection_name
+        }
+        return session

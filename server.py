@@ -96,8 +96,8 @@ def validate_mongodb():
     """
     global databases
     print(request.json)
-    if request.json["alias"] in databases:
-        return {"error": "alias already exists"}, 409
+    # if request.json["alias"] in databases:
+    #     return {"error": "alias already exists"}, 409
     try:
         databases[request.json["alias"]] = MongoDBClient(
             mongo_uri=request.json["uri"],
@@ -558,6 +558,17 @@ def get_revision_status():
         return {"error": "database not found"}, 400
     database = databases[alias]
     return database.get_revision_status()
+
+
+@app.route("/saveSession", methods=["POST"])
+def save_session():
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    database = databases[alias]
+    session = database.save_session()
+    session["alias"] = alias
+    return session
 
 
 @app.errorhandler(404)
