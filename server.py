@@ -65,7 +65,7 @@ def login_mongodb():
 
     :return: The rendered MongoDB login HTML template.
     """
-    return render_template("mongoDBLogin.html")
+    return render_template("login/login_mongodb.html")
 
 
 @app.route("/login/json")
@@ -75,7 +75,7 @@ def login_json():
 
     :return: The rendered JSON login HTML template.
     """
-    return render_template("jsonLogin.html")
+    return render_template("login/login_json.html")
 
 
 @app.route("/validateMongoDB", methods=["POST"])

@@ -68,6 +68,8 @@ function loadPrevSession(event) {
   if (savedSession["client"] === "mongodb") {
     handleMongoURLFetch(savedSession["uri"], savedSession["collection"], savedSession["database"], savedSession["alias"]);
   } else {
+    toggleInteractables(true);
+    
     fetch(`/existingJSON?filename=${savedSession["filename"]}`,
     {
       method: 'GET',
@@ -76,6 +78,8 @@ function loadPrevSession(event) {
       }
     })
     .then((res) => {
+      toggleInteractables(false);
+
       if (res.status !== 200) {
         appendAlert('Error!', 'jsonSession', 'JSON Session Did Not Resume!', 'danger');
       }

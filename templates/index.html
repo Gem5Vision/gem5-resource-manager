@@ -15,8 +15,12 @@
         </div>
         <div class="d-flex flex-column justify-content-center mb-3 buttonGroup">
           <button type="button" class="btn btn-outline-primary btn-box-shadow mt-2 mb-2" onclick="loadPrevSession(event)">Load Previous Session</button>
-          <a href="/login/mongodb" class="btn btn-outline-primary btn-box-shadow mt-2 mb-2">MongoDB</a>
-          <a href="/login/json" class="btn btn-outline-primary btn-box-shadow mt-2 mb-2">JSON</a>
+          <a href="{{ url_for('login_mongodb') }}">
+            <button class="btn btn-outline-primary btn-box-shadow mt-2 mb-2 w-100">MongoDB</button>
+          </a>
+          <a href="{{ url_for('login_json') }}">
+            <button class="btn btn-outline-primary btn-box-shadow mt-2 mb-2 w-100">JSON</button>
+          </a>
         </div>
       </div>
     </div>
