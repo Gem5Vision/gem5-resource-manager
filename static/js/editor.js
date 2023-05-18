@@ -72,35 +72,11 @@ revisionButtons.forEach(btn => {
   btn.disabled = true;
 });
 
-const loadingContainer = document.getElementById("loading-container");
-const interactiveElems = document.querySelectorAll('button, input, select');
-
 const editorGroupIds = [];
 document.querySelectorAll(".editorButtonGroup button, .revisionButtonGroup button")
   .forEach(btn => {
     editorGroupIds.push(btn.id);
   });
-
-function toggleInteractables(isBlocking) {
-  if (isBlocking) {  
-    diffEditor.updateOptions({ readOnly: true });
-    loadingContainer.classList.add("d-flex");
-    interactiveElems.forEach(elems => {
-      elems.disabled = true;
-    });
-    window.scrollTo(0, 0);
-    return;
-  }
-
-  setTimeout(() => {
-    diffEditor.updateOptions({ readOnly: false })
-    loadingContainer.classList.remove("d-flex");
-    interactiveElems.forEach(elems => {
-      !editorGroupIds.includes(elems.id) ? elems.disabled = false : null;
-    });
-    updateRevisionBtnsDisabledAttr();
-  }, 250);
-}
 
 function checkErrors() {
   let errors = monaco.editor.getModelMarkers({ resource: modifiedModel.uri });
@@ -302,7 +278,10 @@ function find(e) {
 
   closeSchema();
 
-  toggleInteractables(true);
+  toggleInteractables(true, editorGroupIds, () => {
+    diffEditor.updateOptions({ readOnly: true }); 
+    updateRevisionBtnsDisabledAttr(); 
+  });
 
   fetch("/find", {
     method: "POST",
@@ -318,7 +297,10 @@ function find(e) {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      toggleInteractables(false);
+      toggleInteractables(false, editorGroupIds, () => { 
+        diffEditor.updateOptions({ readOnly: false }); 
+        updateRevisionBtnsDisabledAttr(); 
+      });
 
       if (data["exists"] == false) {
         fetch("/keys", {
@@ -477,7 +459,10 @@ function executeRevision(event, operation) {
     return;
   }
 
-  toggleInteractables(true);
+  toggleInteractables(true, editorGroupIds, () => { 
+    diffEditor.updateOptions({ readOnly: true }); 
+    updateRevisionBtnsDisabledAttr(); 
+  });
   fetch(`/${operation}`, {
     method: "POST", 
     headers: {
@@ -488,7 +473,10 @@ function executeRevision(event, operation) {
     }),
   })
   .then(() => {
-    toggleInteractables(false);
+    toggleInteractables(false, editorGroupIds, () => {
+      diffEditor.updateOptions({ readOnly: false }); 
+      updateRevisionBtnsDisabledAttr(); 
+    });
     find(event);
   })
 }

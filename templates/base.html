@@ -27,18 +27,12 @@
               <div class="navbar-nav main-text-regular">
                 <a class="nav-link" href="https://gem5vision.github.io/gem5-resources-website/">gem5 Resources</a>
                 <a class="nav-link" href="{{ url_for('help') }}">Help</a>
-                <a id="reset" class="nav-link" role="button">Reset</a>
+                <a id="reset" class="nav-link" role="button" onclick="reset()">Reset</a>
               </div>
           </div>
         </div>
       </div>
     </nav>
-    <script>
-      document.getElementById("reset").addEventListener("click", () => {
-        localStorage.removeItem("savedSession");
-        window.location.href = "/";
-      });
-    </script>
     <main>
       <div id="liveAlertPlaceholder"></div>
       <div id="loading-container" class="align-items-center justify-content-center">
@@ -50,5 +44,6 @@
       {% block main %}{% endblock %}
     </main>
     {% block body %}{% endblock %}
+    <script src="/static/js/app.js"></script>
   </body>
 </html>
