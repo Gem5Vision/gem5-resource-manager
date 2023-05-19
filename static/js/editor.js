@@ -363,6 +363,24 @@ window.onload = () => {
         option.innerHTML = category;
         select.appendChild(option);
       });
+      fetch("/keys", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          category: document.getElementById("category").value,
+          id: "",
+        }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        data["id"] = "";
+        data["category"] = document.getElementById("category").value;
+        originalModel.setValue(JSON.stringify(data, null, 4));
+        modifiedModel.setValue(JSON.stringify(data, null, 4));
+        document.getElementById("add_new_resource").disabled = false;
+      });
     });
 
   const resetInstance = document.getElementById("update-instance");
