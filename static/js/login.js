@@ -12,7 +12,7 @@ function handleEnteredURI() {
   const collection = document.getElementById('collection').value;
   const database = document.getElementById('database').value;
   const alias = document.getElementById('alias').value;
-  const emptyInputs = [{ type: "Collection", value: collection }, { type: "Database", value: database }, { type: "URI", value: uri }];
+  const emptyInputs = [{ type: "Alias", value: alias }, { type: "Collection", value: collection }, { type: "Database", value: database }, { type: "URI", value: uri }];
   let error = false;
 
   for (let i = 0; i < emptyInputs.length; i++) {
@@ -39,7 +39,7 @@ function handleGenerateURI() {
   const alias = document.getElementById('aliasGenerate').value;
   const options = document.getElementById('options').value.split(",");
   let generatedURI = "";
-  const emptyInputs = [{ type: "Host", value: host }, { type: "Collection", value: collection }, { type: "Database", value: database }];
+  const emptyInputs = [{ type: "Alias", value: alias }, { type: "Host", value: host }, { type: "Collection", value: collection }, { type: "Database", value: database }];
   let error = false;
 
   for (let i = 0; i < emptyInputs.length; i++) {

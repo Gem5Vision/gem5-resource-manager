@@ -22,12 +22,12 @@
             <div class="tab-content mt-5" id="tabContent">
               <div class="tab-pane fade show active" id="enter-uri-panel" role="tabpanel">
                 <form class="form-outline d-flex flex-column mt-3 panel-text-styling form-input-shadow">
-                  <label for="collection" class="main-text-semi">Collection</label>
+                  <label for="alias" class="main-text-semi">Alias</label>
+                  <input class="form-control mt-1 main-text-regular" type="text" id="alias" placeholder="Enter Alias..." />
+                  <label for="collection" class="main-text-semi mt-3">Collection</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="collection" placeholder="Enter Collection Name..." />
                   <label for="database" class="main-text-semi mt-3">Database</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="database" placeholder="Enter Database Name..." />
-                  <label for="alias" class="main-text-semi mt-3">Display Alias (Optional)</label>
-                  <input class="form-control mt-1 main-text-regular" type="text" id="alias" placeholder="Enter Alias..." />
                   <label for="uri" class="main-text-semi mt-3">MongoDB URI</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="uri" name="uri" placeholder="Enter URI..." />
                 </form>
@@ -41,6 +41,8 @@
                     </div>
                     <span class="">DNS Seed List</span>
                   </div>
+                  <label for="alias" class="main-text-semi mt-3">Alias</label>
+                  <input class="form-control mt-1 main-text-regular" type="text" id="aliasGenerate" placeholder="Enter Alias..." />
                   <label for="username" class="main-text-semi mt-3">Username (Optional)</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="username" placeholder="Enter Username..." />
                   <label for="password" class="main-text-semi mt-3">Password (Optional)</label>
@@ -51,8 +53,6 @@
                   <input class="form-control mt-1 main-text-regular" type="text" id="collectionGenerate" placeholder="Enter Collection..." />
                   <label for="database" class="main-text-semi mt-3">Database</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="databaseGenerate" placeholder="Enter Database..." />
-                  <label for="alias" class="main-text-semi mt-3">Display Alias (Optional)</label>
-                  <input class="form-control mt-1 main-text-regular" type="text" id="aliasGenerate" placeholder="Enter Alias..." />
                   <label for="options" class="main-text-semi mt-3">Options (Optional)</label>
                   <input class="form-control mt-1 main-text-regular" type="text" id="options" value="retryWrites=true,w=majority" />
                 </form>
