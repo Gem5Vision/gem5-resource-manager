@@ -31,14 +31,9 @@ DATABASE_TYPES = ["mongodb", "json"]
 app = Flask(__name__)
 
 
-# Warning: Deprecated in Flask Version 2.3
-# Use app.json.sort_keys = False if using default JSONProvider
-# else if using custom JSONProvider, use
-# sort_key = False in custom JSONProvider class definition
 # Sorts keys in any serialized dict
 # Default = True
 # Set False to persevere JSON key order
-app.config["JSON_SORT_KEYS"] = False
 app.json.sort_keys = False
 
 with app.app_context():
