@@ -468,8 +468,6 @@ function showSaveSessionModal() {
 function saveSession() {
   bootstrap.Modal.getInstance(document.getElementById("saveSessionModal")).hide();
   
-  document.getElementById("saveSessionForm").reset();
-
   toggleInteractables(true);
   
   fetch("/saveSession", {
@@ -483,6 +481,8 @@ function saveSession() {
     }),
   })
   .then((res) => {
+    document.getElementById("saveSessionForm").reset();
+    
     toggleInteractables(false);
 
     if (res.status === 400) {
