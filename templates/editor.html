@@ -41,7 +41,7 @@
           </div>
           <div>
             <div class="d-flex align-items-center">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="save-session" onclick="saveSession()">Save Session</button>
+              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="showSaveSessionModal" onclick="showSaveSessionModal()">Save Session</button>
             </div>
           </div>
           <div>
@@ -89,6 +89,36 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button id="confirm" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="saveSessionModal" tabindex="-1" aria-labelledby="saveSessionModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header secondary-text-semi">
+          <h5 class="modal-title" id="saveSessionLabel">Save Session</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              {% if saved_session %}
+                <h4 class="main-text-semi text-center d-flex flex-column mb-3">
+                  <span>Warning!</span>
+                  <span>Existing Saved Session of Same Alias Will Be Overwritten!</span>
+                </h4>
+              {% endif %}  
+              <h4 class="main-text-semi text-center">Provide a Password to Secure and Save this Session With.</h4>
+            </div>
+            <form id="saveSessionForm" class="row">
+              <label for="session-password" class="form-label main-text-regular ps-1 mt-3">Enter Password</label>
+              <input type="password" class="form-control input-shadow main-text-regular" id="session-password" placeholder="Password...">
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSession" type="button" class="btn btn-outline-primary" onclick="saveSession()">Save Session</button>
         </div>
       </div>
     </div>

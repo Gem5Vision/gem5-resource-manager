@@ -13,9 +13,17 @@ import markdown
 
 from werkzeug.utils import secure_filename
 
+from cryptography.fernet import Fernet, InvalidToken
+from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+import base64
+
+from cryptography.exceptions import InvalidSignature 
+
 from pathlib import Path
 
 databases = {}
+
+saved_sessions_alias = []
 
 schema = {}
 with open("schema/schema.json", "r") as f:
@@ -24,12 +32,13 @@ with open("schema/schema.json", "r") as f:
 
 UPLOAD_FOLDER = Path("database/")
 TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
+SESSION_FILE = Path("instance/sessions.json")
 ALLOWED_EXTENSIONS = {"json"}
 DATABASE_TYPES = ["mongodb", "json"]
 
 
-app = Flask(__name__)
-
+app = Flask(__name__, instance_relative_config=True)
+app.config.from_pyfile('config.py')
 
 # Sorts keys in any serialized dict
 # Default = True
@@ -41,6 +50,9 @@ with app.app_context():
         Path(UPLOAD_FOLDER).mkdir()
     if not Path(TEMP_UPLOAD_FOLDER).is_dir():
         Path(TEMP_UPLOAD_FOLDER).mkdir()
+    if not Path(SESSION_FILE).is_file():
+        with Path(SESSION_FILE).open("w") as f:
+            json.dump({}, f, indent=4)
 
 
 @app.route("/")
@@ -103,6 +115,24 @@ def validate_mongodb():
         return {"error": str(e)}, 400
     return redirect(
         url_for("editor", type=DATABASE_TYPES[0], alias=request.json["alias"]),
+        302,
+    )
+
+
+@app.route("/validateMongoDB", methods=["GET"])
+def validate_mongodb_get():
+    global databases
+    args = request.args
+    try:
+        databases[args.get("alias")] = MongoDBClient(
+            mongo_uri=urllib.parse.unquote(args.get("uri")),
+            database_name=args.get("database"),
+            collection_name=args.get("collection"),
+        )
+    except Exception as e:
+        return {"error": str(e)}, 400
+    return redirect(
+        url_for("editor", type=DATABASE_TYPES[0], alias=args.get("alias")),
         302,
     )
 
@@ -291,7 +321,7 @@ def editor():
         database_type = "mongodb"
     else:
         return render_template("404.html"), 404
-    return render_template("editor.html", editor_type=database_type, tagline=alias)
+    return render_template("editor.html", editor_type=database_type, tagline=alias, saved_session=any(session == alias for session in saved_sessions_alias))
 
 
 @app.route("/help")
@@ -560,10 +590,59 @@ def save_session():
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
-    database = databases[alias]
-    session = database.save_session()
-    session["alias"] = alias
-    return session
+    session = databases[alias].save_session()
+    try:
+        key = base64.urlsafe_b64encode(Scrypt(salt=app.secret_key, length=32, n=2**16, r=8, p=1).derive(request.json["password"].encode()))
+        fernet = Fernet(key)
+        encrypted_cipher = fernet.encrypt(json.dumps(session).encode())
+    except (TypeError, ValueError):
+        return {"error": "Failed to Encrypt Session!"}, 400
+    with (SESSION_FILE).open("r") as f:
+        file_data = json.load(f)
+    file_data[alias] = encrypted_cipher.decode() 
+    with (SESSION_FILE).open("w") as f:
+        json.dump(file_data, f, indent=4)
+    return {"success": "session saved"}, 200
+
+
+@app.route("/getSavedSessionsAliasList")
+def get_saved_sessions_alias_list():
+    global saved_sessions_alias
+    with (SESSION_FILE).open("r") as f:
+        saved_sessions = json.load(f)
+    saved_sessions_alias = list(saved_sessions.keys())
+    return saved_sessions_alias
+
+
+@app.route("/loadSession", methods=["POST"])
+def load_session():
+    with (SESSION_FILE).open("r") as f:
+        sessions = json.load(f)
+    if not sessions[request.json["alias"]]:
+        return {"error": "Alias not Found in Saved Sessions"}, 400
+    try:
+        key = base64.urlsafe_b64encode(Scrypt(salt=app.secret_key, length=32, n=2**16, r=8, p=1).derive(request.json["password"].encode()))
+        fernet = Fernet(key)
+        decrypted_cipher = json.loads(fernet.decrypt(sessions[request.json["alias"]]))
+    except (InvalidSignature, InvalidToken):
+        return {"error": "Incorrect Password! Please Try Again!"}, 400
+    if decrypted_cipher["client"] == DATABASE_TYPES[0]:
+        return redirect(
+            url_for("validate_mongodb_get", 
+                    alias=request.json["alias"], 
+                    collection=decrypted_cipher["collection"], 
+                    database=decrypted_cipher["database"], 
+                    uri=decrypted_cipher["uri"],
+            ),
+            302,
+        )
+    elif decrypted_cipher["client"] == DATABASE_TYPES[1]:
+        return redirect(
+            url_for("existing_json", filename=decrypted_cipher["filename"]),
+            302,
+        )
+    else:
+        return {"error": "Invalid Client Type!"}, 409
 
 
 @app.errorhandler(404)

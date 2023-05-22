@@ -3,7 +3,6 @@ const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 const interactiveElems = document.querySelectorAll('button, input, select');
 
 function reset() {
-  sessionStorage.removeItem("savedSession");
   window.location.href = "/";
 }
 

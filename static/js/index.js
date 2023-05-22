@@ -1,62 +1,64 @@
-function loadPrevSession(event) {
-  event.preventDefault();
-  const savedSession = JSON.parse(sessionStorage.getItem("savedSession"));
-  if (!savedSession) {
-    appendAlert('Error!', 'savedSession', 'No Saved Session!', 'danger');
-    return;
-  }
-  
-  if (!["mongodb", "json"].includes(savedSession["client"])) {
-    appendAlert('Error!', 'invalidSessionType', 'Saved Session of Invalid Client Type!', 'danger');
-    return;
-  }
+window.onload = () => {
+  fetch("/getSavedSessionsAliasList")
+  .then((res) => res.json())
+  .then((data) => {
+    let select = document.getElementById("sessions-dropdown");
+    if (data.length === 0) {
+      data = ["No Existing Files"];
+      document.getElementById("showSavedSessionModal").disabled = true;
+      return;
+    }
+    data.forEach((files) => {
+      let option = document.createElement("option");
+      option.value = files;
+      option.innerHTML = files;
+      select.appendChild(option);
+    });
+  })
+}
 
-  if (savedSession["client"] === "mongodb") {
-    toggleInteractables(true);
-    fetch("/validateMongoDB",
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          uri: savedSession["uri"],
-          collection: savedSession["collection"],
-          database: savedSession["database"],
-          alias: savedSession["alias"]
-        })
-      })
-      .then((res) => {
-        toggleInteractables(false);
-        if (!res.ok) {
-          res.json()
-            .then(error => {
-              appendAlert('Error!', 'mongodbValidationError', `${error.error}`, 'danger');
-            });
-          return;
-        }
-        res.redirected ? window.location = res.url : appendAlert('Error!', 'invalidRes', 'Invalid Server Response!', 'danger');
-      })
-  } else {
-    toggleInteractables(true);
-    
-    fetch(`/existingJSON?filename=${savedSession["filename"]}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+const loadSessionBtn = document.getElementById("loadSession");
+loadSessionBtn.disabled = true;
+
+let password = document.getElementById("session-password");
+password.addEventListener("input", () => {
+  loadSessionBtn.disabled = password.value === "";
+});
+
+function showSavedSessionModal() {
+  const savedSessionModal = new bootstrap.Modal(document.getElementById('savedSessionModal'), { focus: true, keyboard: false });
+  savedSessionModal.show();
+}
+
+function loadSession() {
+  bootstrap.Modal.getInstance(document.getElementById("savedSessionModal")).hide();
+
+  toggleInteractables(true);
+
+  fetch("/loadSession", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      alias: document.getElementById("sessions-dropdown").value,
+      password: document.getElementById("session-password").value
     })
-    .then((res) => {
-      toggleInteractables(false);
+  })
+  .then((res) => {
+    document.getElementById("session-password").value = "";
 
-      if (res.status !== 200) {
-        appendAlert('Error!', 'jsonSession', 'JSON Session Did Not Resume!', 'danger');
-      }
+    toggleInteractables(false);
 
-      if (res.redirected) {
-        window.location = res.url;
-      }
-    })
-  } 
+    if (res.status !== 200) {
+      res.json()
+      .then((data) => {
+        appendAlert('Error!', 'invalidStatus', `${data["error"]}`, 'danger');
+      })
+    }
+
+    if (res.redirected) {
+      window.location = res.url
+    }
+  })
 }

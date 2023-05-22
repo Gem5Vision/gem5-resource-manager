@@ -385,7 +385,6 @@ window.onload = () => {
 
   const resetInstance = document.getElementById("update-instance");
   resetInstance.addEventListener("click", () => {
-    localStorage.removeItem("savedSession");
     window.location = `/login/${new URL(window.location).searchParams.get("type") === "mongodb"
       ? "mongodb"
       : "json"
@@ -451,7 +450,28 @@ function closeSchema() {
   }
 }
 
+const saveSessionBtn = document.getElementById("saveSession");
+saveSessionBtn.disabled = true;
+
+let password = document.getElementById("session-password");
+password.addEventListener("input", () => {
+  saveSessionBtn.disabled = password.value === "";
+});
+
+function showSaveSessionModal() {
+  const saveSessionModal = new bootstrap.Modal(document.getElementById('saveSessionModal'), { 
+    focus: true, keyboard: false 
+  });
+  saveSessionModal.show();
+}
+
 function saveSession() {
+  bootstrap.Modal.getInstance(document.getElementById("saveSessionModal")).hide();
+  
+  document.getElementById("saveSessionForm").reset();
+
+  toggleInteractables(true);
+  
   fetch("/saveSession", {
     method: "POST",
     headers: {
@@ -459,13 +479,20 @@ function saveSession() {
     },
     body: JSON.stringify({
       alias: document.getElementById("alias").innerText,
+      password: document.getElementById("session-password").value
     }),
   })
-  .then((res) => res.json())
-  .then((data) => {
-    sessionStorage.setItem("savedSession", JSON.stringify(data));
-    const saveSessionBtn = document.getElementById("save-session");
-  
+  .then((res) => {
+    toggleInteractables(false);
+
+    if (res.status === 400) {
+      res.json()
+      .then((data) => {
+        appendAlert('Error!', 'saveSessionError', `${data["error"]}`, 'danger');
+        return;
+      })
+    }
+    const saveSessionBtn = document.getElementById("showSaveSessionModal");
     saveSessionBtn.innerText = "Session Saved";
     saveSessionBtn.disabled = true;
   })
