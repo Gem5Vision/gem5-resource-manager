@@ -601,7 +601,17 @@ def get_revision_status():
     return database.get_revision_status()
 
 
-def fernet_instance_generation(password):    
+def fernet_instance_generation(password):
+    """
+    Generates Fernet instance for use in Saving/Loading Session. 
+
+    Utilizes Scrypt Key Derivation Function with `SECRET_KEY` as salt value and recommended
+    values for `length`, `n`, `r`, and `p` parameters. Derives key using `password`. Derived
+    key is then used to initalize Fernet instance.
+
+    :param password: User provided password
+    :return: Fernet instance 
+    """    
     return Fernet(
         base64.urlsafe_b64encode(
             Scrypt(
@@ -616,6 +626,24 @@ def fernet_instance_generation(password):
 
 @app.route("/saveSession", methods=["POST"])
 def save_session():
+    """
+    Saves current session to file `SESSION_FILE`. 
+    
+    This route expects a POST request with a JSON payload containing the alias of the current session that is to be 
+    saved and a password to be used in encrypting the session data. 
+
+    The alias is used in retrieving the session from `databases`. The `save_session()` method is called to get 
+    the necessary session data from the corresponding `Client` as a dictionary.
+
+    A Fernet instance, using the user provided password, is instantiated. The session data is encrypted using this
+    instance. If an Exception is raised, an error response is returned.
+
+    The encrypted session data is then appended to `SESSION_FILE` and a success response is returned. 
+
+    The result of the save_session operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the save_session operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -635,6 +663,14 @@ def save_session():
 
 @app.route("/getSavedSessionsAliasList")
 def get_saved_sessions_alias_list():
+    """
+    Gets the list of saved session aliases.
+
+    The route retrieves the stored session data from `SESSION_FILE` and saves the aliases present
+    as a list to `saved_sessions_alias`. 
+
+    :return: A JSON response containing a list of aliases present in `SESSION_FILE`.
+    """
     global saved_sessions_alias
     with (SESSION_FILE).open("r") as f:
         saved_sessions = json.load(f)
@@ -644,6 +680,26 @@ def get_saved_sessions_alias_list():
 
 @app.route("/loadSession", methods=["POST"])
 def load_session():
+    """
+    Loads selected session from file `SESSION_FILE`. 
+    
+    This route expects a POST request with a JSON payload containing the alias of the session that is to be 
+    restored and the password associated with it. 
+
+    The alias is used in retrieving the encrypted session data from `SESSION_FILE`. If the alias is not found
+    an error is returned.
+
+    A Fernet instance, using the user provided password, is instantiated. The session data is decrypted using this
+    instance. If an Exception is raised, an error response is returned.
+
+    The `Client` type is retrieved from the session data and a redirect to the correct login with the necessary 
+    parameters from the session data is applied. 
+
+    The result of the load_session operation is either returned as a JSON response containing the error message 
+    or a redirect.
+
+    :return: A JSON response containing the error of the load_session operation or a redirect.
+    """
     alias = request.json["alias"]
     with (SESSION_FILE).open("r") as f:
         sessions = json.load(f)
