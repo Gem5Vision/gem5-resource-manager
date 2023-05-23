@@ -333,7 +333,11 @@ def editor():
         client_type = "mongodb"
     else:
         return render_template("404.html"), 404
-    return render_template("editor.html", client_type=client_type, tagline=alias, saved_session=any(session == alias for session in saved_sessions_alias))
+    return render_template("editor.html", 
+                           client_type=client_type, 
+                           alias=alias, 
+                           saved_session=any(session == alias for session in saved_sessions_alias)
+    )
 
 
 @app.route("/help")
