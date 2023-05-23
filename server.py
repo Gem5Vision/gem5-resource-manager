@@ -45,14 +45,26 @@ app.config.from_pyfile('config.py')
 # Set False to persevere JSON key order
 app.json.sort_keys = False
 
-with app.app_context():
-    if not Path(UPLOAD_FOLDER).is_dir():
-        Path(UPLOAD_FOLDER).mkdir()
-    if not Path(TEMP_UPLOAD_FOLDER).is_dir():
-        Path(TEMP_UPLOAD_FOLDER).mkdir()
-    if not Path(SESSION_FILE).is_file():
-        with Path(SESSION_FILE).open("w") as f:
+
+def startup_config_validation():
+    if not app.secret_key:
+        raise ValueError("SECRET_KEY not set")
+    if not isinstance(app.secret_key, bytes):
+        raise ValueError("SECRET_KEY must be of type 'bytes'")    
+
+
+def startup_dir_file_validation():
+    for dir in [UPLOAD_FOLDER, TEMP_UPLOAD_FOLDER]:
+        if not dir.is_dir():
+            dir.mkdir()
+    if not SESSION_FILE.is_file():
+        with SESSION_FILE.open("w") as f:
             json.dump({}, f, indent=4)
+
+
+with app.app_context():
+    startup_config_validation()
+    startup_dir_file_validation()
 
 
 @app.route("/")
