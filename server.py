@@ -597,6 +597,19 @@ def get_revision_status():
     return database.get_revision_status()
 
 
+def fernet_instance_generation(password):    
+    return Fernet(
+        base64.urlsafe_b64encode(
+            Scrypt(
+                salt=app.secret_key, 
+                length=32, 
+                n=2**16, 
+                r=8, 
+                p=1).derive(password.encode())
+        )
+    )
+
+
 @app.route("/saveSession", methods=["POST"])
 def save_session():
     alias = request.json["alias"]
@@ -604,14 +617,13 @@ def save_session():
         return {"error": "database not found"}, 400
     session = databases[alias].save_session()
     try:
-        key = base64.urlsafe_b64encode(Scrypt(salt=app.secret_key, length=32, n=2**16, r=8, p=1).derive(request.json["password"].encode()))
-        fernet = Fernet(key)
-        encrypted_cipher = fernet.encrypt(json.dumps(session).encode())
+        fernet_instance = fernet_instance_generation(request.json["password"])
+        ciphertext = fernet_instance.encrypt(json.dumps(session).encode())
     except (TypeError, ValueError):
         return {"error": "Failed to Encrypt Session!"}, 400
     with (SESSION_FILE).open("r") as f:
         file_data = json.load(f)
-    file_data[alias] = encrypted_cipher.decode() 
+    file_data[alias] = ciphertext.decode() 
     with (SESSION_FILE).open("w") as f:
         json.dump(file_data, f, indent=4)
     return {"success": "session saved"}, 200
@@ -628,29 +640,30 @@ def get_saved_sessions_alias_list():
 
 @app.route("/loadSession", methods=["POST"])
 def load_session():
+    alias = request.json["alias"]
     with (SESSION_FILE).open("r") as f:
         sessions = json.load(f)
     if not sessions[request.json["alias"]]:
         return {"error": "Alias not Found in Saved Sessions"}, 400
     try:
-        key = base64.urlsafe_b64encode(Scrypt(salt=app.secret_key, length=32, n=2**16, r=8, p=1).derive(request.json["password"].encode()))
-        fernet = Fernet(key)
-        decrypted_cipher = json.loads(fernet.decrypt(sessions[request.json["alias"]]))
+        fernet_instance = fernet_instance_generation(request.json["password"])
+        ciphertext = json.loads(fernet_instance.decrypt(sessions[alias]))
     except (InvalidSignature, InvalidToken):
         return {"error": "Incorrect Password! Please Try Again!"}, 400
-    if decrypted_cipher["client"] == DATABASE_TYPES[0]:
+    client_type = ciphertext["client"]
+    if client_type == DATABASE_TYPES[0]:
         return redirect(
             url_for("validate_mongodb_get", 
-                    alias=request.json["alias"], 
-                    collection=decrypted_cipher["collection"], 
-                    database=decrypted_cipher["database"], 
-                    uri=decrypted_cipher["uri"],
+                    alias=alias, 
+                    collection=ciphertext["collection"], 
+                    database=ciphertext["database"], 
+                    uri=ciphertext["uri"],
             ),
             302,
         )
-    elif decrypted_cipher["client"] == DATABASE_TYPES[1]:
+    elif client_type == DATABASE_TYPES[1]:
         return redirect(
-            url_for("existing_json", filename=decrypted_cipher["filename"]),
+            url_for("existing_json", filename=ciphertext["filename"]),
             302,
         )
     else:
