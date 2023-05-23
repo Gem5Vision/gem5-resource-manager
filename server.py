@@ -34,7 +34,7 @@ UPLOAD_FOLDER = Path("database/")
 TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
 SESSION_FILE = Path("instance/sessions.json")
 ALLOWED_EXTENSIONS = {"json"}
-DATABASE_TYPES = ["mongodb", "json"]
+CLIENT_TYPES = ["mongodb", "json"]
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -126,7 +126,7 @@ def validate_mongodb():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[0], alias=request.json["alias"]),
+        url_for("editor", type=CLIENT_TYPES[0], alias=request.json["alias"]),
         302,
     )
 
@@ -144,7 +144,7 @@ def validate_mongodb_get():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[0], alias=args.get("alias")),
+        url_for("editor", type=CLIENT_TYPES[0], alias=args.get("alias")),
         302,
     )
 
@@ -188,7 +188,7 @@ def validate_json_get():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1],
+        url_for("editor", type=CLIENT_TYPES[1],
                 filename=filename, alias=filename),
         302,
     )
@@ -215,7 +215,7 @@ def validate_json_post():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1],
+        url_for("editor", type=CLIENT_TYPES[1],
                 filename=filename, alias=filename),
         302,
     )
@@ -232,7 +232,7 @@ def existing_json():
             print(e)
             return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1],
+        url_for("editor", type=CLIENT_TYPES[1],
                 filename=filename, alias=filename),
         302,
     )
@@ -281,7 +281,7 @@ def resolve_conflict():
     except Exception as e:
         return {"error": str(e)}, 400
     return redirect(
-        url_for("editor", type=DATABASE_TYPES[1],
+        url_for("editor", type=CLIENT_TYPES[1],
                 filename=filename, alias=filename),
         302,
     )
@@ -293,7 +293,7 @@ def editor():
     Renders the editor page based on the specified database type.
 
     This route expects a GET request with specific query parameters:
-    - "type": Specifies the type of the editor, which should be one of the values in the "DATABASE_TYPES" configuration.
+    - "type": Specifies the type of the editor, which should be one of the values in the "CLIENT_TYPES" configuration.
     - "uri": The URI for the MongoDB database. This parameter is required if the editor type is MongoDB.
     - "alias": An optional alias for the MongoDB database.
     - "database": The name of the MongoDB database.
@@ -303,7 +303,7 @@ def editor():
     The function checks if the query parameters are present. If not, it returns a 404 error.
 
     The function determines the database type based on the "type" query parameter. If the type is not in the
-    "DATABASE_TYPES" configuration, it returns a 404 error.
+    "CLIENT_TYPES" configuration, it returns a 404 error.
 
     If the database type is MongoDB, the function sets the global variable "isMongo" to True, extracts the MongoDB
     URI, database name, and collection name from the query parameters, and updates the database configuration accordingly.
@@ -326,14 +326,14 @@ def editor():
     """ if not (Path(UPLOAD_FOLDER) / alias).is_file():
         return render_template("404.html"), 404 """
 
-    database_type = ""
+    client_type = ""
     if isinstance(databases[alias], JSONClient):
-        database_type = "json"
+        client_type = "json"
     elif isinstance(databases[alias], MongoDBClient):
-        database_type = "mongodb"
+        client_type = "mongodb"
     else:
         return render_template("404.html"), 404
-    return render_template("editor.html", editor_type=database_type, tagline=alias, saved_session=any(session == alias for session in saved_sessions_alias))
+    return render_template("editor.html", client_type=client_type, tagline=alias, saved_session=any(session == alias for session in saved_sessions_alias))
 
 
 @app.route("/help")
@@ -651,7 +651,7 @@ def load_session():
     except (InvalidSignature, InvalidToken):
         return {"error": "Incorrect Password! Please Try Again!"}, 400
     client_type = ciphertext["client"]
-    if client_type == DATABASE_TYPES[0]:
+    if client_type == CLIENT_TYPES[0]:
         return redirect(
             url_for("validate_mongodb_get", 
                     alias=alias, 
@@ -661,7 +661,7 @@ def load_session():
             ),
             302,
         )
-    elif client_type == DATABASE_TYPES[1]:
+    elif client_type == CLIENT_TYPES[1]:
         return redirect(
             url_for("existing_json", filename=ciphertext["filename"]),
             302,

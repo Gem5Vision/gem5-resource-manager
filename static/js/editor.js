@@ -64,8 +64,8 @@ require(["vs/editor/editor.main"], () => {
     });
 });
 
-let editorType = document.getElementById('editor-type');
-editorType.textContent = editorType.textContent === "mongodb" ? "MongoDB" : editorType.textContent.toUpperCase();
+let clientType = document.getElementById('client-type');
+clientType.textContent = clientType.textContent === "mongodb" ? "MongoDB" : clientType.textContent.toUpperCase();
 
 const revisionButtons = [document.getElementById("undo-operation"), document.getElementById("redo-operation")];
 revisionButtons.forEach(btn => {
