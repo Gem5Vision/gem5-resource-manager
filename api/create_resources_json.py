@@ -128,7 +128,7 @@ class ResourceJsonCreator:
         elif "bootloader" in resource["name"]:
             resource["type"] = "bootloader"
         elif "benchmark" in resource["documentation"]:
-            resource["type"] = "disk_image"
+            resource["type"] = "disk-image"
             # if tags not in resource:
             if "tags" not in resource:
                 resource["tags"] = []
@@ -144,7 +144,7 @@ class ResourceJsonCreator:
             else:
                 resource["root_partition"] = ""
         elif resource["url"] is not None and ".img.gz" in resource["url"]:
-            resource["type"] = "disk_image"
+            resource["type"] = "disk-image"
             if (
                 "additional_metadata" in resource
                 and "root_partition" in resource["additional_metadata"]
