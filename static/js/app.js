@@ -2,10 +2,6 @@ const loadingContainer = document.getElementById("loading-container");
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 const interactiveElems = document.querySelectorAll('button, input, select');
 
-function reset() {
-  window.location.href = "/";
-}
-
 const appendAlert = (errorHeader, id, message, type) => {
   const alertDiv = document.createElement('div');
   alertDiv.classList.add("alert", `alert-${type}`, "alert-dismissible", "fade", "show", "d-flex", "flex-column", "shadow-sm");

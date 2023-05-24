@@ -769,5 +769,14 @@ def checkExists():
     return database.checkResourceExists(request.json)
 
 
+@app.route("/logout", methods=["POST"])
+def logout():
+    alias = request.json["alias"]
+    if alias not in databases:
+        return {"error": "database not found"}, 400
+    databases.pop(alias)
+    return(redirect(url_for("index")),302)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
