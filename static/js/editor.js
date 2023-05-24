@@ -382,15 +382,6 @@ window.onload = () => {
         document.getElementById("add_new_resource").disabled = false;
       });
     });
-
-  const resetInstance = document.getElementById("update-instance");
-  resetInstance.addEventListener("click", () => {
-    localStorage.removeItem("savedSession");
-    window.location = `/login/${new URL(window.location).searchParams.get("type") === "mongodb"
-      ? "mongodb"
-      : "json"
-      }`;
-  });
 };
 
 const myModal = new bootstrap.Modal("#ConfirmModal", {
@@ -514,5 +505,32 @@ function updateRevisionBtnsDisabledAttr() {
     console.log(`REVISION BUTTON DISABLED STATUS:\n UNDO: ${!!data.undo}, REDO: ${!!data.redo}`);
     revisionButtons[0].disabled = data.undo;
     revisionButtons[1].disabled = data.redo;
+  })
+}
+
+function logout() {
+  toggleInteractables(true);
+
+  fetch("/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      alias: document.getElementById("alias").innerText,
+    }),
+  })
+  .then((res) => {
+    toggleInteractables(false);
+
+    if (res.status !== 302) {
+      res.json()
+      .then((data) => {
+        appendAlert('Error!', 'logoutError', `${data["error"]}`, 'danger');
+        return;
+      })
+    }
+    
+    window.location = res.url;
   })
 }
