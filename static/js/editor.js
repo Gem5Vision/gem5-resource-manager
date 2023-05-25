@@ -382,6 +382,8 @@ window.onload = () => {
         document.getElementById("add_new_resource").disabled = false;
       });
     });
+
+  checkExistingSavedSession();
 };
 
 const myModal = new bootstrap.Modal("#ConfirmModal", {
@@ -475,6 +477,8 @@ function saveSession() {
   .then((res) => {
     document.getElementById("saveSessionForm").reset();
     
+    checkExistingSavedSession();
+
     toggleInteractables(false);
 
     if (res.status === 400) {
@@ -484,9 +488,7 @@ function saveSession() {
         return;
       })
     }
-    const saveSessionBtn = document.getElementById("showSaveSessionModal");
-    saveSessionBtn.innerText = "Session Saved";
-    saveSessionBtn.disabled = true;
+    document.getElementById("showSaveSessionModal").innerText = "Session Saved";
   })
 }
 
@@ -560,5 +562,22 @@ function logout() {
     }
     
     window.location = res.url;
+  })
+}
+
+function checkExistingSavedSession() {
+  const existingSessionWarning = document.getElementById("existing-session-warning");
+  fetch("/getSavedSessionsAliasList", {
+    method: "GET",
+  })
+  .then((res) => {
+    res.json()
+    .then((data) => {
+      if (res.status !== 200) {
+        appendAlert("Error!","checkSavedSessionError", `${data["error"]}`, "danger");
+        return;
+      }
+      existingSessionWarning.style.display = data.includes(document.getElementById("alias").innerText) ? "flex" : "none";
+    })
   })
 }

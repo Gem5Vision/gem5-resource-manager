@@ -336,7 +336,7 @@ def editor():
     return render_template("editor.html", 
                            client_type=client_type, 
                            alias=alias, 
-                           saved_session=any(session == alias for session in saved_sessions_alias)
+                        #    saved_session=any(session == alias for session in saved_sessions_alias)
     )
 
 
@@ -644,6 +644,7 @@ def save_session():
 
     :return: A JSON response containing the result of the save_session operation.
     """
+    global saved_sessions_alias
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -658,6 +659,7 @@ def save_session():
     file_data[alias] = ciphertext.decode() 
     with (SESSION_FILE).open("w") as f:
         json.dump(file_data, f, indent=4)
+    saved_sessions_alias.append(alias)
     return {"success": "session saved"}, 200
 
 

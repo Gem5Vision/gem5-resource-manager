@@ -103,12 +103,10 @@
         <div class="modal-body">
           <div class="container-fluid">
             <div class="row">
-              {% if saved_session %}
-                <h4 class="main-text-semi text-center d-flex flex-column mb-3">
-                  <span>Warning!</span>
-                  <span>Existing Saved Session of Same Alias Will Be Overwritten!</span>
-                </h4>
-              {% endif %}  
+              <h4 id="existing-session-warning" class="main-text-semi text-center flex-column mb-3">
+                <span>Warning!</span>
+                <span>Existing Saved Session of Same Alias Will Be Overwritten!</span>
+              </h4>
               <h4 class="main-text-semi text-center">Provide a Password to Secure and Save this Session With.</h4>
             </div>
             <form id="saveSessionForm" class="row">
