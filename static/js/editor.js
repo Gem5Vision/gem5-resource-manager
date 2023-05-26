@@ -462,6 +462,12 @@ function showSaveSessionModal() {
 function saveSession() {
   bootstrap.Modal.getInstance(document.getElementById("saveSessionModal")).hide();
   
+  let preserveDisabled = [];
+  document.querySelectorAll(".editorButtonGroup button, .revisionButtonGroup button")
+  .forEach(btn => {
+    btn.disabled === true ? preserveDisabled.push(btn.id) : null;
+  });
+
   toggleInteractables(true);
   
   fetch("/saveSession", {
@@ -479,8 +485,6 @@ function saveSession() {
     
     checkExistingSavedSession();
 
-    toggleInteractables(false);
-
     if (res.status === 400) {
       res.json()
       .then((data) => {
@@ -489,6 +493,8 @@ function saveSession() {
       })
     }
     document.getElementById("showSaveSessionModal").innerText = "Session Saved";
+
+    toggleInteractables(false, preserveDisabled);
   })
 }
 
