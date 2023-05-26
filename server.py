@@ -205,7 +205,7 @@ def validate_json_post():
     if Path(path).is_file():
         temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
         file.save(temp_path)
-        return {"conflict": "exisiting file in server"}, 409
+        return {"conflict": "existing file in server"}, 409
     file.save(path)
     global databases
     if filename in databases:
@@ -607,7 +607,7 @@ def fernet_instance_generation(password):
 
     Utilizes Scrypt Key Derivation Function with `SECRET_KEY` as salt value and recommended
     values for `length`, `n`, `r`, and `p` parameters. Derives key using `password`. Derived
-    key is then used to initalize Fernet instance.
+    key is then used to initialize Fernet instance.
 
     :param password: User provided password
     :return: Fernet instance 
