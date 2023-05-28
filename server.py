@@ -16,6 +16,7 @@ from werkzeug.utils import secure_filename
 from cryptography.fernet import Fernet, InvalidToken
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 import base64
+import secrets
 
 from cryptography.exceptions import InvalidSignature 
 
@@ -32,13 +33,23 @@ with open("schema/schema.json", "r") as f:
 
 UPLOAD_FOLDER = Path("database/")
 TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
+CONFIG_FILE = Path("instance/config.py")
 SESSION_FILE = Path("instance/sessions.json")
 ALLOWED_EXTENSIONS = {"json"}
 CLIENT_TYPES = ["mongodb", "json"]
 
 
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_pyfile('config.py')
+
+
+if not CONFIG_FILE.exists():
+    CONFIG_FILE.parent.mkdir()
+    with CONFIG_FILE.open("w+") as f:
+        f.write(f"SECRET_KEY = {secrets.token_bytes(32)}")
+
+
+app.config.from_pyfile(CONFIG_FILE.name)
+
 
 # Sorts keys in any serialized dict
 # Default = True
