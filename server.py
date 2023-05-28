@@ -1,5 +1,5 @@
 import json
-from flask import render_template, Flask, request, redirect, url_for
+from flask import render_template, Flask, request, redirect, url_for, make_response
 import os
 from dotenv import load_dotenv
 from bson import json_util
@@ -344,11 +344,14 @@ def editor():
         client_type = "mongodb"
     else:
         return render_template("404.html"), 404
-    return render_template("editor.html", 
-                           client_type=client_type, 
-                           alias=alias, 
-                        #    saved_session=any(session == alias for session in saved_sessions_alias)
-    )
+    
+    response = make_response(render_template("editor.html", client_type=client_type, alias=alias))
+
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+
+    return response    
 
 
 @app.route("/help")
