@@ -51,3 +51,19 @@ function toggleInteractables(isBlocking, excludedOnNotBlockingIds = [], otherBlo
     otherBlockingUpdates();
   }, 250);
 }
+
+function resetCookies() {
+  fetch("/resetCookies")
+  .then((res) => {
+    if (res.status !== 200) {
+      res.json((data) => {
+        console.log(data);
+
+        return;
+      })
+    }
+
+    appendAlert('Success!', 'resetCookies', `All Cookies Deleted!`, 'danger');
+    location.reload();
+  })
+}

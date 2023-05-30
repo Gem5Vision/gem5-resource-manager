@@ -18,7 +18,7 @@ from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 import base64
 import secrets
 
-from cryptography.exceptions import InvalidSignature 
+from cryptography.exceptions import InvalidSignature
 
 from pathlib import Path
 
@@ -34,7 +34,7 @@ with open("schema/schema.json", "r") as f:
 UPLOAD_FOLDER = Path("database/")
 TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
 CONFIG_FILE = Path("instance/config.py")
-SESSION_FILE = Path("instance/sessions.json")
+SESSIONS_COOKIE_KEY = "sessions"
 ALLOWED_EXTENSIONS = {"json"}
 CLIENT_TYPES = ["mongodb", "json"]
 
@@ -61,16 +61,13 @@ def startup_config_validation():
     if not app.secret_key:
         raise ValueError("SECRET_KEY not set")
     if not isinstance(app.secret_key, bytes):
-        raise ValueError("SECRET_KEY must be of type 'bytes'")    
+        raise ValueError("SECRET_KEY must be of type 'bytes'")
 
 
 def startup_dir_file_validation():
     for dir in [UPLOAD_FOLDER, TEMP_UPLOAD_FOLDER]:
         if not dir.is_dir():
             dir.mkdir()
-    if not SESSION_FILE.is_file():
-        with SESSION_FILE.open("w") as f:
-            json.dump({}, f, indent=4)
 
 
 with app.app_context():
@@ -125,9 +122,6 @@ def validate_mongodb():
     :return: A redirect response to the 'editor' route or a JSON response with an error message and status code 400.
     """
     global databases
-    print(request.json)
-    # if request.json["alias"] in databases:
-    #     return {"error": "alias already exists"}, 409
     try:
         databases[request.json["alias"]] = MongoDBClient(
             mongo_uri=request.json["uri"],
@@ -136,26 +130,9 @@ def validate_mongodb():
         )
     except Exception as e:
         return {"error": str(e)}, 400
+    print(f"\nDATABASES: {databases}\n")
     return redirect(
         url_for("editor", type=CLIENT_TYPES[0], alias=request.json["alias"]),
-        302,
-    )
-
-
-@app.route("/validateMongoDB", methods=["GET"])
-def validate_mongodb_get():
-    global databases
-    args = request.args
-    try:
-        databases[args.get("alias")] = MongoDBClient(
-            mongo_uri=urllib.parse.unquote(args.get("uri")),
-            database_name=args.get("database"),
-            collection_name=args.get("collection"),
-        )
-    except Exception as e:
-        return {"error": str(e)}, 400
-    return redirect(
-        url_for("editor", type=CLIENT_TYPES[0], alias=args.get("alias")),
         302,
     )
 
@@ -328,6 +305,7 @@ def editor():
 
     :return: The rendered editor template based on the specified database type.
     """
+    print("test")
     global databases
     if not request.args:
         return render_template("404.html"), 404
@@ -344,14 +322,15 @@ def editor():
         client_type = "mongodb"
     else:
         return render_template("404.html"), 404
-    
-    response = make_response(render_template("editor.html", client_type=client_type, alias=alias))
+
+    response = make_response(render_template(
+        "editor.html", client_type=client_type, alias=alias))
 
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
 
-    return response    
+    return response
 
 
 @app.route("/help")
@@ -390,7 +369,7 @@ def find():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.findResource(request.json)
+    return database.find_resource(request.json)
 
 
 @app.route("/update", methods=["POST"])
@@ -417,11 +396,11 @@ def update():
     database = databases[alias]
     original_resource = request.json["original_resource"]
     modified_resource = request.json["resource"]
-    status = database.updateResource({
+    status = database.update_resource({
         "original_resource": original_resource,
         "resource": modified_resource,
     })
-    database._addToStack({
+    database._add_to_stack({
         "operation": "update",
         "resource": {
             "original_resource": modified_resource,
@@ -452,7 +431,7 @@ def getVersions():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.getVersions(request.json)
+    return database.get_versions(request.json)
 
 
 @app.route("/categories", methods=["GET"])
@@ -552,8 +531,8 @@ def delete():
         return {"error": "database not found"}, 400
     database = databases[alias]
     resource = request.json["resource"]
-    status = database.deleteResource(resource)
-    database._addToStack({
+    status = database.delete_resource(resource)
+    database._add_to_stack({
         "operation": "delete",
         "resource": resource
     })
@@ -583,8 +562,8 @@ def insert():
         return {"error": "database not found"}, 400
     database = databases[alias]
     resource = request.json["resource"]
-    status = database.insertResource(resource)
-    database._addToStack({"operation": "insert", "resource": resource})
+    status = database.insert_resource(resource)
+    database._add_to_stack({"operation": "insert", "resource": resource})
     return status
 
 
@@ -594,7 +573,7 @@ def undo():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.undoOperation()
+    return database.undo_operation()
 
 
 @app.route("/redo", methods=["POST"])
@@ -603,7 +582,7 @@ def redo():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.redoOperation()
+    return database.redo_operation()
 
 
 @app.route("/getRevisionStatus", methods=["POST"])
@@ -625,24 +604,35 @@ def fernet_instance_generation(password):
 
     :param password: User provided password
     :return: Fernet instance 
-    """    
+    """
     return Fernet(
         base64.urlsafe_b64encode(
             Scrypt(
-                salt=app.secret_key, 
-                length=32, 
-                n=2**16, 
-                r=8, 
+                salt=app.secret_key,
+                length=32,
+                n=2**16,
+                r=8,
                 p=1).derive(password.encode())
         )
     )
+
+
+@app.route("/resetCookies")
+def reset():
+    """
+    Resets all cookies to default values.
+    :return: A JSON response containing the result of the reset operation.
+    """
+    response = make_response({"success": "sessions cookie cleared"}, 200)
+    response.delete_cookie(key=SESSIONS_COOKIE_KEY)
+    return response
 
 
 @app.route("/saveSession", methods=["POST"])
 def save_session():
     """
     Saves current session to file `SESSION_FILE`. 
-    
+
     This route expects a POST request with a JSON payload containing the alias of the current session that is to be 
     saved and a password to be used in encrypting the session data. 
 
@@ -663,18 +653,24 @@ def save_session():
     if alias not in databases:
         return {"error": "database not found"}, 400
     session = databases[alias].save_session()
+
+    sessions_cookie = request.cookies.get(SESSIONS_COOKIE_KEY)
+    if not sessions_cookie:
+        sessions_cookie = "{}"
+
     try:
         fernet_instance = fernet_instance_generation(request.json["password"])
         ciphertext = fernet_instance.encrypt(json.dumps(session).encode())
     except (TypeError, ValueError):
         return {"error": "Failed to Encrypt Session!"}, 400
-    with (SESSION_FILE).open("r") as f:
-        file_data = json.load(f)
-    file_data[alias] = ciphertext.decode() 
-    with (SESSION_FILE).open("w") as f:
-        json.dump(file_data, f, indent=4)
+
+    sessions = json.loads(sessions_cookie)
+    sessions[alias] = ciphertext.decode()
     saved_sessions_alias.append(alias)
-    return {"success": "session saved"}, 200
+
+    response = make_response({"success": "session saved"}, 200)
+    response.set_cookie(key=SESSIONS_COOKIE_KEY, value=json.dumps(sessions))
+    return response
 
 
 @app.route("/getSavedSessionsAliasList")
@@ -688,9 +684,10 @@ def get_saved_sessions_alias_list():
     :return: A JSON response containing a list of aliases present in `SESSION_FILE`.
     """
     global saved_sessions_alias
-    with (SESSION_FILE).open("r") as f:
-        saved_sessions = json.load(f)
-    saved_sessions_alias = list(saved_sessions.keys())
+    sessions_cookie = request.cookies.get(SESSIONS_COOKIE_KEY)
+    if not sessions_cookie:
+        return []
+    saved_sessions_alias = list(json.loads(sessions_cookie).keys())
     return saved_sessions_alias
 
 
@@ -698,7 +695,7 @@ def get_saved_sessions_alias_list():
 def load_session():
     """
     Loads selected session from file `SESSION_FILE`. 
-    
+
     This route expects a POST request with a JSON payload containing the alias of the session that is to be 
     restored and the password associated with it. 
 
@@ -717,10 +714,15 @@ def load_session():
     :return: A JSON response containing the error of the load_session operation or a redirect.
     """
     alias = request.json["alias"]
-    with (SESSION_FILE).open("r") as f:
-        sessions = json.load(f)
+
+    sessions_cookie = request.cookies.get(SESSIONS_COOKIE_KEY)
+    if not sessions_cookie:
+        return {"error": "no sessions cookie"}, 400
+
+    sessions = json.loads(sessions_cookie)
     if not sessions[request.json["alias"]]:
         return {"error": "Alias not Found in Saved Sessions"}, 400
+
     try:
         fernet_instance = fernet_instance_generation(request.json["password"])
         ciphertext = json.loads(fernet_instance.decrypt(sessions[alias]))
@@ -728,13 +730,17 @@ def load_session():
         return {"error": "Incorrect Password! Please Try Again!"}, 400
     client_type = ciphertext["client"]
     if client_type == CLIENT_TYPES[0]:
+        try:
+            databases[alias] = MongoDBClient(
+                mongo_uri=ciphertext["uri"],
+                database_name=ciphertext["database"],
+                collection_name=ciphertext["collection"],
+            )
+        except Exception as e:
+            return {"error": str(e)}, 400
+
         return redirect(
-            url_for("validate_mongodb_get", 
-                    alias=alias, 
-                    collection=ciphertext["collection"], 
-                    database=ciphertext["database"], 
-                    uri=ciphertext["uri"],
-            ),
+            url_for("editor", type=CLIENT_TYPES[0], alias=alias),
             302,
         )
     elif client_type == CLIENT_TYPES[1]:
@@ -787,11 +793,17 @@ def checkExists():
 
 @app.route("/logout", methods=["POST"])
 def logout():
+    """
+    Logs the user out of the application.
+    Deletes the alias from the `databases` dictionary.
+    :param alias: The alias of the database to logout from.
+    :return: A redirect to the index page.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     databases.pop(alias)
-    return(redirect(url_for("index")),302)
+    return(redirect(url_for("index")), 302)
 
 
 if __name__ == "__main__":

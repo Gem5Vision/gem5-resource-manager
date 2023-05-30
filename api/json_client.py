@@ -4,6 +4,7 @@ import json
 import requests
 from api.client import Client
 from werkzeug.utils import secure_filename
+from typing import Dict, List
 
 
 class JSONClient(Client):
@@ -12,27 +13,20 @@ class JSONClient(Client):
         self.file_path = Path("database/") / file_path
         self.resources = self.__get_resources(self.file_path)
 
-    def __get_resources(self, path):
+    def __get_resources(self, path: Path) -> List[Dict]:
+        """
+        Retrieves the resources from the JSON file.
+        :param path: The path to the JSON file.
+        :return: The resources as a JSON string.
+        """
         with open(path) as f:
             return json.load(f)
 
-    def findResource(self, query):
+    def find_resource(self, query: Dict) -> Dict:
         """
-        Finds and returns the matching resources based on the provided query.
-
-        The function iterates over the resources and compares the "id" and "resource_version" fields with the values in the query.
-        If the "resource_version" in the query is empty or "Latest", it checks for a matching "id" value.
-        If the "resource_version" in the query is not empty and not "Latest", it checks for matching "id" and "resource_version" values.
-
-        If a matching resource is found, it is returned as a JSON string.
-
-        If no matching resources are found, a response indicating that the resource does not exist is returned.
-
-        If multiple matching resources are found, the function returns the one with the highest version number.
-
-        :param resources: The list of resources to search within.
+        Finds a resource within a list of resources based on the provided query.
         :param query: The query object containing the search criteria.
-        :return: The matching resource(s) as a JSON string, or a response indicating the resource does not exist.
+        :return: The resource that matches the query.        
         """
         found_resources = []
         for resource in self.resources:
@@ -58,20 +52,11 @@ class JSONClient(Client):
             ),
         )
 
-    def getVersions(self, query):
+    def get_versions(self, query: Dict) -> List[Dict]:
         """
-        Retrieves the versions of a resource based on the provided query.
-
-        The function iterates over the resources and checks if the "id" field matches the value in the query.
-        If there is a match, it appends the "resource_version" of the resource to a list.
-
-        The list of versions is then sorted in descending order based on the version numbers.
-
-        The function returns the list of versions as a JSON string.
-
-        :param resources: The list of resources to search within.
+        Retrieves all versions of a resource with the given ID from the list of resources.
         :param query: The query object containing the search criteria.
-        :return: The versions of the resource as a JSON string.
+        :return: A list of all versions of the resource.
         """
         versions = []
         for resource in self.resources:
@@ -86,7 +71,7 @@ class JSONClient(Client):
         )
         return versions
 
-    def updateResource(self, query):
+    def update_resource(self, query: Dict) -> Dict:
         """
         Updates a resource within a list of resources based on the provided query.
 
@@ -95,10 +80,8 @@ class JSONClient(Client):
 
         After updating the resources, the function saves the updated list to the specified file path.
 
-        :param resources: The list of resources to update.
-        :param query: The query object containing the update criteria.
-        :param file_path: The file path to save the updated resources.
-        :return: A dictionary indicating the status of the update.
+        :param query: The query object containing the resource identification criteria.
+        :return: A dictionary indicating that the resource was updated.
         """
         original_resource = query["original_resource"]
         modified_resource = query["resource"]
@@ -112,10 +95,10 @@ class JSONClient(Client):
                 self.resources.remove(resource)
                 self.resources.append(modified_resource)
 
-        self.writeToFile()
+        self.write_to_file()
         return {"status": "Updated"}
 
-    def checkResourceExists(self, query):
+    def check_resource_exists(self, query: Dict) -> Dict:
         """
         Checks if a resource exists within a list of resources based on the provided query.
 
@@ -123,9 +106,8 @@ class JSONClient(Client):
         If a matching resource is found, it returns a dictionary indicating that the resource exists.
         If no matching resource is found, it returns a dictionary indicating that the resource does not exist.
 
-        :param resources: The list of resources to check.
         :param query: The query object containing the resource identification criteria.
-        :return: A dictionary indicating if the resource exists or not.
+        :return: A dictionary indicating whether the resource exists.
         """
         for resource in self.resources:
             if (
@@ -135,32 +117,28 @@ class JSONClient(Client):
                 return {"exists": True}
         return {"exists": False}
 
-    def insertResource(self, query):
+    def insert_resource(self, query: Dict) -> Dict:
         """
         Inserts a new resource into a list of resources.
 
         The function appends the query (new resource) to the resources list, indicating the insertion.
         It then writes the updated resources to the specified file path.
 
-        :param resources: The list of resources.
-        :param query: The resource object to insert.
-        :param file_path: The file path to write the updated resources to.
-        :return: A dictionary indicating the status of the insertion.
+        :param query: The query object containing the resource identification criteria.
+        :return: A dictionary indicating that the resource was inserted.
         """
-        if self.checkResourceExists(query)["exists"]:
+        if self.check_resource_exists(query)["exists"]:
             return {"status": "Resource already exists"}
         self.resources.append(query)
-        self.writeToFile()
+        self.write_to_file()
         return {"status": "Inserted"}
 
-    def deleteResource(self, query):
+    def delete_resource(self, query: Dict) -> Dict:
         """
         This function deletes a resource from the list of resources based on the provided query.
 
-        :param resources: List of resources
-        :param query: JSON object with id and resource_version
-        :param file_path: File path where the resources are stored
-        :return: JSON object with status message
+        :param query: The query object containing the resource identification criteria.
+        :return: A dictionary indicating that the resource was deleted.
         """
         for resource in self.resources:
             if (
@@ -168,31 +146,23 @@ class JSONClient(Client):
                 and resource["resource_version"] == query["resource_version"]
             ):
                 self.resources.remove(resource)
-        self.writeToFile()
+        self.write_to_file()
         return {"status": "Deleted"}
 
-    def writeToFile(self):
+    def write_to_file(self) -> None:
         """
         This function writes the list of resources to a file at the specified file path.
 
-        :param file_path: File path where the resources will be written
-        :param resources: List of resources to be written to the file
+        :return: None
         """
         with Path(self.file_path).open("w") as outfile:
             json.dump(self.resources, outfile, indent=4)
 
-    """ def validateFilePath(self, upload_folder):
-        if not self.file_path:
-            return {"error": "empty"}
-        response = requests.get(self.file_path)
-        if response.status_code != 200:
-            return {"error": "invalid status"}
-        filename = secure_filename(self.file_path)
-        self.file_path = Path(upload_folder) / filename
-        with Path(self.file_path).open("wb") as f:
-            f.write(response.content) """
-
-    def save_session(self):
+    def save_session(self) -> Dict:
+        """
+        This function saves the client session to a dictionary.
+        :return: A dictionary containing the client session.
+        """
         session = {
             'client': 'json',
             'filename': self.file_path.name,

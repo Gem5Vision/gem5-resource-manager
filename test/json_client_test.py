@@ -7,7 +7,7 @@ import json
 from bson import json_util
 import copy
 import io
-from mock import patch
+from unittest.mock import patch
 from pathlib import Path
 from api.json_client import JSONClient
 
@@ -64,7 +64,7 @@ class TestJson(unittest.TestCase):
             ],
             "resource_version": "1.0.0",
         }
-        response = self.json_client.insertResource(test_resource)
+        response = self.json_client.insert_resource(test_resource)
         self.assertEqual(response, {"status": "Inserted"})
         json_data = get_json()
         self.assertNotEqual(json_data, self.orignal_json)
@@ -84,7 +84,7 @@ class TestJson(unittest.TestCase):
             "resource_version": "1.0.0",
             "gem5_versions": ["23.0"],
         }
-        response = self.json_client.insertResource(test_resource)
+        response = self.json_client.insert_resource(test_resource)
         self.assertEqual(response, {"status": "Resource already exists"})
 
     def test_find_no_version(self):
@@ -101,7 +101,7 @@ class TestJson(unittest.TestCase):
             "resource_version": "1.0.0",
             "gem5_versions": ["23.0"],
         }
-        response = self.json_client.findResource({"id": expected_response["id"]})
+        response = self.json_client.find_resource({"id": expected_response["id"]})
         self.assertEqual(response, expected_response)
 
     def test_find_with_version(self):
@@ -117,7 +117,7 @@ class TestJson(unittest.TestCase):
             "resource_version": "1.0.0",
             "gem5_versions": ["23.0"],
         }
-        response = self.json_client.findResource(
+        response = self.json_client.find_resource(
             {
                 "id": expected_response["id"],
                 "resource_version": expected_response["resource_version"],
@@ -126,7 +126,7 @@ class TestJson(unittest.TestCase):
         self.assertEqual(response, expected_response)
 
     def test_find_not_found(self):
-        response = self.json_client.findResource({"id": "not-found"})
+        response = self.json_client.find_resource({"id": "not-found"})
         self.assertEqual(response, {"exists": False})
 
     def test_deleteResource(self):
@@ -143,7 +143,7 @@ class TestJson(unittest.TestCase):
             "resource_version": "1.0.0",
             "gem5_versions": ["23.0"],
         }
-        response = self.json_client.deleteResource(
+        response = self.json_client.delete_resource(
             {
                 "id": deleted_resource["id"],
                 "resource_version": deleted_resource["resource_version"],
@@ -168,7 +168,25 @@ class TestJson(unittest.TestCase):
             "resource_version": "1.0.0",
             "gem5_versions": ["23.0"],
         }
-        response = self.json_client.updateResource(updated_resource)
+        original_resource = {
+            "category": "diskimage",
+            "id": "disk-image-example",
+            "description": "disk-image documentation.",
+            "architecture": "X86",
+            "is_zipped": True,
+            "md5sum": "90e363abf0ddf22eefa2c7c5c9391c49",
+            "url": "http://dist.gem5.org/dist/develop/images/x86/ubuntu-18-04/x86-ubuntu.img.gz",
+            "source": "src/x86-ubuntu",
+            "root_partition": "1",
+            "resource_version": "1.0.0",
+            "gem5_versions": [
+                "23.0"
+            ]
+        }
+        response = self.json_client.update_resource({
+            "original_resource": original_resource,
+            "resource":updated_resource
+        })
         self.assertEqual(response, {"status": "Updated"})
         json_data = get_json()
         self.assertNotEqual(json_data, self.orignal_json)
@@ -176,7 +194,7 @@ class TestJson(unittest.TestCase):
 
     def test_getVersions(self):
         resource_id = "kernel-example"
-        response = self.json_client.getVersions({"id": resource_id})
+        response = self.json_client.get_versions({"id": resource_id})
         self.assertEqual(
             response, [{"resource_version": "2.0.0"}, {"resource_version": "1.0.0"}]
         )
@@ -184,7 +202,7 @@ class TestJson(unittest.TestCase):
     def test_checkResourceExists_True(self):
         resource_id = "kernel-example"
         resource_version = "1.0.0"
-        response = self.json_client.checkResourceExists(
+        response = self.json_client.check_resource_exists(
             {"id": resource_id, "resource_version": resource_version}
         )
         self.assertEqual(response, {"exists": True})
@@ -192,7 +210,7 @@ class TestJson(unittest.TestCase):
     def test_checkResourceExists_False(self):
         resource_id = "kernel-example"
         resource_version = "3.0.0"
-        response = self.json_client.checkResourceExists(
+        response = self.json_client.check_resource_exists(
             {"id": resource_id, "resource_version": resource_version}
         )
         self.assertEqual(response, {"exists": False})

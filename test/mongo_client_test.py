@@ -9,19 +9,6 @@ from unittest.mock import patch
 from api.mongo_client import MongoDBClient
 
 
-@contextlib.contextmanager
-def captured_templates(app):
-    """This is a context manager that allows you to capture the templates that are rendered during a test."""
-    recorded = []
-
-    def record(sender, template, context, **extra):
-        recorded.append((template, context))
-
-    flask.template_rendered.connect(record, app)
-    try:
-        yield recorded
-    finally:
-        flask.template_rendered.disconnect(record, app)
 
 
 class TestApi(unittest.TestCase):
@@ -75,7 +62,7 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0",
         }
-        ret_value = self.mongo_client.insertResource(test_resource)
+        ret_value = self.mongo_client.insert_resource(test_resource)
         self.assertEqual(ret_value, {"status": "Inserted"})
         self.assertEqual(
             self.collection.find({"id": "test-resource"})[0], test_resource
@@ -98,7 +85,7 @@ class TestApi(unittest.TestCase):
             "resource_version": "1.0.0",
         }
         self.collection.insert_one(test_resource)
-        ret_value = self.mongo_client.insertResource(test_resource)
+        ret_value = self.mongo_client.insert_resource(test_resource)
         self.assertEqual(ret_value, {"status": "Resource already exists"})
 
     def test_findResource_no_version(self):
@@ -117,7 +104,7 @@ class TestApi(unittest.TestCase):
             "resource_version": "1.0.0",
         }
         self.collection.insert_one(test_resource.copy())
-        ret_value = self.mongo_client.findResource({"id": "test-resource"})
+        ret_value = self.mongo_client.find_resource({"id": "test-resource"})
         self.assertEqual(ret_value, test_resource)
         self.collection.delete_one({"id": "test-resource"})
 
@@ -140,13 +127,13 @@ class TestApi(unittest.TestCase):
         test_resource["resource_version"] = "2.0.0"
         test_resource["description"] = "test-description2"
         self.collection.insert_one(test_resource.copy())
-        ret_value = self.mongo_client.findResource(
+        ret_value = self.mongo_client.find_resource(
             {"id": "test-resource", "resource_version": "2.0.0"}
         )
         self.assertEqual(ret_value, test_resource)
 
     def test_findResource_not_found(self):
-        ret_value = self.mongo_client.findResource({"id": "test-resource"})
+        ret_value = self.mongo_client.find_resource({"id": "test-resource"})
         self.assertEqual(ret_value, {"exists": False})
 
     def test_deleteResource(self):
@@ -165,7 +152,7 @@ class TestApi(unittest.TestCase):
             "resource_version": "1.0.0",
         }
         self.collection.insert_one(test_resource.copy())
-        ret_value = self.mongo_client.deleteResource(
+        ret_value = self.mongo_client.delete_resource(
             {"id": "test-resource", "resource_version": "1.0.0"}
         )
         self.assertEqual(ret_value, {"status": "Deleted"})
@@ -190,10 +177,11 @@ class TestApi(unittest.TestCase):
             ],
             "resource_version": "1.0.0",
         }
+        original_resource = test_resource.copy()
         self.collection.insert_one(test_resource.copy())
         test_resource["author"].append("test-author2")
         test_resource["description"] = "test-description2"
-        ret_value = self.mongo_client.updateResource(test_resource.copy())
+        ret_value = self.mongo_client.update_resource({"original_resource": original_resource, "resource": test_resource})
         self.assertEqual(ret_value, {"status": "Updated"})
         self.assertEqual(
             self.collection.find({"id": "test-resource"}, {"_id": 0})[0], test_resource
@@ -215,13 +203,13 @@ class TestApi(unittest.TestCase):
             "resource_version": "1.0.0",
         }
         self.collection.insert_one(test_resource.copy())
-        ret_value = self.mongo_client.checkResourceExists(
+        ret_value = self.mongo_client.check_resource_exists(
             {"id": "test-resource", "resource_version": "1.0.0"}
         )
         self.assertEqual(ret_value, {"exists": True})
 
     def test_checkResourceExists_not_found(self):
-        ret_value = self.mongo_client.checkResourceExists(
+        ret_value = self.mongo_client.check_resource_exists(
             {"id": "test-resource", "resource_version": "1.0.0"}
         )
         self.assertEqual(ret_value, {"exists": False})
@@ -245,7 +233,7 @@ class TestApi(unittest.TestCase):
         test_resource["resource_version"] = "2.0.0"
         test_resource["description"] = "test-description2"
         self.collection.insert_one(test_resource.copy())
-        ret_value = self.mongo_client.getVersions({"id": "test-resource"})
+        ret_value = self.mongo_client.get_versions({"id": "test-resource"})
         self.assertEqual(
             ret_value, [{"resource_version": "2.0.0"}, {"resource_version": "1.0.0"}]
         )
