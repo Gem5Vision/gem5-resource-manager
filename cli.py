@@ -74,6 +74,21 @@ def removeTags(id, tags):
             {"id": id}, {"$pull": {"tags": {"$in": list(tags)}}})
         print("Removed ", tags, " from ", id)
 
+@cli.command()
+@click.argument("file")
+def backupMongoDB(file):
+    """
+    Backs up the MongoDB collection to a JSON file.
+    
+    :param file: The JSON file to back up the MongoDB collection to.
+    """
+    with click_spinner.spinner():
+        # get all the data from the collection
+        resources = collection.find({}, {"_id": 0})
+        # write to resources.json
+        with open(file, "w") as f:
+            json.dump(list(resources), f, indent=4)
+            click.echo("Backed up the database to " + file)
 
 @cli.command()
 @click.argument("file")
@@ -91,9 +106,6 @@ def updateMongoDB(file):
         # read from resources.json
         with open(file) as f:
             resources = json.load(f)
-            """ res = requests.get(
-                'https://raw.githubusercontent.com/Gem5Vision/json-to-mongodb/main/resources.json')
-            resources = res.json() """
             # clear the collection
             collection.delete_many({})
             # push the new data
