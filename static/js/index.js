@@ -1,20 +1,18 @@
 window.onload = () => {
-  fetch("/getSavedSessionsAliasList")
-  .then((res) => res.json())
-  .then((data) => {
-    let select = document.getElementById("sessions-dropdown");
-    if (data.length === 0) {
-      data = ["No Existing Files"];
-      document.getElementById("showSavedSessionModal").disabled = true;
-      return;
-    }
-    data.forEach((files) => {
-      let option = document.createElement("option");
-      option.value = files;
-      option.innerHTML = files;
-      select.appendChild(option);
-    });
-  })
+  let select = document.getElementById("sessions-dropdown");
+  const sessions = JSON.parse(localStorage.getItem("sessions"));
+
+  if (sessions === null) {
+    document.getElementById("showSavedSessionModal").disabled = true;
+    return;
+  }
+
+  Object.keys(sessions).forEach((alias) => {
+    let option = document.createElement("option");
+    option.value = alias;
+    option.innerHTML = alias;
+    select.appendChild(option);
+  });
 }
 
 const loadSessionBtn = document.getElementById("loadSession");
@@ -33,6 +31,14 @@ function showSavedSessionModal() {
 function loadSession() {
   bootstrap.Modal.getInstance(document.getElementById("savedSessionModal")).hide();
 
+  const alias = document.getElementById("sessions-dropdown").value;
+  const session = JSON.parse(localStorage.getItem("sessions"))[alias];
+
+  if (session === null) {
+    appendAlert("Error!", "sessionNotFound", "Saved Session Not Found!", "danger");
+    return;
+  }
+  
   toggleInteractables(true);
 
   fetch("/loadSession", {
@@ -41,24 +47,24 @@ function loadSession() {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      alias: document.getElementById("sessions-dropdown").value,
-      password: document.getElementById("session-password").value
+      password: document.getElementById("session-password").value,
+      alias: alias,
+      session: session
     })
   })
   .then((res) => {
-    document.getElementById("session-password").value = "";
-
     toggleInteractables(false);
 
     if (res.status !== 200) {
       res.json()
-      .then((data) => {
-        appendAlert('Error!', 'invalidStatus', `${data["error"]}`, 'danger');
+      .then((error) => {
+        appendAlert("Error!", "invalidStatus", `${error["error"]}`, "danger");
+        return;
       })
     }
-
+    
     if (res.redirected) {
-      window.location = res.url
+      window.location = res.url;
     }
-  })
+  }) 
 }

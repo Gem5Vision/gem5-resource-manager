@@ -460,6 +460,8 @@ function showSaveSessionModal() {
 }
 
 function saveSession() {
+  alias = document.getElementById("alias").innerText;
+  
   bootstrap.Modal.getInstance(document.getElementById("saveSessionModal")).hide();
   
   let preserveDisabled = [];
@@ -467,34 +469,38 @@ function saveSession() {
   .forEach(btn => {
     btn.disabled === true ? preserveDisabled.push(btn.id) : null;
   });
-
-  toggleInteractables(true);
   
+  toggleInteractables(true);
+
   fetch("/saveSession", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      alias: document.getElementById("alias").innerText,
+      alias: alias,
       password: document.getElementById("session-password").value
     }),
   })
   .then((res) => {
     document.getElementById("saveSessionForm").reset();
     
-    checkExistingSavedSession();
-
-    if (res.status === 400) {
-      res.json()
-      .then((data) => {
+    toggleInteractables(false, preserveDisabled);
+    
+    res.json()
+    .then((data) => {
+      if (res.status === 400) {
         appendAlert('Error!', 'saveSessionError', `${data["error"]}`, 'danger');
         return;
-      })
-    }
-    document.getElementById("showSaveSessionModal").innerText = "Session Saved";
-
-    toggleInteractables(false, preserveDisabled);
+      } 
+      
+      let sessions = JSON.parse(localStorage.getItem("sessions")) || {};
+      sessions[alias] = data["ciphertext"];
+      localStorage.setItem("sessions", JSON.stringify(sessions));
+      
+      document.getElementById("showSaveSessionModal").innerText = "Session Saved";
+      checkExistingSavedSession();
+    })
   })
 }
 
@@ -572,18 +578,8 @@ function logout() {
 }
 
 function checkExistingSavedSession() {
-  const existingSessionWarning = document.getElementById("existing-session-warning");
-  fetch("/getSavedSessionsAliasList", {
-    method: "GET",
-  })
-  .then((res) => {
-    res.json()
-    .then((data) => {
-      if (res.status !== 200) {
-        appendAlert("Error!","checkSavedSessionError", `${data["error"]}`, "danger");
-        return;
-      }
-      existingSessionWarning.style.display = data.includes(document.getElementById("alias").innerText) ? "flex" : "none";
-    })
-  })
+  document.getElementById("existing-session-warning").style.display = 
+    document.getElementById("alias").innerText in JSON.parse(localStorage.getItem("sessions") || "{}") 
+      ? "flex" 
+      : "none"; 
 }
