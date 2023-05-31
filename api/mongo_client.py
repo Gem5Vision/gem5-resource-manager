@@ -155,7 +155,6 @@ class MongoDBClient(Client):
         try:
             self.collection.insert_one(query)
         except Exception as e:
-            print(e)
             return {"status": "Resource already exists"}
         return {"status": "Inserted"}
 

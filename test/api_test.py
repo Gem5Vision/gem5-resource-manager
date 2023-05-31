@@ -2,6 +2,7 @@ import flask
 import contextlib
 import unittest
 from server import app
+import server
 import json
 from bson import json_util
 import copy
@@ -44,10 +45,21 @@ class TestAPI(unittest.TestCase):
             self.collection.insert_one(obj)
         # self.mongo_client = MongoDBClient("mongodb://localhost:27017", "test", "test")
 
+        self.test_client.post("/validateMongoDB", json={
+            "uri": "mongodb://localhost:27017",
+            "database": "test",
+            "collection": "test",
+            "alias": self.alias
+        })
+        # server.databases["test"] = self.mongo_client
+        # print(mongo_client.insertResource({"id": "test"}))
+        # print(mongo_client.findResource({"id": "test-kernel"}))
+
     def tearDown(self):
         """This method tears down the test environment."""
         self.collection.drop()
         self.ctx.pop()
+
 
     
     def test_get_helppage(self):
@@ -92,337 +104,296 @@ class TestAPI(unittest.TestCase):
         response = self.test_client.post("/")
         self.assertEqual(response.status_code, 405)
 
-    # def test_get_categories(self):
-    #     """The methods tests if the category call returns the same categories as the schema."""
+    def test_get_categories(self):
+        """The methods tests if the category call returns the same categories as the schema."""
 
-    #     response = self.test_client.get("/categories")
-    #     post_response = self.test_client.post("/categories")
-    #     categories = [
-    #         "workload",
-    #         "diskimage",
-    #         "binary",
-    #         "kernel",
-    #         "benchmark",
-    #         "checkpoint",
-    #         "git",
-    #         "bootloader",
-    #         "file",
-    #         "directory",
-    #         "simpoint",
-    #         "simpoint-directory",
-    #         "resource",
-    #         "looppoint-pinpoint-csv",
-    #         "looppoint-json",
-    #     ]
-    #     self.assertEqual(post_response.status_code, 405)
-    #     self.assertEqual(response.status_code, 200)
-    #     returnedData = json.loads(response.data)
-    #     self.assertTrue(returnedData == categories)
+        response = self.test_client.get("/categories")
+        post_response = self.test_client.post("/categories")
+        categories = [
+            "workload",
+            "disk-image",
+            "binary",
+            "kernel",
+            "checkpoint",
+            "git",
+            "bootloader",
+            "file",
+            "directory",
+            "simpoint",
+            "simpoint-directory",
+            "resource",
+            "looppoint-pinpoint-csv",
+            "looppoint-json",
+        ]
+        self.assertEqual(post_response.status_code, 405)
+        self.assertEqual(response.status_code, 200)
+        returnedData = json.loads(response.data)
+        self.assertTrue(returnedData == categories)
 
-# def test_get_schema(self):
-#     """The methods tests if the schema call returns the same schema as the schema file."""
+    def test_get_schema(self):
+        """The methods tests if the schema call returns the same schema as the schema file."""
 
-#     response = self.test_client.get("/schema")
-#     post_response = self.test_client.post("/schema")
-#     self.assertEqual(post_response.status_code, 405)
-#     self.assertEqual(response.status_code, 200)
-#     returnedData = json.loads(response.data)
-#     schema = {}
-#     with open("schema/schema.json", "r") as f:
-#         schema = json.load(f)
-#     self.assertTrue(returnedData == schema)
+        response = self.test_client.get("/schema")
+        post_response = self.test_client.post("/schema")
+        self.assertEqual(post_response.status_code, 405)
+        self.assertEqual(response.status_code, 200)
+        returnedData = json.loads(response.data)
+        schema = {}
+        with open("./test/refs/schema.json", "r") as f:
+            schema = json.load(f)
+        self.assertTrue(returnedData == schema)
 
-# def test_insert(self):
-#     """This method tests the insert method of the API."""
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     response = self.test_client.post("/insert", json=test_resource)
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(response.json, {"status": "Inserted"})
-#     resource = (
-#         app.config["DATABASE"]
-#         .get_collection()
-#         .find({"id": "test-resource"}, {"_id": 0})
-#     )
-#     json_resource = json.loads(json_util.dumps(resource[0]))
-#     self.assertTrue(json_resource == test_resource)
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": "test-resource", "resource_version": "1.0.0"}
-#     )
+    def test_insert(self):
+        """This method tests the insert method of the API."""
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        response = self.test_client.post("/insert", json={"resource": test_resource, "alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Inserted"})
+        resource = self.collection.find({"id": "test-resource"}, {"_id": 0})
 
-# def test_find_no_version(self):
-#     """This method tests the find method of the API."""
-#     test_id = "test-resource"
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     response = self.test_client.post(
-#         "/find", json={"id": test_id, "resource_version": ""}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     return_json = json.loads(response.data)[0]
-#     self.assertTrue(return_json == test_resource)
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.0"}
-#     )
+        json_resource = json.loads(json_util.dumps(resource[0]))
+        self.assertTrue(json_resource == test_resource)
 
-# def test_find_not_exist(self):
-#     """This method tests the find method of the API."""
-#     test_id = "test-resource"
-#     response = self.test_client.post(
-#         "/find", json={"id": test_id, "resource_version": ""}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     self.assertTrue(response.json == {"exists": False})
+    def test_find_no_version(self):
+        """This method tests the find method of the API."""
+        test_id = "test-resource"
+        test_resource_version = "1.0.0"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        self.collection.insert_one(test_resource.copy())
+        response = self.test_client.post(
+            "/find", json={"id": test_id, "resource_version": "", "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json == test_resource)
 
-# def test_find_with_version(self):
-#     """This method tests the find method of the API."""
-#     test_id = "test-resource"
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     test_resource["resource_version"] = "1.0.1"
-#     test_resource["description"] = "test-description2"
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     response = self.test_client.post(
-#         "/find", json={"id": test_id, "resource_version": "1.0.1"}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     return_json = json.loads(response.data)[0]
-#     self.assertTrue(return_json["description"] == "test-description2")
-#     self.assertTrue(return_json["resource_version"] == "1.0.1")
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.0"}
-#     )
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.1"}
-#     )
+    def test_find_not_exist(self):
+        """This method tests the find method of the API."""
+        test_id = "test-resource"
+        response = self.test_client.post(
+            "/find", json={"id": test_id, "resource_version": "", "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json == {"exists": False})
 
-# def test_delete(self):
-#     """This method tests the delete method of the API."""
-#     test_id = "test-resource"
-#     test_version = "1.0.0"
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     response = self.test_client.post(
-#         "/delete", json={"id": test_id, "resource_version": test_version}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(response.json, {"status": "Deleted"})
-#     resource = (
-#         app.config["DATABASE"]
-#         .get_collection()
-#         .find({"id": "test-resource"}, {"_id": 0})
-#     )
-#     json_resource = json.loads(json_util.dumps(resource))
-#     self.assertTrue(json_resource == [])
+    def test_find_with_version(self):
+        """This method tests the find method of the API."""
+        test_id = "test-resource"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        self.collection.insert_one(test_resource.copy())
+        test_resource["resource_version"] = "1.0.1"
+        test_resource["description"] = "test-description2"
+        self.collection.insert_one(test_resource.copy())
+        response = self.test_client.post(
+            "/find", json={"id": test_id, "resource_version": "1.0.1", "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        return_json = response.json
+        self.assertTrue(return_json["description"] == "test-description2")
+        self.assertTrue(return_json["resource_version"] == "1.0.1")
+        self.assertTrue(return_json==test_resource)
 
-# def test_if_resource_exists_true(self):
-#     """This method tests the checkExists method of the API."""
-#     test_id = "test-resource"
-#     test_version = "1.0.0"
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     response = self.test_client.post(
-#         "/checkExists", json={"id": test_id, "resource_version": test_version}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(response.json, {"exists": True})
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.0"}
-#     )
+    def test_delete(self):
+        """This method tests the delete method of the API."""
+        test_id = "test-resource"
+        test_version = "1.0.0"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        self.collection.insert_one(test_resource.copy())
+        response = self.test_client.post(
+            "/delete", json={"resource": test_resource, "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Deleted"})
+        resource = self.collection.find({"id": "test-resource"}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [])
 
-# def test_if_resource_exists_false(self):
-#     """This method tests the checkExists method of the API."""
-#     test_id = "test-resource"
-#     test_version = "1.0.0"
-#     response = self.test_client.post(
-#         "/checkExists", json={"id": test_id, "resource_version": test_version}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(response.json, {"exists": False})
+    def test_if_resource_exists_true(self):
+        """This method tests the checkExists method of the API."""
+        test_id = "test-resource"
+        test_version = "1.0.0"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        self.collection.insert_one(test_resource.copy())
+        response = self.test_client.post(
+            "/checkExists", json={"id": test_id, "resource_version": test_version, "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"exists": True})
 
-# def test_get_resource_versions(self):
-#     """This method tests the getResourceVersions method of the API."""
-#     test_id = "test-resource"
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     test_resource["resource_version"] = "1.0.1"
-#     test_resource["description"] = "test-description2"
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     response = self.test_client.post("/versions", json={"id": test_id})
-#     return_json = json.loads(response.data)
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(
-#         return_json, [{"resource_version": "1.0.1"},
-#                       {"resource_version": "1.0.0"}]
-#     )
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.0"}
-#     )
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.1"}
-#     )
+    def test_if_resource_exists_false(self):
+        """This method tests the checkExists method of the API."""
+        test_id = "test-resource"
+        test_version = "1.0.0"
+        response = self.test_client.post(
+            "/checkExists", json={"id": test_id, "resource_version": test_version, "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"exists": False})
 
-# def test_update_resource(self):
-#     """This method tests the updateResource method of the API."""
-#     test_id = "test-resource"
-#     test_resource = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": ["test-author"],
-#         "description": "test-description",
-#         "license": "test-license",
-#         "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
-#         "tags": ["test-tag", "test-tag2"],
-#         "example_usage": " test-usage",
-#         "gem5_versions": [
-#             "22.1",
-#         ],
-#         "resource_version": "1.0.0",
-#     }
-#     app.config["DATABASE"].get_collection(
-#     ).insert_one(test_resource.copy())
-#     test_resource["description"] = "test-description2"
-#     test_resource["example_usage"] = "test-usage2"
-#     response = self.test_client.post(
-#         "/update", json={"id": test_id, "resource": test_resource}
-#     )
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(response.json, {"status": "Updated"})
-#     resource = (
-#         app.config["DATABASE"]
-#         .get_collection()
-#         .find({"id": "test-resource"}, {"_id": 0})
-#     )
-#     json_resource = json.loads(json_util.dumps(resource))
-#     self.assertTrue(json_resource == [test_resource])
-#     app.config["DATABASE"].get_collection().delete_one(
-#         {"id": test_id, "resource_version": "1.0.0"}
-#     )
+    def test_get_resource_versions(self):
+        """This method tests the getResourceVersions method of the API."""
+        test_id = "test-resource"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        self.collection.insert_one(test_resource.copy())
+        test_resource["resource_version"] = "1.0.1"
+        test_resource["description"] = "test-description2"
+        self.collection.insert_one(test_resource.copy())
+        response = self.test_client.post("/versions", json={"id": test_id, "alias": self.alias})
+        return_json = json.loads(response.data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            return_json, [{"resource_version": "1.0.1"},
+                        {"resource_version": "1.0.0"}]
+        )
 
-# def test_keys_1(self):
-#     """This method tests the keys method of the API."""
-#     response = self.test_client.post(
-#         "/keys", json={"category": "simpoint", "id": "test-resource"}
-#     )
-#     test_response = {
-#         "category": "simpoint",
-#         "id": "test-resource",
-#         "author": [],
-#         "description": "",
-#         "license": "",
-#         "source_url": "",
-#         "tags": [],
-#         "example_usage": "",
-#         "gem5_versions": [],
-#         "resource_version": "",
-#         "simpoint_interval": 0,
-#         "simpoint_list": [],
-#         "weight_list": [],
-#         "warmup_interval": 0,
-#     }
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(json.loads(response.data), test_response)
+    def test_update_resource(self):
+        """This method tests the updateResource method of the API."""
+        test_id = "test-resource"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        original_resource = test_resource.copy()
+        self.collection.insert_one(test_resource.copy())
+        test_resource["description"] = "test-description2"
+        test_resource["example_usage"] = "test-usage2"
+        response = self.test_client.post(
+            "/update", json={"original_resource": original_resource, "resource": test_resource, "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Updated"})
+        resource = self.collection.find({"id": test_id}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [test_resource])
+        self.collection.delete_one(
+            {"id": test_id, "resource_version": "1.0.0"}
+        )
 
-# def test_keys_2(self):
-#     """This method tests the keys method of the API."""
-#     response = self.test_client.post(
-#         "/keys", json={"category": "diskimage", "id": "test-resource"}
-#     )
-#     test_response = {
-#         "category": "diskimage",
-#         "id": "test-resource",
-#         "author": [],
-#         "description": "",
-#         "license": "",
-#         "source_url": "",
-#         "tags": [],
-#         "example_usage": "",
-#         "gem5_versions": [],
-#         "resource_version": "",
-#     }
-#     self.assertEqual(response.status_code, 200)
-#     self.assertEqual(json.loads(response.data), test_response)
+    def test_keys_1(self):
+        """This method tests the keys method of the API."""
+        response = self.test_client.post(
+            "/keys", json={"category": "simpoint", "id": "test-resource"}
+        )
+        test_response = {
+            "category": "simpoint",
+            "id": "test-resource",
+            "author": [],
+            "description": "",
+            "license": "",
+            "source_url": "",
+            "tags": [],
+            "example_usage": "",
+            "gem5_versions": [],
+            "resource_version": "1.0.0",
+            "simpoint_interval": 0,
+            "warmup_interval": 0,
+        }
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.data), test_response)
+
+    def test_keys_2(self):
+        """This method tests the keys method of the API."""
+        response = self.test_client.post(
+            "/keys", json={"category": "disk-image", "id": "test-resource"}
+        )
+        test_response = {
+            "category": "disk-image",
+            "id": "test-resource",
+            "author": [],
+            "description": "",
+            "license": "",
+            "source_url": "",
+            "tags": [],
+            "example_usage": "",
+            "gem5_versions": [],
+            "resource_version": "1.0.0",
+        }
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.data), test_response)

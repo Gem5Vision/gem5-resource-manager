@@ -25,10 +25,9 @@ from pathlib import Path
 databases = {}
 
 saved_sessions_alias = []
+response = requests.get("https://resources.gem5.org/gem5-resources-schema.json")
+schema = json.loads(response.content)
 
-schema = {}
-with open("schema/schema.json", "r") as f:
-    schema = json.load(f)
 
 
 UPLOAD_FOLDER = Path("database/")
@@ -130,7 +129,7 @@ def validate_mongodb():
         )
     except Exception as e:
         return {"error": str(e)}, 400
-    print(f"\nDATABASES: {databases}\n")
+    # print(f"\nDATABASES: {databases}\n")
     return redirect(
         url_for("editor", type=CLIENT_TYPES[0], alias=request.json["alias"]),
         302,
@@ -217,7 +216,7 @@ def existing_json():
         try:
             databases[filename] = JSONClient(filename)
         except Exception as e:
-            print(e)
+            # print(e)
             return {"error": str(e)}, 400
     return redirect(
         url_for("editor", type=CLIENT_TYPES[1],
@@ -248,10 +247,10 @@ def resolve_conflict():
                           "openExisting", "overwrite", "newFilename"]
     temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
     if not resolution:
-        print("no resolution")
+        # print("no resolution")
         return {"error": "empty"}, 400
     if resolution not in resolution_options:
-        print("invalid resolution")
+        # print("invalid resolution")
         return {"error": "invalid resolution"}, 400
     if resolution == resolution_options[0]:
         temp_path.unlink()
@@ -305,7 +304,7 @@ def editor():
 
     :return: The rendered editor template based on the specified database type.
     """
-    print("test")
+    # print("test")
     global databases
     if not request.args:
         return render_template("404.html"), 404
@@ -788,7 +787,7 @@ def checkExists():
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.checkResourceExists(request.json)
+    return database.check_resource_exists(request.json)
 
 
 @app.route("/logout", methods=["POST"])
