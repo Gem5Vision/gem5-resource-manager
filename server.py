@@ -599,7 +599,7 @@ def get_revision_status():
 
 def fernet_instance_generation(password):
     """
-    Generates Fernet instance for use in Saving/Loading Session. 
+    Generates Fernet instance for use in Saving and Loading Session. 
 
     Utilizes Scrypt Key Derivation Function with `SECRET_KEY` as salt value and recommended
     values for `length`, `n`, `r`, and `p` parameters. Derives key using `password`. Derived
@@ -623,20 +623,22 @@ def fernet_instance_generation(password):
 @app.route("/saveSession", methods=["POST"])
 def save_session():
     """
-    Saves current session to file `SESSION_FILE`. 
+    Generates ciphertext of session that is to be saved.
 
-    This route expects a POST request with a JSON payload containing the alias of the current session that is to be 
+    This route expects a POST request with a JSON payload containing the alias of the session that is to be 
     saved and a password to be used in encrypting the session data. 
 
-    The alias is used in retrieving the session from `databases`. The `save_session()` method is called to get 
-    the necessary session data from the corresponding `Client` as a dictionary.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
+    
+    The `save_session()` method is called to get the necessary session data from the corresponding `Client` 
+    as a dictionary.
 
     A Fernet instance, using the user provided password, is instantiated. The session data is encrypted using this
-    instance. If an Exception is raised, an error response is returned.
+    instance. If an Exception is raised, an error response is returned. 
 
-    The encrypted session data is then appended to `SESSION_FILE` and a success response is returned. 
-
-    The result of the save_session operation is returned as a JSON response.
+    The result of the save_session operation is returned as a JSON response. The ciphertext is returned or an error
+    message if an error occurred. 
 
     :return: A JSON response containing the result of the save_session operation.
     """
@@ -655,21 +657,18 @@ def save_session():
 @app.route("/loadSession", methods=["POST"])
 def load_session():
     """
-    Loads selected session from file `SESSION_FILE`. 
+    Loads session from data specified in user request. 
 
-    This route expects a POST request with a JSON payload containing the alias of the session that is to be 
-    restored and the password associated with it. 
-
-    The alias is used in retrieving the encrypted session data from `SESSION_FILE`. If the alias is not found
-    an error is returned.
+    This route expects a POST request with a JSON payload containing the encrypted ciphertext containing the session 
+    data, the alias of the session that is to be restored, and the password associated with it. 
 
     A Fernet instance, using the user provided password, is instantiated. The session data is decrypted using this
     instance. If an Exception is raised, an error response is returned.
 
-    The `Client` type is retrieved from the session data and a redirect to the correct login with the necessary 
+    The `Client` type is retrieved from the session data and a redirect to the appropriate login with the stored 
     parameters from the session data is applied. 
 
-    The result of the load_session operation is either returned as a JSON response containing the error message 
+    The result of the load_session operation is returned either as a JSON response containing the error message 
     or a redirect.
 
     :return: A JSON response containing the error of the load_session operation or a redirect.
