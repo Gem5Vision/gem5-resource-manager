@@ -678,16 +678,16 @@ def load_session():
     session = request.json["session"]
     try:
         fernet_instance = fernet_instance_generation(request.json["password"])
-        ciphertext = json.loads(fernet_instance.decrypt(session))
+        session_data = json.loads(fernet_instance.decrypt(session))
     except (InvalidSignature, InvalidToken):
         return {"error": "Incorrect Password! Please Try Again!"}, 400
-    client_type = ciphertext["client"]
+    client_type = session_data["client"]
     if client_type == CLIENT_TYPES[0]:
         try:
             databases[alias] = MongoDBClient(
-                mongo_uri=ciphertext["uri"],
-                database_name=ciphertext["database"],
-                collection_name=ciphertext["collection"],
+                mongo_uri=session_data["uri"],
+                database_name=session_data["database"],
+                collection_name=session_data["collection"],
             )
         except Exception as e:
             return {"error": str(e)}, 400
@@ -698,7 +698,7 @@ def load_session():
         )
     elif client_type == CLIENT_TYPES[1]:
         return redirect(
-            url_for("existing_json", filename=ciphertext["filename"]),
+            url_for("existing_json", filename=session_data["filename"]),
             302,
         )
     else:
