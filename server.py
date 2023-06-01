@@ -24,9 +24,13 @@ from pathlib import Path
 
 databases = {}
 
-saved_sessions_alias = []
 response = requests.get("https://resources.gem5.org/gem5-resources-schema.json")
-schema = json.loads(response.content)
+if not response:
+    schema = {}
+    with open("schema/schema.json", "r") as f:
+        schema = json.load(f)
+else:
+    schema = json.loads(response.content)
 
 
 
@@ -647,47 +651,16 @@ def save_session():
 
     :return: A JSON response containing the result of the save_session operation.
     """
-    global saved_sessions_alias
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     session = databases[alias].save_session()
-
-    sessions_cookie = request.cookies.get(SESSIONS_COOKIE_KEY)
-    if not sessions_cookie:
-        sessions_cookie = "{}"
-
     try:
         fernet_instance = fernet_instance_generation(request.json["password"])
         ciphertext = fernet_instance.encrypt(json.dumps(session).encode())
     except (TypeError, ValueError):
         return {"error": "Failed to Encrypt Session!"}, 400
-
-    sessions = json.loads(sessions_cookie)
-    sessions[alias] = ciphertext.decode()
-    saved_sessions_alias.append(alias)
-
-    response = make_response({"success": "session saved"}, 200)
-    response.set_cookie(key=SESSIONS_COOKIE_KEY, value=json.dumps(sessions))
-    return response
-
-
-@app.route("/getSavedSessionsAliasList")
-def get_saved_sessions_alias_list():
-    """
-    Gets the list of saved session aliases.
-
-    The route retrieves the stored session data from `SESSION_FILE` and saves the aliases present
-    as a list to `saved_sessions_alias`. 
-
-    :return: A JSON response containing a list of aliases present in `SESSION_FILE`.
-    """
-    global saved_sessions_alias
-    sessions_cookie = request.cookies.get(SESSIONS_COOKIE_KEY)
-    if not sessions_cookie:
-        return []
-    saved_sessions_alias = list(json.loads(sessions_cookie).keys())
-    return saved_sessions_alias
+    return {"ciphertext": ciphertext.decode()}, 200
 
 
 @app.route("/loadSession", methods=["POST"])
@@ -713,18 +686,10 @@ def load_session():
     :return: A JSON response containing the error of the load_session operation or a redirect.
     """
     alias = request.json["alias"]
-
-    sessions_cookie = request.cookies.get(SESSIONS_COOKIE_KEY)
-    if not sessions_cookie:
-        return {"error": "no sessions cookie"}, 400
-
-    sessions = json.loads(sessions_cookie)
-    if not sessions[request.json["alias"]]:
-        return {"error": "Alias not Found in Saved Sessions"}, 400
-
+    session = request.json["session"]
     try:
         fernet_instance = fernet_instance_generation(request.json["password"])
-        ciphertext = json.loads(fernet_instance.decrypt(sessions[alias]))
+        ciphertext = json.loads(fernet_instance.decrypt(session))
     except (InvalidSignature, InvalidToken):
         return {"error": "Incorrect Password! Please Try Again!"}, 400
     client_type = ciphertext["client"]
