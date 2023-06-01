@@ -572,6 +572,20 @@ def insert():
 
 @app.route("/undo", methods=["POST"])
 def undo():
+    """
+    Undoes last operation performed on the session. 
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose last operation
+    is to be undone.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
+
+    The Client API is used to undo the last operation performed on the session by calling `Client.undo_operation()`.
+
+    The result of the `undo_operation` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the undo operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -581,6 +595,20 @@ def undo():
 
 @app.route("/redo", methods=["POST"])
 def redo():
+    """
+    Redoes last operation performed on the session.
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose last operation
+    is to be redone.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
+
+    The Client API is used to redo the last operation performed on the session by calling `Client.redo_operation()`.
+
+    The result of the `redo_operation` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the redo operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -590,6 +618,21 @@ def redo():
 
 @app.route("/getRevisionStatus", methods=["POST"])
 def get_revision_status():
+    """
+    Gets the status of revision operations.
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose revision operations 
+    statuses is being requested.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
+
+    The Client API is used to get the status of the revision operations by calling `Client.get_revision_status()`.
+
+    The result of the `get_revision_status()` is returned as a JSON response. 
+
+    :return: A JSON response contain the result of the get_revision_status operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400

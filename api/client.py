@@ -88,6 +88,16 @@ class Client(ABC):
         return {"status": "Added to stack"}
     
     def get_revision_status(self) -> Dict:
+        """
+        This function saves the status of revision operations to a dictionary.
+
+        The revision operations whose statuses are saved are undo and redo.  
+
+        If the stack of a given revision operation is empty, the status of 
+        that operation is set to 1 else the status is set to 0.  
+
+        :return: A dictionary containing the status of revision operations.
+        """
         return {
             "undo": 1 if len(self.__undo_stack) == 0 else 0,
             "redo": 1 if len(self.__redo_stack) == 0 else 0    
