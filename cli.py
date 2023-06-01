@@ -170,12 +170,11 @@ def cli():
     req_group = parser_create_resources_json.add_argument_group(
         title="required arguments"
     )
-    req_group.add_argument(
+    parser_create_resources_json.add_argument(
         "-v",
         "--versions",
         help="The versions of the resources to include in the JSON file. Accepts multiple versions as arguments.",
         nargs=-1,
-        required=True
     )
     parser_create_resources_json.add_argument(
         "-o",
@@ -270,6 +269,8 @@ def restore_backup(args):
 
 def create_resources_json(args):
     with Loader("Creating resources JSON...", end="Created " + args.output):
+        if not args.versions:
+            args.versions = []
         creator = ResourceJsonCreator(list(args.versions), args.debug)
         creator.create_json(args.source, args.output)
 
