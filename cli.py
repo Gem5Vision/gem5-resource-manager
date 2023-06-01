@@ -88,7 +88,7 @@ def cli():
         default=MONGO_URI
     )
     parser.add_argument(
-        "-m", "--mongodb_database",
+        "-d", "--database",
         help="The MongoDB database to use.",
         type=str,
         default="gem5-vision"
@@ -167,14 +167,12 @@ def cli():
         help="Creates a JSON file of all the resources in the collection.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
-    req_group = parser_create_resources_json.add_argument_group(
-        title="required arguments"
-    )
     parser_create_resources_json.add_argument(
         "-v",
-        "--versions",
-        help="The versions of the resources to include in the JSON file. Accepts multiple versions as arguments.",
-        nargs=-1,
+        "--version",
+        help="The version of the resources to create the JSON file for.",
+        type=str,
+        default="dev"
     )
     parser_create_resources_json.add_argument(
         "-o",
@@ -182,13 +180,6 @@ def cli():
         help="The JSON file to create.",
         type=str,
         default="resources.json"
-    )
-    parser_create_resources_json.add_argument(
-        "-d",
-        "--debug",
-        help="Prints debug information.",
-        action="store_true",
-        default=False
     )
     parser_create_resources_json.add_argument(
         "-s",
@@ -206,7 +197,7 @@ def cli():
             collection = get_database(
                 args.collection,
                 args.uri,
-                args.mongodb_database
+                args.database
             )
     args.func(args)
 
@@ -239,7 +230,7 @@ def get_resource(args):
         loader.end = json.dumps(resource, indent=4)
     else:
         loader.end = "Resource not found"
-    
+
     loader.stop()
 
 
@@ -269,10 +260,8 @@ def restore_backup(args):
 
 def create_resources_json(args):
     with Loader("Creating resources JSON...", end="Created " + args.output):
-        if not args.versions:
-            args.versions = []
-        creator = ResourceJsonCreator(list(args.versions), args.debug)
-        creator.create_json(args.source, args.output)
+        creator = ResourceJsonCreator()
+        creator.create_json(args.version, args.source, args.output)
 
 
 if __name__ == "__main__":

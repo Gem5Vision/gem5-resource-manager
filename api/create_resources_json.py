@@ -2,15 +2,16 @@ import json
 import requests
 import base64
 import os
+from jsonschema import validate
 
 
 class ResourceJsonCreator:
     """
     This class generates the JSON which is pushed onto MongoDB.
     On a high-level, it does the following:
-        - Merges all the current available JSONs of gem5 versions into one.
         - Adds certain fields to the JSON.
         - Populates those fields.
+        - Makes sure the JSON follows the schema.
     """
 
     # Global Variables
@@ -22,12 +23,10 @@ class ResourceJsonCreator:
         "21.2": "http://resources.gem5.org/prev-resources-json/resources-22-0.json",
     }
 
-    def __init__(self, versions, debug=False):
-        if debug:
-            print("Creating Resource JSON for gem5 versions: ", versions)
-        # print(src)
-        self.debug = debug
-        self.link_map = self.__create_resource_map(versions)
+    def __init__(self):
+        self.schema = {}
+        with open("schema/schema.json", "r") as f:
+            self.schema = json.load(f)
 
     def __get_file_data(self, url):
         json_data = None
@@ -39,17 +38,6 @@ class ResourceJsonCreator:
             json_data = requests.get(url).json()
             return json_data
 
-    def __create_resource_map(self, versions):
-        url = "http://dist.gem5.org/dist/"
-        ver_map = {}
-        for version in versions:
-            if version != "dev":
-                ver_map[version] = url + "v" + version.replace(".", "-")
-            else:
-                ver_map[version] = url + "develop"
-        # print(ver_map)
-        return ver_map
-
     def __get_size(self, url):
         """
         Helper function to return the size of a download through its URL.
@@ -57,15 +45,11 @@ class ResourceJsonCreator:
 
         :param url: Download URL
         """
-        if self.debug:
-            return 0
         try:
             response = requests.head(url)
             size = int(response.headers.get("content-length", 0))
             return size
         except Exception as e:
-            if self.debug:
-                print(e)
             return 0
 
     def __search_folder(self, folder_path, id):
@@ -169,19 +153,12 @@ class ResourceJsonCreator:
         matching_files = [file.replace(source, self.base_url)
                           for file in matching_files]
 
-        if self.debug and len(matching_files) > 0:
-            print("Files containing id {}:".format(id))
-            print(matching_files)
-
         code_examples = []
 
         for i in range(len(matching_files)):
             json_obj = {
                 "example": matching_files[i], "tested": tested_files[i]}
             code_examples.append(json_obj)
-
-        if self.debug:
-            print(json.dumps(code_examples, indent=4))
         return code_examples
 
     def unwrap_resources(self,  ver):
@@ -292,8 +269,17 @@ class ResourceJsonCreator:
             new_resources.append(res)
         return new_resources
 
-    def create_json(self, source, output):
-        resources = self.unwrap_resources("dev")
+    def __validate_schema(self, resources):
+        for resource in resources:
+            try:
+                validate(resource, schema=self.schema)
+            except Exception as e:
+                print(resource)
+                raise e
+
+    def create_json(self, verion, source, output):
+        resources = self.unwrap_resources(verion)
         resources = self.__add_fields(resources, source)
+        self.__validate_schema(resources)
         with open(output, "w") as f:
             json.dump(resources, f, indent=4)
