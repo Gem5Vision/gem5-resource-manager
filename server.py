@@ -572,6 +572,20 @@ def insert():
 
 @app.route("/undo", methods=["POST"])
 def undo():
+    """
+    Undoes last operation performed on the session. 
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose last operation
+    is to be undone.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
+
+    The Client API is used to undo the last operation performed on the session by calling `Client.undo_operation()`.
+
+    The result of the `undo_operation` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the undo operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -581,6 +595,20 @@ def undo():
 
 @app.route("/redo", methods=["POST"])
 def redo():
+    """
+    Redoes last operation performed on the session.
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose last operation
+    is to be redone.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
+
+    The Client API is used to redo the last operation performed on the session by calling `Client.redo_operation()`.
+
+    The result of the `redo_operation` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the redo operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -590,6 +618,21 @@ def redo():
 
 @app.route("/getRevisionStatus", methods=["POST"])
 def get_revision_status():
+    """
+    Gets the status of revision operations.
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose revision operations 
+    statuses is being requested.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
+
+    The Client API is used to get the status of the revision operations by calling `Client.get_revision_status()`.
+
+    The result of the `get_revision_status()` is returned as a JSON response. 
+
+    :return: A JSON response contain the result of the get_revision_status operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -599,7 +642,7 @@ def get_revision_status():
 
 def fernet_instance_generation(password):
     """
-    Generates Fernet instance for use in Saving/Loading Session. 
+    Generates Fernet instance for use in Saving and Loading Session. 
 
     Utilizes Scrypt Key Derivation Function with `SECRET_KEY` as salt value and recommended
     values for `length`, `n`, `r`, and `p` parameters. Derives key using `password`. Derived
@@ -623,20 +666,22 @@ def fernet_instance_generation(password):
 @app.route("/saveSession", methods=["POST"])
 def save_session():
     """
-    Saves current session to file `SESSION_FILE`. 
+    Generates ciphertext of session that is to be saved.
 
-    This route expects a POST request with a JSON payload containing the alias of the current session that is to be 
+    This route expects a POST request with a JSON payload containing the alias of the session that is to be 
     saved and a password to be used in encrypting the session data. 
 
-    The alias is used in retrieving the session from `databases`. The `save_session()` method is called to get 
-    the necessary session data from the corresponding `Client` as a dictionary.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
+    
+    The `save_session()` method is called to get the necessary session data from the corresponding `Client` 
+    as a dictionary.
 
     A Fernet instance, using the user provided password, is instantiated. The session data is encrypted using this
-    instance. If an Exception is raised, an error response is returned.
+    instance. If an Exception is raised, an error response is returned. 
 
-    The encrypted session data is then appended to `SESSION_FILE` and a success response is returned. 
-
-    The result of the save_session operation is returned as a JSON response.
+    The result of the save_session operation is returned as a JSON response. The ciphertext is returned or an error
+    message if an error occurred. 
 
     :return: A JSON response containing the result of the save_session operation.
     """
@@ -655,21 +700,18 @@ def save_session():
 @app.route("/loadSession", methods=["POST"])
 def load_session():
     """
-    Loads selected session from file `SESSION_FILE`. 
+    Loads session from data specified in user request. 
 
-    This route expects a POST request with a JSON payload containing the alias of the session that is to be 
-    restored and the password associated with it. 
-
-    The alias is used in retrieving the encrypted session data from `SESSION_FILE`. If the alias is not found
-    an error is returned.
+    This route expects a POST request with a JSON payload containing the encrypted ciphertext containing the session 
+    data, the alias of the session that is to be restored, and the password associated with it. 
 
     A Fernet instance, using the user provided password, is instantiated. The session data is decrypted using this
     instance. If an Exception is raised, an error response is returned.
 
-    The `Client` type is retrieved from the session data and a redirect to the correct login with the necessary 
+    The `Client` type is retrieved from the session data and a redirect to the appropriate login with the stored 
     parameters from the session data is applied. 
 
-    The result of the load_session operation is either returned as a JSON response containing the error message 
+    The result of the load_session operation is returned either as a JSON response containing the error message 
     or a redirect.
 
     :return: A JSON response containing the error of the load_session operation or a redirect.
@@ -678,16 +720,16 @@ def load_session():
     session = request.json["session"]
     try:
         fernet_instance = fernet_instance_generation(request.json["password"])
-        ciphertext = json.loads(fernet_instance.decrypt(session))
+        session_data = json.loads(fernet_instance.decrypt(session))
     except (InvalidSignature, InvalidToken):
         return {"error": "Incorrect Password! Please Try Again!"}, 400
-    client_type = ciphertext["client"]
+    client_type = session_data["client"]
     if client_type == CLIENT_TYPES[0]:
         try:
             databases[alias] = MongoDBClient(
-                mongo_uri=ciphertext["uri"],
-                database_name=ciphertext["database"],
-                collection_name=ciphertext["collection"],
+                mongo_uri=session_data["uri"],
+                database_name=session_data["database"],
+                collection_name=session_data["collection"],
             )
         except Exception as e:
             return {"error": str(e)}, 400
@@ -698,7 +740,7 @@ def load_session():
         )
     elif client_type == CLIENT_TYPES[1]:
         return redirect(
-            url_for("existing_json", filename=ciphertext["filename"]),
+            url_for("existing_json", filename=session_data["filename"]),
             302,
         )
     else:
