@@ -53,17 +53,9 @@ function toggleInteractables(isBlocking, excludedOnNotBlockingIds = [], otherBlo
 }
 
 function resetCookies() {
-  fetch("/resetCookies")
-  .then((res) => {
-    if (res.status !== 200) {
-      res.json((data) => {
-        console.log(data);
-
-        return;
-      })
-    }
-
-    appendAlert('Success!', 'resetCookies', `All Cookies Deleted!`, 'danger');
+  localStorage.clear("sessions");
+  appendAlert('Success!', 'resetCookies', `All Saved Sessions Deleted!`, 'danger');
+  setTimeout(() => {
     location.reload();
-  })
+  }, 750);
 }

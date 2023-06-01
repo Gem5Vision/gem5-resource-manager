@@ -620,17 +620,6 @@ def fernet_instance_generation(password):
     )
 
 
-@app.route("/resetCookies")
-def reset():
-    """
-    Resets all cookies to default values.
-    :return: A JSON response containing the result of the reset operation.
-    """
-    response = make_response({"success": "sessions cookie cleared"}, 200)
-    response.delete_cookie(key=SESSIONS_COOKIE_KEY)
-    return response
-
-
 @app.route("/saveSession", methods=["POST"])
 def save_session():
     """
