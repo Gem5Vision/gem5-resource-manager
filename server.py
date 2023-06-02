@@ -1,26 +1,18 @@
-import json
 from flask import render_template, Flask, request, redirect, url_for, make_response
-import os
-from dotenv import load_dotenv
 from bson import json_util
+import json
 import jsonschema
 import requests
-from api.json_client import JSONClient
-from api.mongo_client import MongoDBClient
-
-import urllib.parse
 import markdown
-
-from werkzeug.utils import secure_filename
-
-from cryptography.fernet import Fernet, InvalidToken
-from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 import base64
 import secrets
-
-from cryptography.exceptions import InvalidSignature
-
 from pathlib import Path
+from werkzeug.utils import secure_filename
+from cryptography.fernet import Fernet, InvalidToken
+from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+from cryptography.exceptions import InvalidSignature
+from api.json_client import JSONClient
+from api.mongo_client import MongoDBClient
 
 databases = {}
 
@@ -31,7 +23,6 @@ if not response:
         schema = json.load(f)
 else:
     schema = json.loads(response.content)
-
 
 
 UPLOAD_FOLDER = Path("database/")
@@ -133,7 +124,6 @@ def validate_mongodb():
         )
     except Exception as e:
         return {"error": str(e)}, 400
-    # print(f"\nDATABASES: {databases}\n")
     return redirect(
         url_for("editor", type=CLIENT_TYPES[0], alias=request.json["alias"]),
         302,
@@ -163,13 +153,13 @@ def validate_json_get():
     if response.status_code != 200:
         return {"error": "invalid status"}, response.status_code
     filename = secure_filename(request.args.get("filename"))
-    path = Path(UPLOAD_FOLDER) / filename
-    if (Path(UPLOAD_FOLDER) / filename).is_file():
-        temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
-        with Path(temp_path).open("wb") as f:
+    path = UPLOAD_FOLDER / filename
+    if (UPLOAD_FOLDER / filename).is_file():
+        temp_path = TEMP_UPLOAD_FOLDER / filename
+        with temp_path.open("wb") as f:
             f.write(response.content)
         return {"conflict": "existing file in server"}, 409
-    with Path(path).open("wb") as f:
+    with path.open("wb") as f:
         f.write(response.content)
     global databases
     if filename in databases:
@@ -192,9 +182,9 @@ def validate_json_post():
         return {"error": "empty"}, 400
     file = request.files["file"]
     filename = secure_filename(file.filename)
-    path = Path(UPLOAD_FOLDER) / filename
-    if Path(path).is_file():
-        temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
+    path = UPLOAD_FOLDER / filename
+    if path.is_file():
+        temp_path = TEMP_UPLOAD_FOLDER / filename
         file.save(temp_path)
         return {"conflict": "existing file in server"}, 409
     file.save(path)
@@ -220,7 +210,6 @@ def existing_json():
         try:
             databases[filename] = JSONClient(filename)
         except Exception as e:
-            # print(e)
             return {"error": str(e)}, 400
     return redirect(
         url_for("editor", type=CLIENT_TYPES[1],
@@ -239,7 +228,7 @@ def get_existing_files():
 
     :return: A JSON response with the list of existing files.
     """
-    files = [f.name for f in Path(UPLOAD_FOLDER).iterdir() if f.is_file()]
+    files = [f.name for f in UPLOAD_FOLDER.iterdir() if f.is_file()]
     return json.dumps(files)
 
 
@@ -249,21 +238,19 @@ def resolve_conflict():
     resolution = request.args.get("resolution")
     resolution_options = ["clearInput",
                           "openExisting", "overwrite", "newFilename"]
-    temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
+    temp_path = TEMP_UPLOAD_FOLDER / filename
     if not resolution:
-        # print("no resolution")
         return {"error": "empty"}, 400
     if resolution not in resolution_options:
-        # print("invalid resolution")
         return {"error": "invalid resolution"}, 400
     if resolution == resolution_options[0]:
         temp_path.unlink()
         return {"success": "input cleared"}, 204
     if resolution in resolution_options[-2:]:
         filename = secure_filename(request.args.get("filename"))
-        next(TEMP_UPLOAD_FOLDER.glob("*")).replace(Path(UPLOAD_FOLDER) / filename)
-    if Path(temp_path).is_file():
-        Path(temp_path).unlink()
+        next(TEMP_UPLOAD_FOLDER.glob("*")).replace(UPLOAD_FOLDER / filename)
+    if temp_path.is_file():
+        temp_path.unlink()
     global databases
     if filename in databases:
         return {"error": "alias already exists"}, 409
@@ -308,21 +295,18 @@ def editor():
 
     :return: The rendered editor template based on the specified database type.
     """
-    # print("test")
     global databases
     if not request.args:
         return render_template("404.html"), 404
     alias = request.args.get("alias")
     if alias not in databases:
         return render_template("404.html"), 404
-    """ if not (Path(UPLOAD_FOLDER) / alias).is_file():
-        return render_template("404.html"), 404 """
 
     client_type = ""
     if isinstance(databases[alias], JSONClient):
-        client_type = "json"
+        client_type = CLIENT_TYPES[1]
     elif isinstance(databases[alias], MongoDBClient):
-        client_type = "mongodb"
+        client_type = CLIENT_TYPES[0]
     else:
         return render_template("404.html"), 404
 
