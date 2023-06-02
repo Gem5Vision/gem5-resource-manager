@@ -4,27 +4,7 @@
   <title>Resources Manager</title>
 {% endblock %}
 
-{% block main %}
-  <div style="height: inherit;">
-    <div class="container-fluid d-flex justify-content-center main-panel-container">
-      <div class="d-flex flex-column align-items-center justify-content-center panel-container">
-        <div class="d-flex flex-column align-items-center mb-3">
-          <div style="width: 50%;">
-            <img id="gem5RMImg" class="img-fluid" src="/static/images/gem5ResourcesManager.png" alt="gem5">
-          </div>
-        </div>
-        <div class="d-flex flex-column justify-content-center mb-3 buttonGroup">
-          <button id="showSavedSessionModal" type="button" class="btn btn-outline-primary btn-box-shadow mt-2 mb-2" onclick="showSavedSessionModal()">Load Saved Session</button>
-          <a href="{{ url_for('login_mongodb') }}">
-            <button class="btn btn-outline-primary btn-box-shadow mt-2 mb-2 w-100">MongoDB</button>
-          </a>
-          <a href="{{ url_for('login_json') }}">
-            <button class="btn btn-outline-primary btn-box-shadow mt-2 mb-2 w-100">JSON</button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+{% block body %}
   <div class="modal fade" id="savedSessionModal" tabindex="-1" aria-labelledby="savedSessionModal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -51,7 +31,25 @@
       </div>
     </div>
   </div>
-{% endblock %}
-{% block body %}
+  <main>
+    <div class="container-fluid d-flex justify-content-center main-panel-container">
+      <div class="d-flex flex-column align-items-center justify-content-center panel-container">
+        <div class="d-flex flex-column align-items-center mb-3">
+          <div style="width: 50%;">
+            <img id="gem5RMImg" class="img-fluid" src="/static/images/gem5ResourcesManager.png" alt="gem5">
+          </div>
+        </div>
+        <div class="d-flex flex-column justify-content-center mb-3 buttonGroup">
+          <button id="showSavedSessionModal" type="button" class="btn btn-outline-primary btn-box-shadow mt-2 mb-2" onclick="showSavedSessionModal()">Load Saved Session</button>
+          <a href="{{ url_for('login_mongodb') }}">
+            <button class="btn btn-outline-primary btn-box-shadow mt-2 mb-2 w-100">MongoDB</button>
+          </a>
+          <a href="{{ url_for('login_json') }}">
+            <button class="btn btn-outline-primary btn-box-shadow mt-2 mb-2 w-100">JSON</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
 <script src="/static/js/index.js"></script>
 {% endblock %}

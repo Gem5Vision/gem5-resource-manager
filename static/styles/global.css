@@ -28,7 +28,7 @@ html, body {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-main {
+.calc-main-height {
   height: calc(100vh - 81px);
 }
 
@@ -107,6 +107,7 @@ main {
 }
 
 .editor-sizing {
+  min-height: 650px;
   height: 75%;
   width: 100%;
 }

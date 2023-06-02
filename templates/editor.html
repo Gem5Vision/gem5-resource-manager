@@ -5,8 +5,50 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
 {% endblock %}
 
-{% block main %}
-  <div class="container-fluid" style="height: inherit;">
+{% block body %}
+  <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" data-bs-backdrop="static" aria-hidden="true" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header secondary-text-semi">
+          <h5 class="modal-title" id="ConfirmModalLabel">Confirm Changes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body main-text-semi mt-3 mb-3" style="text-align: center;">These changes may not be able to be undone. Are you sure you want to continue?</div>
+        <div class="modal-footer">
+          <button id="confirm" type="button" class="btn btn-outline-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="saveSessionModal" tabindex="-1" aria-labelledby="saveSessionModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header secondary-text-semi">
+          <h5 class="modal-title" id="saveSessionLabel">Save Session</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <h4 id="existing-session-warning" class="main-text-semi text-center flex-column mb-3">
+                <span>Warning!</span>
+                <span>Existing Saved Session of Same Alias Will Be Overwritten!</span>
+              </h4>
+              <h4 class="main-text-semi text-center">Provide a Password to Secure and Save this Session With.</h4>
+            </div>
+            <form id="saveSessionForm" class="row">
+              <label for="session-password" class="form-label main-text-regular ps-1 mt-3">Enter Password</label>
+              <input type="password" class="form-control input-shadow main-text-regular" id="session-password" placeholder="Password...">
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSession" type="button" class="btn btn-outline-primary" onclick="saveSession()">Save Session</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="container-fluid calc-main-height">
     <div class="row" style="height: inherit;">
       <div id="databaseActions" class="col-lg-3 offcanvas-lg offcanvas-start shadow-sm overflow-y-auto" style="background-color: #f8f9fa!important; height: initial;">
         <div class="d-flex flex-row justify-content-between mt-2">
@@ -73,50 +115,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" data-bs-backdrop="static" aria-hidden="true" >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header secondary-text-semi">
-          <h5 class="modal-title" id="ConfirmModalLabel">Confirm Changes</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body main-text-semi mt-3 mb-3" style="text-align: center;">These changes may not be able to be undone. Are you sure you want to continue?</div>
-        <div class="modal-footer">
-          <button id="confirm" type="button" class="btn btn-outline-primary">Save Changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="saveSessionModal" tabindex="-1" aria-labelledby="saveSessionModal" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header secondary-text-semi">
-          <h5 class="modal-title" id="saveSessionLabel">Save Session</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <h4 id="existing-session-warning" class="main-text-semi text-center flex-column mb-3">
-                <span>Warning!</span>
-                <span>Existing Saved Session of Same Alias Will Be Overwritten!</span>
-              </h4>
-              <h4 class="main-text-semi text-center">Provide a Password to Secure and Save this Session With.</h4>
-            </div>
-            <form id="saveSessionForm" class="row">
-              <label for="session-password" class="form-label main-text-regular ps-1 mt-3">Enter Password</label>
-              <input type="password" class="form-control input-shadow main-text-regular" id="session-password" placeholder="Password...">
-            </form>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="saveSession" type="button" class="btn btn-outline-primary" onclick="saveSession()">Save Session</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-{% block body %}
+  </main>
   <script src="/static/js/editor.js"></script>
 {% endblock %}

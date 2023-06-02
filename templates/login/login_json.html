@@ -4,8 +4,56 @@
   <title>JSON Login</title>
 {% endblock %}
 
-{% block main %}
-  <div style="height: inherit;"> 
+{% block body %}
+  <div class="modal fade" id="conflictResolutionModal" tabindex="-1" aria-labelledby="conflictResolutionModalLabel" data-bs-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header justify-content-center">
+          <h5 class="modal-title" id="conflictResolutionModalLabel">File Conflict</h5>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <h4 class="main-text-semi">
+                <span id="header-filename">File</span>
+                <span>already exists in the server. Select an option below to resolve this conflict.</span>
+              </h4>
+            </div>
+            <div class="row mt-1">
+              <div class="input-group flex-column main-text-regular">
+                <div class="form-check mt-1">
+                  <input class="form-check-input" type="radio" name="conflictRadio" id="openExisting" checked>
+                  <label class="form-check-label" for="openExisting">Open Existing</label>
+                </div>
+                <div class="form-check mt-1">
+                  <input class="form-check-input" type="radio" name="conflictRadio" id="clearInput">
+                  <label class="form-check-label" for="clearInput">Clear Input</label>
+                </div>
+                <div class="form-check mt-1">
+                  <input class="form-check-input" type="radio" name="conflictRadio" id="overwrite">
+                  <label class="form-check-label" for="overwrite">Overwrite Existing File</label>
+                </div>
+                <div class="mt-1">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="conflictRadio" id="newFilename">
+                    <label class="form-check-label" for="newFilename">Enter New Filename</label>
+                  </div>
+                  <div class="d-flex flex-row align-items-center">
+                    <input class="form-control mt-1 main-text-regular" type="text" id="updatedFilename" name="updatedFilename" placeholder="Enter Filename..." />
+                    <span class="main-text-regular ms-3">.json</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="confirm" type="button" class="btn btn-outline-primary" onclick="saveConflictResolution()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main> 
     <div class="container-fluid d-flex justify-content-center main-panel-container">
       <div class="d-flex flex-column align-items-center justify-content-between panel-container h-auto" >
         <div class="d-flex flex-column align-items-center" style="width: -webkit-fill-available;">
@@ -55,56 +103,6 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal fade" id="conflictResolutionModal" tabindex="-1" aria-labelledby="conflictResolutionModalLabel" data-bs-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header justify-content-center">
-          <h5 class="modal-title" id="conflictResolutionModalLabel">File Conflict</h5>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <h4 class="main-text-semi">
-                <span id="header-filename">File</span>
-                <span>already exists in the server. Select an option below to resolve this conflict.</span>
-              </h4>
-            </div>
-            <div class="row mt-1">
-              <div class="input-group flex-column main-text-regular">
-                <div class="form-check mt-1">
-                  <input class="form-check-input" type="radio" name="conflictRadio" id="openExisting" checked>
-                  <label class="form-check-label" for="openExisting">Open Existing</label>
-                </div>
-                <div class="form-check mt-1">
-                  <input class="form-check-input" type="radio" name="conflictRadio" id="clearInput">
-                  <label class="form-check-label" for="clearInput">Clear Input</label>
-                </div>
-                <div class="form-check mt-1">
-                  <input class="form-check-input" type="radio" name="conflictRadio" id="overwrite">
-                  <label class="form-check-label" for="overwrite">Overwrite Existing File</label>
-                </div>
-                <div class="mt-1">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="conflictRadio" id="newFilename">
-                    <label class="form-check-label" for="newFilename">Enter New Filename</label>
-                  </div>
-                  <div class="d-flex flex-row align-items-center">
-                    <input class="form-control mt-1 main-text-regular" type="text" id="updatedFilename" name="updatedFilename" placeholder="Enter Filename..." />
-                    <span class="main-text-regular ms-3">.json</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="confirm" type="button" class="btn btn-outline-primary" onclick="saveConflictResolution()">Save</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-{% block body %}
-<script src="/static/js/login.js"></script>
+  </main>
+  <script src="/static/js/login.js"></script>
 {% endblock %}
