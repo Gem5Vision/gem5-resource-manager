@@ -161,6 +161,20 @@ main {
   background-color: #0095AF;
 }
 
+.reset-nav {
+  --bs-nav-link-color: #0095AF;
+  --bs-nav-link-hover-color: white;
+  --bs-nav-tabs-link-active-color: #0095AF;
+}
+
+.reset-nav-link {
+  color: black;
+}
+
+.reset-nav-link:hover {
+  background-color: #0095AF;
+}
+
 .form-check-input:checked {
   background-color: #6c6c6c;
   border-color: #6c6c6c;

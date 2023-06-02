@@ -1,6 +1,6 @@
 function handleMongoDBLogin(event) {
   event.preventDefault();
-  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  const activeTab =  document.getElementById("mongodb-login-tabs").querySelector(".nav-link.active").getAttribute("id");
 
   activeTab === "enter-uri-tab" ? handleEnteredURI() : handleGenerateURI();
 
@@ -101,7 +101,7 @@ function handleMongoURLFetch(uri, collection, database, alias) {
 
 function handleJSONLogin(event) {
   event.preventDefault();
-  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  const activeTab = document.getElementById("json-login-tabs").querySelector(".nav-link.active").getAttribute("id");
   if (activeTab === "remote-tab") {
     handleRemoteJSON();
   } else if (activeTab === "existing-tab") {
@@ -227,7 +227,7 @@ function handleUploadJSON() {
 function saveConflictResolution() {
   const conflictResolutionModal = bootstrap.Modal.getInstance(document.getElementById("conflictResolutionModal"));
   const selectedValue = document.querySelector('input[name="conflictRadio"]:checked').id;
-  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  const activeTab = document.getElementById("json-login-tabs").querySelector(".nav-link.active").getAttribute("id");
 
   if (selectedValue === null) {
     appendAlert('Error!', 'nullRadio', 'Fatal! Null Radio!', 'danger');

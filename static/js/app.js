@@ -52,10 +52,78 @@ function toggleInteractables(isBlocking, excludedOnNotBlockingIds = [], otherBlo
   }, 250);
 }
 
-function resetCookies() {
-  localStorage.clear("sessions");
-  appendAlert('Success!', 'resetCookies', `All Saved Sessions Deleted!`, 'danger');
+function showResetSavedSessionsModal() {
+  let sessions = localStorage.getItem("sessions");
+  if (sessions === null) {
+    appendAlert('Error!', 'noSavedSessions', `No Saved Sessions Exist!`, 'danger');
+    return;
+  }
+  sessions = JSON.parse(sessions);  
+
+  const resetSavedSessionsModal = new bootstrap.Modal(document.getElementById('resetSavedSessionsModal'), { 
+    focus: true, keyboard: false 
+  });
+
+
+  let select = document.getElementById("delete-session-dropdown");
+  select.innerHTML = "";
+  Object.keys(sessions).forEach((alias) => {
+    let option = document.createElement("option");
+    option.value = alias;
+    option.innerHTML = alias;
+    select.appendChild(option);
+  });
+
+  document.getElementById("selected-session").innerText = `"${document.getElementById("delete-session-dropdown").value}"`;
+
+  resetSavedSessionsModal.show();
+}
+
+function resetSavedSessions() {
+  bootstrap.Modal.getInstance(document.getElementById("resetSavedSessionsModal")).hide();
+
+  const sessions = JSON.parse(localStorage.getItem("sessions"));
+  if (sessions === null) {
+    appendAlert('Error!', 'noSavedSessions', `No Saved Sessions Exist!`, 'danger');
+    return;
+  }
+
+  const activeTab = document.getElementById("reset-tabs").querySelector(".nav-link.active").getAttribute("id");
+  if (activeTab === "delete-one-tab") {
+    const deleteOneConfirmation = document.getElementById("delete-one-confirmation").value; 
+    if (deleteOneConfirmation !== document.getElementById("delete-session-dropdown").value) {
+      appendAlert('Error!', 'noSavedSessions', `Invalid Confirmation Entry!`, 'danger');
+      return;
+    }
+
+    delete sessions[document.getElementById("delete-session-dropdown").value];
+    Object.keys(sessions).length === 0 
+      ? localStorage.removeItem("sessions") 
+      : localStorage.setItem("sessions", JSON.stringify(sessions));
+  
+    } else {
+    const deleteAllConfirmation = document.getElementById("delete-all-confirmation").value; 
+    if (deleteAllConfirmation !== "Delete All") {
+      appendAlert('Error!', 'noSavedSessions', `Invalid Confirmation Entry!`, 'danger');
+      return;
+    }
+
+    localStorage.removeItem("sessions");
+  } 
+
+  appendAlert('Success!', 'resetCookies', `Saved Session Reset Successful!`, 'danger');
   setTimeout(() => {
     location.reload();
   }, 750);
 }
+
+document.getElementById("close-reset-modal").addEventListener("click", () => {
+  document.getElementById("resetSavedSessionsModal").querySelectorAll("form").forEach(form => {
+    form.reset();
+  })
+});
+
+document.getElementById("delete-session-dropdown").addEventListener("change", () => {
+  document.getElementById("selected-session").innerText = 
+    `"${document.getElementById("delete-session-dropdown").value}"`;
+});
