@@ -23,6 +23,10 @@ password.addEventListener("input", () => {
   loadSessionBtn.disabled = password.value === "";
 });
 
+document.getElementById("close-load-session-modal").addEventListener("click", () => {
+  document.getElementById("savedSessionModal").querySelector("form").reset();
+})
+
 function showSavedSessionModal() {
   const savedSessionModal = new bootstrap.Modal(document.getElementById('savedSessionModal'), { focus: true, keyboard: false });
   savedSessionModal.show();
@@ -58,6 +62,7 @@ function loadSession() {
     if (res.status !== 200) {
       res.json()
       .then((error) => {
+        document.getElementById("savedSessionModal").querySelector("form").reset();
         appendAlert("Error!", "invalidStatus", `${error["error"]}`, "danger");
         return;
       })
