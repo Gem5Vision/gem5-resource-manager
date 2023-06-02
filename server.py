@@ -339,18 +339,17 @@ def find():
     """
     Finds a resource based on the provided search criteria.
 
-    This route expects a POST request with a JSON payload containing the search criteria. The route determines the
-    appropriate method for finding the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session which is to be searched for the 
+    resource and the search criteria. 
 
-    If `isMongo` is True, the MongoDB API is used to find the resource by calling `mongo_db_api.findResource()` with the
-    database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to find the resource by calling `json_api.findResource()` with the
-    `resources` variable.
+    The Client API is used to find the resource by calling `find_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the find operation is returned as a JSON response.
+    The result of the `find_resource` operation is returned as a JSON response.
 
-    :return: A JSON response containing the result of the find operation.
+    :return: A JSON response containing the result of the `find_resource` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -362,20 +361,22 @@ def find():
 @app.route("/update", methods=["POST"])
 def update():
     """
-    Updates a resource based on the provided data.
+    Updates a resource with provided changes.
 
-    This route expects a POST request with a JSON payload containing the data for updating the resource. The route
-    determines the appropriate method for updating the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session which contains the resource 
+    that is to be updated and the data for updating the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to update the resource by calling `mongo_db_api.updateResource()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to update the resource by calling `json_api.updateResource()` with the
-    `resources` variable and the filepath from the Flask application's configuration.
+    The Client API is used to update the resource by calling `update_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the update operation is returned as a JSON response.
+    The `_add_to_stack` function of the session is called to insert the operation, update, and necessary data onto the revision 
+    operations stack.
 
-    :return: A JSON response containing the result of the update operation.
+    The result of the `update_resource` operation is returned as a JSON response. It contains the original and the modified resources. 
+
+    :return: A JSON response containing the result of the `update_resource` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -401,18 +402,17 @@ def getVersions():
     """
     Retrieves the versions of a resource based on the provided search criteria.
 
-    This route expects a POST request with a JSON payload containing the search criteria. The route determines the
-    appropriate method for retrieving the versions based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session which contains the resource 
+    whose versions are to be retrieved and the search criteria. 
 
-    If `isMongo` is True, the MongoDB API is used to retrieve the versions by calling `mongo_db_api.getVersions()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to retrieve the versions by calling `json_api.getVersions()` with the
-    `resources` variable.
+    The Client API is used to get the versions of a resource by calling `get_versions()` on the session where the operation is 
+    accomplished by the concrete client class.
+    
+    The result of the `get_versions` operation is returned as a JSON response.
 
-    The result of the versions retrieval is returned as a JSON response.
-
-    :return: A JSON response containing the versions of the resource.
+    :return: A JSON response containing the result of the `get_versions` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -498,20 +498,22 @@ def getFields():
 @app.route("/delete", methods=["POST"])
 def delete():
     """
-    Deletes a resource based on the provided data.
+    Deletes a resource.
 
-    This route expects a POST request with a JSON payload containing the data for deleting the resource. The route
-    determines the appropriate method for deleting the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session from which a resource is to be 
+    deleted and the data for deleting the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to delete the resource by calling `mongo_db_api.deleteResource()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to delete the resource by calling `json_api.deleteResource()` with the
-    `resources` variable and the filepath from the Flask application's configuration.
+    The Client API is used to delete the resource by calling `delete_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the delete operation is returned as a JSON response.
+    The `_add_to_stack` function of the session is called to insert the operation, delete, and necessary data onto the revision 
+    operations stack.
 
-    :return: A JSON response containing the result of the delete operation.
+    The result of the `delete` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the `delete` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -529,20 +531,22 @@ def delete():
 @app.route("/insert", methods=["POST"])
 def insert():
     """
-    Inserts a new resource based on the provided data.
+    Inserts a new resource.
 
-    This route expects a POST request with a JSON payload containing the data for inserting the resource. The route
-    determines the appropriate method for inserting the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session to which the data 
+    is to be inserted and the data for inserting the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to insert the resource by calling `mongo_db_api.insertResource()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to insert the resource by calling `json_api.insertResource()` with the
-    `resources` variable and the filepath from the Flask application's configuration.
+    The Client API is used to insert the new resource by calling `insert_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the insert operation is returned as a JSON response.
+    The `_add_to_stack` function of the session is called to insert the operation, insert, and necessary data onto the revision 
+    operations stack.
 
-    :return: A JSON response containing the result of the insert operation.
+    The result of the `insert` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the `insert` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -564,11 +568,12 @@ def undo():
 
     The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    The Client API is used to undo the last operation performed on the session by calling `Client.undo_operation()`.
+    The Client API is used to undo the last operation performed on the session by calling `undo_operation()` on the 
+    session where the operation is accomplished by the concrete client class.
 
     The result of the `undo_operation` operation is returned as a JSON response.
 
-    :return: A JSON response containing the result of the undo operation.
+    :return: A JSON response containing the result of the `undo_operation` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -587,11 +592,12 @@ def redo():
 
     The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    The Client API is used to redo the last operation performed on the session by calling `Client.redo_operation()`.
+    The Client API is used to redo the last operation performed on the session by calling `redo_operation()` on the 
+    session where the operation is accomplished by the concrete client class.
 
     The result of the `redo_operation` operation is returned as a JSON response.
 
-    :return: A JSON response containing the result of the redo operation.
+    :return: A JSON response containing the result of the `redo_operation` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -611,11 +617,12 @@ def get_revision_status():
     The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
     returned.
 
-    The Client API is used to get the status of the revision operations by calling `Client.get_revision_status()`.
+    The Client API is used to get the status of the revision operations by calling `get_revision_status()` on the 
+    session where the operation is accomplished by the concrete client class.
 
-    The result of the `get_revision_status()` is returned as a JSON response. 
+    The result of the `get_revision_status` is returned as a JSON response. 
 
-    :return: A JSON response contain the result of the get_revision_status operation.
+    :return: A JSON response contain the result of the `get_revision_status` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -750,18 +757,18 @@ def checkExists():
     """
     Checks if a resource exists based on the provided data.
 
-    This route expects a POST request with a JSON payload containing the data for checking the existence of the resource.
-    The route determines the appropriate method for checking the existence based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session in which it is to be 
+    determined whether a given resource exists and the necessary data for checking the existence of the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to check the existence of the resource by calling
-    `mongo_db_api.checkResourceExists()` with the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
 
-    If `isMongo` is False, the JSON API is used to check the existence of the resource by calling
-    `json_api.checkResourceExists()` with the `resources` variable.
+    The Client API is used to check the existence of the resource by calling `check_resource_exists()` on the 
+    session where the operation is accomplished by the concrete client class.
 
-    The result of the existence check is returned as a JSON response.
+    The result of the `check_resource_exists` is returned as a JSON response. 
 
-    :return: A JSON response containing the result of the existence check.
+    :return: A JSON response contain the result of the `check_resource_exists` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -774,8 +781,11 @@ def checkExists():
 def logout():
     """
     Logs the user out of the application.
+    
     Deletes the alias from the `databases` dictionary.
+
     :param alias: The alias of the database to logout from.
+
     :return: A redirect to the index page.
     """
     alias = request.json["alias"]
