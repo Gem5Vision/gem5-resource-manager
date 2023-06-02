@@ -26,31 +26,23 @@
         <div class="d-flex flex-column align-items-start mt-3 mb-3 gap-3">
           <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Revision Actions</h5>
           <div class="d-flex flex-column justify-content-center gap-3 revisionButtonGroup">
-            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editorButton-tooltip" data-bs-title="Undoes Last Edit to Database">
+            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editor-tooltips" data-bs-title="Undoes Last Edit to Database">
               <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="undo-operation" onclick="executeRevision(event, 'undo')">Undo</button>
             </span>
-            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editorButton-tooltip" data-bs-title="Restores Last Undone Change to Database">
+            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editor-tooltips" data-bs-title="Restores Last Undone Change to Database">
               <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="redo-operation" onclick="executeRevision(event, 'redo')">Redo</button>
             </span>
           </div>
         </div>
         <div class="btn-group-vertical gap-3 mt-3 mb-3" role="group" aria-label="Other Database Actions">
           <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Other Actions</h5>
-          <div>
-            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="View Schema Database Validated Against">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
-            </span>
-          </div>
-          <div>
-            <div class="d-flex align-items-center">
-              <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Securely Save Session for Expedited Login">
-                <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="showSaveSessionModal" onclick="showSaveSessionModal()">Save Session</button>
-              </span>
-            </div>
-          </div>
-          <div>
-            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="logout" onclick="logout()">Logout</button>
-          </div>
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="View Schema Database Validated Against">
+            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
+          </span>
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Securely Save Session for Expedited Login">
+            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="showSaveSessionModal" onclick="showSaveSessionModal()">Save Session</button>
+          </span>
+          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1 w-auto" id="logout" onclick="logout()">Logout</button>
         </div>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
@@ -66,16 +58,16 @@
         <div id="diff-editor" class="editor-sizing"></div>
         <div id="schema-editor"></div>
         <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Add a New Resource to Database">
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Add a New Resource to Database">
             <button type="button" class="btn btn-primary btn-box-shadow" id="add_new_resource" onclick="showModal(event, addNewResource)" disabled >Add New Resource</button>
           </span>
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create a New Version of Resource">
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Create a New Version of Resource">
             <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>
           </span>
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Delete Selected Version of Resource">
             <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
           </span>
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications"> 
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Update Current Resource With Modifications"> 
             <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)" disabled>Update</button>
           </span>
         </div>

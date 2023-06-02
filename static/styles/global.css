@@ -162,7 +162,7 @@ code {
   border-radius: 3px;
 }
 
-.editorButton-tooltip {
+.editor-tooltips {
   --bs-tooltip-bg: #0095AF;
   --bs-tooltip-opacity: 1;
 }
