@@ -111,7 +111,7 @@ function resetSavedSessions() {
     localStorage.removeItem("sessions");
   } 
 
-  appendAlert('Success!', 'resetCookies', `Saved Session Reset Successful!`, 'danger');
+  appendAlert('Success!', 'resetCookies', `Saved Session Reset Successful!`, 'success');
   setTimeout(() => {
     location.reload();
   }, 750);
