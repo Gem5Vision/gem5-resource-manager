@@ -1,62 +1,75 @@
-function loadPrevSession(event) {
-  event.preventDefault();
-  const savedSession = JSON.parse(sessionStorage.getItem("savedSession"));
-  if (!savedSession) {
-    appendAlert('Error!', 'savedSession', 'No Saved Session!', 'danger');
+window.onload = () => {
+  let select = document.getElementById("sessions-dropdown");
+  const sessions = JSON.parse(localStorage.getItem("sessions"));
+
+  if (sessions === null) {
+    document.getElementById("showSavedSessionModal").disabled = true;
+    return;
+  }
+
+  Object.keys(sessions).forEach((alias) => {
+    let option = document.createElement("option");
+    option.value = alias;
+    option.innerHTML = alias;
+    select.appendChild(option);
+  });
+}
+
+const loadSessionBtn = document.getElementById("loadSession");
+loadSessionBtn.disabled = true;
+
+let password = document.getElementById("session-password");
+password.addEventListener("input", () => {
+  loadSessionBtn.disabled = password.value === "";
+});
+
+document.getElementById("close-load-session-modal").addEventListener("click", () => {
+  document.getElementById("savedSessionModal").querySelector("form").reset();
+})
+
+function showSavedSessionModal() {
+  const savedSessionModal = new bootstrap.Modal(document.getElementById('savedSessionModal'), { focus: true, keyboard: false });
+  savedSessionModal.show();
+}
+
+function loadSession() {
+  bootstrap.Modal.getInstance(document.getElementById("savedSessionModal")).hide();
+
+  const alias = document.getElementById("sessions-dropdown").value;
+  const session = JSON.parse(localStorage.getItem("sessions"))[alias];
+
+  if (session === null) {
+    appendAlert("Error!", "sessionNotFound", "Saved Session Not Found!", "danger");
     return;
   }
   
-  if (!["mongodb", "json"].includes(savedSession["client"])) {
-    appendAlert('Error!', 'invalidSessionType', 'Saved Session of Invalid Client Type!', 'danger');
-    return;
-  }
+  toggleInteractables(true);
 
-  if (savedSession["client"] === "mongodb") {
-    toggleInteractables(true);
-    fetch("/validateMongoDB",
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          uri: savedSession["uri"],
-          collection: savedSession["collection"],
-          database: savedSession["database"],
-          alias: savedSession["alias"]
-        })
+  fetch("/loadSession", {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      password: document.getElementById("session-password").value,
+      alias: alias,
+      session: session
+    })
+  })
+  .then((res) => {
+    toggleInteractables(false);
+
+    if (res.status !== 200) {
+      res.json()
+      .then((error) => {
+        document.getElementById("savedSessionModal").querySelector("form").reset();
+        appendAlert("Error!", "invalidStatus", `${error["error"]}`, "danger");
+        return;
       })
-      .then((res) => {
-        toggleInteractables(false);
-        if (!res.ok) {
-          res.json()
-            .then(error => {
-              appendAlert('Error!', 'mongodbValidationError', `${error.error}`, 'danger');
-            });
-          return;
-        }
-        res.redirected ? window.location = res.url : appendAlert('Error!', 'invalidRes', 'Invalid Server Response!', 'danger');
-      })
-  } else {
-    toggleInteractables(true);
+    }
     
-    fetch(`/existingJSON?filename=${savedSession["filename"]}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then((res) => {
-      toggleInteractables(false);
-
-      if (res.status !== 200) {
-        appendAlert('Error!', 'jsonSession', 'JSON Session Did Not Resume!', 'danger');
-      }
-
-      if (res.redirected) {
-        window.location = res.url;
-      }
-    })
-  } 
+    if (res.redirected) {
+      window.location = res.url;
+    }
+  }) 
 }

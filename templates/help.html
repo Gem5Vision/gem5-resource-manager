@@ -7,13 +7,10 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 {% endblock %}
 
-{% block main %}
-  <div class="container d-flex justify-content-center w-100">
+{% block body %}
+  <main class="container d-flex justify-content-center w-100">
     <div id="markdown-body-styling" class="markdown-body mt-5" style="width: inherit; margin-bottom: 5rem;">
       {{ rendered_html|safe }}
     </div>
-  </div>
-{% endblock %}
-{% block body %}
-<script src="/static/app.js"></script>
+  </main>
 {% endblock %}

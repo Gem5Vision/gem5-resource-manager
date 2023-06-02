@@ -1,6 +1,6 @@
 function handleMongoDBLogin(event) {
   event.preventDefault();
-  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  const activeTab =  document.getElementById("mongodb-login-tabs").querySelector(".nav-link.active").getAttribute("id");
 
   activeTab === "enter-uri-tab" ? handleEnteredURI() : handleGenerateURI();
 
@@ -84,7 +84,6 @@ function handleMongoURLFetch(uri, collection, database, alias) {
       })
     })
     .then((res) => {
-      console.log("URI Validation Response Status: " + res.status);
       toggleInteractables(false);
 
       if (!res.ok) {
@@ -101,7 +100,7 @@ function handleMongoURLFetch(uri, collection, database, alias) {
 
 function handleJSONLogin(event) {
   event.preventDefault();
-  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  const activeTab = document.getElementById("json-login-tabs").querySelector(".nav-link.active").getAttribute("id");
   if (activeTab === "remote-tab") {
     handleRemoteJSON();
   } else if (activeTab === "existing-tab") {
@@ -117,7 +116,6 @@ function handleJSONLogin(event) {
           }
         })
         .then((res) => {
-          console.log("Existing JSON Response Status: " + res.status);
           toggleInteractables(false);
 
           if (res.status !== 200) {
@@ -163,7 +161,6 @@ function handleRemoteJSON() {
     method: 'GET',
   })
     .then((res) => {
-      console.log("JSON Remote Response Status: " + res.status);
       toggleInteractables(false);
 
       if (res.status === 400) {
@@ -205,7 +202,6 @@ function handleUploadJSON() {
     body: form
   })
     .then((res) => {
-      console.log("JSON Upload Response Status: " + res.status);
       toggleInteractables(false);
 
       if (res.status === 400) {
@@ -227,7 +223,7 @@ function handleUploadJSON() {
 function saveConflictResolution() {
   const conflictResolutionModal = bootstrap.Modal.getInstance(document.getElementById("conflictResolutionModal"));
   const selectedValue = document.querySelector('input[name="conflictRadio"]:checked').id;
-  const activeTab = document.querySelector(".nav-link.active").getAttribute("id");
+  const activeTab = document.getElementById("json-login-tabs").querySelector(".nav-link.active").getAttribute("id");
 
   if (selectedValue === null) {
     appendAlert('Error!', 'nullRadio', 'Fatal! Null Radio!', 'danger');
@@ -295,7 +291,6 @@ function handleConflictResolution(resolution, filename) {
     }
   })
     .then((res) => {
-      console.log("JSON Upload Response Status: " + res.status);
       toggleInteractables(false);
 
       if (res.status === 204) {

@@ -4,7 +4,8 @@ from bson import json_util
 from api.client import Client
 from pymongo.errors import ConnectionFailure, ConfigurationError
 from pymongo import MongoClient
-
+from typing import Dict, List
+import pymongo
 
 class DatabaseConnectionError(Exception):
     "Raised for failure to connect to MongoDB client"
@@ -22,10 +23,10 @@ class MongoDBClient(Client):
 
     def __get_database(
         self,
-        mongo_uri,
-        database_name,
-        collection_name,
-    ):
+        mongo_uri: str,
+        database_name: str,
+        collection_name: str,
+    ) -> pymongo.collection.Collection:
         """
         This function returns a MongoDB database object for the specified collection.
         It takes three arguments: 'mongo_uri', 'database_name', and 'collection_name'.
@@ -57,12 +58,11 @@ class MongoDBClient(Client):
 
         return collection
 
-    def findResource(self, query):
+    def find_resource(self, query: Dict) -> Dict:
         """
         Find a resource in the database
 
-        :param: database: Database object
-        :param: json: JSON object with id and resource_version[optional]
+        :param query: JSON object with id and resource_version
         :return: json_resource: JSON object with request resource or error message
         """
         if "resource_version" not in query or query["resource_version"] == "":
@@ -87,7 +87,7 @@ class MongoDBClient(Client):
             return {"exists": False}
         return res[0]
 
-    def updateResource(self, query):
+    def update_resource(self, query: Dict) -> Dict[str,str]:
         """
         This function updates a resource in the database by first checking if the resource version in the request matches the resource version stored in the database.
         If they match, the resource is updated in the database. If they do not match, the update is rejected.
@@ -110,7 +110,7 @@ class MongoDBClient(Client):
             return {"status": "Resource does not exist"}
         return {"status": "Updated"}
 
-    def getVersions(self, query):
+    def get_versions(self, query: Dict) -> List[Dict]:
         """
         This function retrieves all versions of a resource with the given ID from the database.
         It takes two arguments, the database object and a JSON object containing the 'id' key of the resource to be retrieved.
@@ -127,7 +127,7 @@ class MongoDBClient(Client):
         res = json_util.dumps(versions)
         return json_util.loads(res)
 
-    def deleteResource(self, query):
+    def delete_resource(self, query: Dict) -> Dict[str,str]:
         """
         This function deletes a resource from the database by first checking if the resource version in the request matches the resource version stored in the database.
         If they match, the resource is deleted from the database. If they do not match, the delete operation is rejected
@@ -143,7 +143,7 @@ class MongoDBClient(Client):
         # self._addToStack({"operation": "delete", "resource": query})
         return {"status": "Deleted"}
 
-    def insertResource(self, query):
+    def insert_resource(self, query: Dict) -> Dict[str,str]:
         """
         This function inserts a new resource into the database using the 'insert_one' method of the MongoDB client.
         The function takes two arguments, the database object and the JSON object representing the new resource to be inserted.
@@ -155,11 +155,10 @@ class MongoDBClient(Client):
         try:
             self.collection.insert_one(query)
         except Exception as e:
-            print(e)
             return {"status": "Resource already exists"}
         return {"status": "Inserted"}
 
-    def checkResourceExists(self, query):
+    def check_resource_exists(self, query: Dict) -> Dict:
         """
         This function checks if a resource exists in the database by searching for a resource with a matching 'id' and 'resource_version' in the database.
         The function takes two arguments, the database object and a JSON object containing the 'id' and 'resource_version' keys.
@@ -182,7 +181,11 @@ class MongoDBClient(Client):
             return {"exists": False}
         return {"exists": True}
 
-    def save_session(self):
+    def save_session(self) -> Dict:
+        """
+        This function saves the client session to a dictionary.
+        :return: A dictionary containing the client session.
+        """
         session = {
             'client': 'mongodb',
             'uri': self.mongo_uri,

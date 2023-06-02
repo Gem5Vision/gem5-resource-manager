@@ -5,8 +5,50 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
 {% endblock %}
 
-{% block main %}
-  <div class="container-fluid" style="height: inherit;">
+{% block body %}
+  <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" data-bs-backdrop="static" aria-hidden="true" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header secondary-text-semi">
+          <h5 class="modal-title" id="ConfirmModalLabel">Confirm Changes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body main-text-semi mt-3 mb-3" style="text-align: center;">These changes may not be able to be undone. Are you sure you want to continue?</div>
+        <div class="modal-footer">
+          <button id="confirm" type="button" class="btn btn-outline-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="saveSessionModal" tabindex="-1" aria-labelledby="saveSessionModal" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header secondary-text-semi">
+          <h5 class="modal-title" id="saveSessionLabel">Save Session</h5>
+          <button type="button" id="close-save-session-modal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <h4 id="existing-session-warning" class="main-text-semi text-center flex-column mb-3">
+                <span>Warning!</span>
+                <span>Existing Saved Session of Same Alias Will Be Overwritten!</span>
+              </h4>
+              <h4 class="main-text-semi text-center">Provide a Password to Secure and Save this Session With.</h4>
+            </div>
+            <form id="saveSessionForm" class="row">
+              <label for="session-password" class="form-label main-text-regular ps-1 mt-3">Enter Password</label>
+              <input type="password" class="form-control input-shadow main-text-regular" id="session-password" placeholder="Password...">
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="saveSession" type="button" class="btn btn-outline-primary" onclick="saveSession()">Save Session</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <main class="container-fluid calc-main-height">
     <div class="row" style="height: inherit;">
       <div id="databaseActions" class="col-lg-3 offcanvas-lg offcanvas-start shadow-sm overflow-y-auto" style="background-color: #f8f9fa!important; height: initial;">
         <div class="d-flex flex-row justify-content-between mt-2">
@@ -17,7 +59,7 @@
           <label for="id" class="main-text-regular">Resource ID</label>
           <div class="d-flex flex-row align-items-center gap-1">
             <input class="form-control input-shadow" type="text" id="id" placeholder="Enter ID..." />
-            <select id="version-dropdown" class="form-select main-text-regular input-shadow" aria-label="Default select example" style="width: auto;"></select>
+            <select id="version-dropdown" class="form-select main-text-regular input-shadow w-auto" aria-label="Default select example"></select>
           </div>
           <label for="category" class="main-text-regular mt-3">Category</label>
           <select id="category" class="form-select mt-1 input-shadow" aria-label="Default select example"></select>
@@ -25,28 +67,24 @@
         </form>
         <div class="d-flex flex-column align-items-start mt-3 mb-3 gap-3">
           <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Revision Actions</h5>
-          <div class="d-flex flex-column justify-content-center gap-3 revisionButtonGroup">
-            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editorButton-tooltip" data-bs-title="Undo Last Edit to Database">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="undo-operation" onclick="executeRevision(event, 'undo')">Undo</button>
+          <div class="d-flex flex-column justify-content-center gap-3 main-text-regular revisionButtonGroup">
+            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editor-tooltips" data-bs-title="Undoes Last Edit to Database">
+              <button type="button" class="btn btn-outline-primary btn-box-shadow" id="undo-operation" onclick="executeRevision(event, 'undo')">Undo</button>
             </span>
-            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editorButton-tooltip" data-bs-title="Restores Last Undone Change to Database">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="redo-operation" onclick="executeRevision(event, 'redo')">Redo</button>
+            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editor-tooltips" data-bs-title="Restores Last Undone Change to Database">
+              <button type="button" class="btn btn-outline-primary btn-box-shadow" id="redo-operation" onclick="executeRevision(event, 'redo')">Redo</button>
             </span>
           </div>
         </div>
         <div class="btn-group-vertical gap-3 mt-3 mb-3" role="group" aria-label="Other Database Actions">
           <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Other Actions</h5>
-          <div>
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="View Schema Database Validated Against">
             <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="schema-toggle" onclick="showSchema()">Show Schema</button>
-          </div>
-          <div>
-            <div class="d-flex align-items-center">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="save-session" onclick="saveSession()">Save Session</button>
-            </div>
-          </div>
-          <div>
-            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="logout" onclick="logout()">Logout</button>
-          </div>
+          </span>
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Securely Save Session for Expedited Login">
+            <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1" id="showSaveSessionModal" onclick="showSaveSessionModal()">Save Session</button>
+          </span>
+          <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow mt-1 w-auto" id="logout" onclick="logout()">Logout</button>
         </div>
       </div>
       <div class="col ms-auto me-auto" style="max-width: 1440px;">
@@ -62,38 +100,21 @@
         <div id="diff-editor" class="editor-sizing"></div>
         <div id="schema-editor"></div>
         <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Add a New Resource to Database">
-            <button type="button" class="btn btn-primary btn-box-shadow" id="add_new_resource" onclick="showModal(event, addNewResource)" disabled >Add New Resource</button>
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Add a New Resource to Database">
+            <button type="button" class="btn btn-primary btn-box-shadow" id="add_new_resource" onclick="showModal(event, addNewResource)" disabled>Add New Resource</button>
           </span>
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Create a New Version of Resource">
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Create a New Version of Resource">
             <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>
           </span>
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Delete Selected Version of Resource">
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Delete Selected Version of Resource">
             <button type="button" class="btn btn-danger btn-box-shadow" id="delete" onclick="showModal(event, deleteRes)" disabled>Delete</button>
           </span>
-          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editorButton-tooltip" data-bs-title="Update Current Resource With Modifications"> 
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Update Current Resource With Modifications"> 
             <button type="button" class="btn btn-primary btn-box-shadow" id="update" onclick="showModal(event, update)" disabled>Update</button>
           </span>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ConfirmModalLabel">Confirm Changes</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">These changes can not be undone. Are you sure you want to continue?</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button id="confirm" type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
-{% block body %}
+  </main>
   <script src="/static/js/editor.js"></script>
 {% endblock %}

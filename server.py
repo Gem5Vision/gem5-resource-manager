@@ -1,34 +1,43 @@
-import json
-from flask import render_template, Flask, request, redirect, url_for
-import os
-from dotenv import load_dotenv
+from flask import render_template, Flask, request, redirect, url_for, make_response
 from bson import json_util
+import json
 import jsonschema
 import requests
+import markdown
+import base64
+import secrets
+from pathlib import Path
+from werkzeug.utils import secure_filename
+from cryptography.fernet import Fernet, InvalidToken
+from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+from cryptography.exceptions import InvalidSignature
 from api.json_client import JSONClient
 from api.mongo_client import MongoDBClient
 
-import urllib.parse
-import markdown
-
-from werkzeug.utils import secure_filename
-
-from pathlib import Path
-
 databases = {}
 
-schema = {}
-with open("schema/schema.json", "r") as f:
-    schema = json.load(f)
+response = requests.get("https://resources.gem5.org/gem5-resources-schema.json")
+schema = json.loads(response.content)
 
 
 UPLOAD_FOLDER = Path("database/")
 TEMP_UPLOAD_FOLDER = Path("database/.tmp/")
+CONFIG_FILE = Path("instance/config.py")
+SESSIONS_COOKIE_KEY = "sessions"
 ALLOWED_EXTENSIONS = {"json"}
 CLIENT_TYPES = ["mongodb", "json"]
 
 
-app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+
+
+if not CONFIG_FILE.exists():
+    CONFIG_FILE.parent.mkdir()
+    with CONFIG_FILE.open("w+") as f:
+        f.write(f"SECRET_KEY = {secrets.token_bytes(32)}")
+
+
+app.config.from_pyfile(CONFIG_FILE.name)
 
 
 # Sorts keys in any serialized dict
@@ -36,11 +45,34 @@ app = Flask(__name__)
 # Set False to persevere JSON key order
 app.json.sort_keys = False
 
+
+def startup_config_validation():
+    """
+    Validates the startup configuration.
+
+    Raises:
+        ValueError: If the 'SECRET_KEY' is not set or is not of type 'bytes'.
+    """
+    if not app.secret_key:
+        raise ValueError("SECRET_KEY not set")
+    if not isinstance(app.secret_key, bytes):
+        raise ValueError("SECRET_KEY must be of type 'bytes'")
+
+
+def startup_dir_file_validation():
+    """
+    Validates the startup directory and file configuration.
+
+    Creates the required directories if they do not exist.
+    """
+    for dir in [UPLOAD_FOLDER, TEMP_UPLOAD_FOLDER]:
+        if not dir.is_dir():
+            dir.mkdir()
+
+
 with app.app_context():
-    if not Path(UPLOAD_FOLDER).is_dir():
-        Path(UPLOAD_FOLDER).mkdir()
-    if not Path(TEMP_UPLOAD_FOLDER).is_dir():
-        Path(TEMP_UPLOAD_FOLDER).mkdir()
+    startup_config_validation()
+    startup_dir_file_validation()
 
 
 @app.route("/")
@@ -78,11 +110,13 @@ def validate_mongodb():
     """
     Validates the MongoDB connection parameters and redirects to the editor route if successful.
 
-    This route expects the following query parameters:
+    This route expects a POST request with a JSON payload containing an alias for the session and the listed parameters in order to validate the MongoDB instance.
+
+    This route expects the following JSON payload parameters:
     - uri: The MongoDB connection URI.
     - collection: The name of the collection in the MongoDB database.
     - database: The name of the MongoDB database.
-    - alias: An optional alias for the MongoDB configuration.
+    - alias: The value by which the session will be keyed in `databases`.
 
     If the 'uri' parameter is empty, a JSON response with an error message and status code 400 (Bad Request) is returned.
     If the connection parameters are valid, the route redirects to the 'editor' route with the appropriate query parameters.
@@ -90,9 +124,6 @@ def validate_mongodb():
     :return: A redirect response to the 'editor' route or a JSON response with an error message and status code 400.
     """
     global databases
-    print(request.json)
-    # if request.json["alias"] in databases:
-    #     return {"error": "alias already exists"}, 409
     try:
         databases[request.json["alias"]] = MongoDBClient(
             mongo_uri=request.json["uri"],
@@ -130,13 +161,13 @@ def validate_json_get():
     if response.status_code != 200:
         return {"error": "invalid status"}, response.status_code
     filename = secure_filename(request.args.get("filename"))
-    path = Path(UPLOAD_FOLDER) / filename
-    if (Path(UPLOAD_FOLDER) / filename).is_file():
-        temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
-        with Path(temp_path).open("wb") as f:
+    path = UPLOAD_FOLDER / filename
+    if (UPLOAD_FOLDER / filename).is_file():
+        temp_path = TEMP_UPLOAD_FOLDER / filename
+        with temp_path.open("wb") as f:
             f.write(response.content)
         return {"conflict": "existing file in server"}, 409
-    with Path(path).open("wb") as f:
+    with path.open("wb") as f:
         f.write(response.content)
     global databases
     if filename in databases:
@@ -154,16 +185,34 @@ def validate_json_get():
 
 @app.route("/validateJSON", methods=["POST"])
 def validate_json_post():
+    """
+    Validates and processes the uploaded JSON file.
+
+    This route expects a file with the key 'file' in the request files.
+    If the file is not present, a JSON response with an error message 
+    and status code 400 (Bad Request) is returned.
+    If the file already exists in the server, a JSON response with a 
+    conflict error message and status code 409 (Conflict) is returned.
+    If the file's filename conflicts with an existing alias, a JSON 
+    response with an error message and status code 409 (Conflict) is returned.
+    If there is an error while processing the JSON file, a JSON response 
+    with the error message and status code 400 (Bad Request) is returned.
+    If the file is successfully processed, a redirect response to the 
+    'editor' route with the appropriate query parameters is returned.
+
+    :return: A JSON response with an error message and 
+    status code 400 or 409, or a redirect response to the 'editor' route.
+    """
     temp_path = None
     if "file" not in request.files:
         return {"error": "empty"}, 400
     file = request.files["file"]
     filename = secure_filename(file.filename)
-    path = Path(UPLOAD_FOLDER) / filename
-    if Path(path).is_file():
-        temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
+    path = UPLOAD_FOLDER / filename
+    if path.is_file():
+        temp_path = TEMP_UPLOAD_FOLDER / filename
         file.save(temp_path)
-        return {"conflict": "exisiting file in server"}, 409
+        return {"conflict": "existing file in server"}, 409
     file.save(path)
     global databases
     if filename in databases:
@@ -181,13 +230,29 @@ def validate_json_post():
 
 @app.route("/existingJSON", methods=["GET"])
 def existing_json():
+    """
+    Handles the request for an existing JSON file.
+
+    This route expects a query parameter 'filename' 
+    specifying the name of the JSON file.
+    If the file is not present in the 'databases', 
+    it tries to create a 'JSONClient' instance for the file.
+    If there is an error while creating the 'JSONClient' 
+    instance, a JSON response with the error message 
+    and status code 400 (Bad Request) is returned.
+    If the file is present in the 'databases', a redirect 
+    response to the 'editor' route with the appropriate 
+    query parameters is returned.
+
+    :return: A JSON response with an error message 
+    and status code 400, or a redirect response to the 'editor' route.
+    """
     filename = request.args.get("filename")
     global databases
     if filename not in databases:
         try:
             databases[filename] = JSONClient(filename)
         except Exception as e:
-            print(e)
             return {"error": str(e)}, 400
     return redirect(
         url_for("editor", type=CLIENT_TYPES[1],
@@ -206,31 +271,45 @@ def get_existing_files():
 
     :return: A JSON response with the list of existing files.
     """
-    files = [f.name for f in Path(UPLOAD_FOLDER).iterdir() if f.is_file()]
+    files = [f.name for f in UPLOAD_FOLDER.iterdir() if f.is_file()]
     return json.dumps(files)
 
 
 @app.route("/resolveConflict", methods=["GET"])
 def resolve_conflict():
-    filename = request.args.get("filename")
+    """
+    Resolves file conflict with JSON files.
+
+    This route expects the following query parameters:
+    - filename: The name of the file that is conflicting or an updated name for it to resolve the name conflict 
+    - resolution: A resolution option, defined as follows:
+        - clearInput: Deletes the conflicting file and does not proceed with login 
+        - openExisting: Opens the existing file in `UPLOAD_FOLDER`  
+        - overwrite: Overwrites the existing file with the conflicting file 
+        - newFilename: Renames conflicting file, moving it to `UPLOAD_FOLDER`
+
+    If the resolution parameter is not from the list given, an error is returned. 
+
+    The conflicting file in `TEMP_UPLOAD_FOLDER` is deleted. 
+
+    :return: A JSON response containing an error, or a success response, or a redirect to the editor.   
+    """
+    filename = secure_filename(request.args.get("filename"))
     resolution = request.args.get("resolution")
     resolution_options = ["clearInput",
                           "openExisting", "overwrite", "newFilename"]
-    temp_path = Path(TEMP_UPLOAD_FOLDER) / filename
+    temp_path = TEMP_UPLOAD_FOLDER / filename
     if not resolution:
-        print("no resolution")
         return {"error": "empty"}, 400
     if resolution not in resolution_options:
-        print("invalid resolution")
         return {"error": "invalid resolution"}, 400
     if resolution == resolution_options[0]:
         temp_path.unlink()
         return {"success": "input cleared"}, 204
     if resolution in resolution_options[-2:]:
-        filename = secure_filename(request.args.get("filename"))
-        next(TEMP_UPLOAD_FOLDER.glob("*")).replace(Path(UPLOAD_FOLDER) / filename)
-    if Path(temp_path).is_file():
-        Path(temp_path).unlink()
+        next(TEMP_UPLOAD_FOLDER.glob("*")).replace(UPLOAD_FOLDER / filename)
+    if temp_path.is_file():
+        temp_path.unlink()
     global databases
     if filename in databases:
         return {"error": "alias already exists"}, 409
@@ -281,17 +360,23 @@ def editor():
     alias = request.args.get("alias")
     if alias not in databases:
         return render_template("404.html"), 404
-    """ if not (Path(UPLOAD_FOLDER) / alias).is_file():
-        return render_template("404.html"), 404 """
 
     client_type = ""
     if isinstance(databases[alias], JSONClient):
-        client_type = "json"
+        client_type = CLIENT_TYPES[1]
     elif isinstance(databases[alias], MongoDBClient):
-        client_type = "mongodb"
+        client_type = CLIENT_TYPES[0]
     else:
         return render_template("404.html"), 404
-    return render_template("editor.html", client_type=client_type, alias=alias)
+
+    response = make_response(render_template(
+        "editor.html", client_type=client_type, alias=alias))
+
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+
+    return response
 
 
 @app.route("/help")
@@ -313,43 +398,44 @@ def find():
     """
     Finds a resource based on the provided search criteria.
 
-    This route expects a POST request with a JSON payload containing the search criteria. The route determines the
-    appropriate method for finding the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session which is to be searched for the 
+    resource and the search criteria. 
 
-    If `isMongo` is True, the MongoDB API is used to find the resource by calling `mongo_db_api.findResource()` with the
-    database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to find the resource by calling `json_api.findResource()` with the
-    `resources` variable.
+    The Client API is used to find the resource by calling `find_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the find operation is returned as a JSON response.
+    The result of the `find_resource` operation is returned as a JSON response.
 
-    :return: A JSON response containing the result of the find operation.
+    :return: A JSON response containing the result of the `find_resource` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.findResource(request.json)
+    return database.find_resource(request.json)
 
 
 @app.route("/update", methods=["POST"])
 def update():
     """
-    Updates a resource based on the provided data.
+    Updates a resource with provided changes.
 
-    This route expects a POST request with a JSON payload containing the data for updating the resource. The route
-    determines the appropriate method for updating the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session which contains the resource 
+    that is to be updated and the data for updating the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to update the resource by calling `mongo_db_api.updateResource()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to update the resource by calling `json_api.updateResource()` with the
-    `resources` variable and the filepath from the Flask application's configuration.
+    The Client API is used to update the resource by calling `update_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the update operation is returned as a JSON response.
+    The `_add_to_stack` function of the session is called to insert the operation, update, and necessary data onto the revision 
+    operations stack.
 
-    :return: A JSON response containing the result of the update operation.
+    The result of the `update_resource` operation is returned as a JSON response. It contains the original and the modified resources. 
+
+    :return: A JSON response containing the result of the `update_resource` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
@@ -357,11 +443,11 @@ def update():
     database = databases[alias]
     original_resource = request.json["original_resource"]
     modified_resource = request.json["resource"]
-    status = database.updateResource({
+    status = database.update_resource({
         "original_resource": original_resource,
         "resource": modified_resource,
     })
-    database._addToStack({
+    database._add_to_stack({
         "operation": "update",
         "resource": {
             "original_resource": modified_resource,
@@ -375,24 +461,23 @@ def getVersions():
     """
     Retrieves the versions of a resource based on the provided search criteria.
 
-    This route expects a POST request with a JSON payload containing the search criteria. The route determines the
-    appropriate method for retrieving the versions based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session which contains the resource 
+    whose versions are to be retrieved and the search criteria. 
 
-    If `isMongo` is True, the MongoDB API is used to retrieve the versions by calling `mongo_db_api.getVersions()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to retrieve the versions by calling `json_api.getVersions()` with the
-    `resources` variable.
+    The Client API is used to get the versions of a resource by calling `get_versions()` on the session where the operation is 
+    accomplished by the concrete client class.
+    
+    The result of the `get_versions` operation is returned as a JSON response.
 
-    The result of the versions retrieval is returned as a JSON response.
-
-    :return: A JSON response containing the versions of the resource.
+    :return: A JSON response containing the result of the `get_versions` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.getVersions(request.json)
+    return database.get_versions(request.json)
 
 
 @app.route("/categories", methods=["GET"])
@@ -472,28 +557,30 @@ def getFields():
 @app.route("/delete", methods=["POST"])
 def delete():
     """
-    Deletes a resource based on the provided data.
+    Deletes a resource.
 
-    This route expects a POST request with a JSON payload containing the data for deleting the resource. The route
-    determines the appropriate method for deleting the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session from which a resource is to be 
+    deleted and the data for deleting the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to delete the resource by calling `mongo_db_api.deleteResource()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to delete the resource by calling `json_api.deleteResource()` with the
-    `resources` variable and the filepath from the Flask application's configuration.
+    The Client API is used to delete the resource by calling `delete_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the delete operation is returned as a JSON response.
+    The `_add_to_stack` function of the session is called to insert the operation, delete, and necessary data onto the revision 
+    operations stack.
 
-    :return: A JSON response containing the result of the delete operation.
+    The result of the `delete` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the `delete` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
     resource = request.json["resource"]
-    status = database.deleteResource(resource)
-    database._addToStack({
+    status = database.delete_resource(resource)
+    database._add_to_stack({
         "operation": "delete",
         "resource": resource
     })
@@ -503,51 +590,99 @@ def delete():
 @app.route("/insert", methods=["POST"])
 def insert():
     """
-    Inserts a new resource based on the provided data.
+    Inserts a new resource.
 
-    This route expects a POST request with a JSON payload containing the data for inserting the resource. The route
-    determines the appropriate method for inserting the resource based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session to which the data 
+    is to be inserted and the data for inserting the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to insert the resource by calling `mongo_db_api.insertResource()` with
-    the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
 
-    If `isMongo` is False, the JSON API is used to insert the resource by calling `json_api.insertResource()` with the
-    `resources` variable and the filepath from the Flask application's configuration.
+    The Client API is used to insert the new resource by calling `insert_resource()` on the session where the operation is 
+    accomplished by the concrete client class.
 
-    The result of the insert operation is returned as a JSON response.
+    The `_add_to_stack` function of the session is called to insert the operation, insert, and necessary data onto the revision 
+    operations stack.
 
-    :return: A JSON response containing the result of the insert operation.
+    The result of the `insert` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the `insert` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
     resource = request.json["resource"]
-    status = database.insertResource(resource)
-    database._addToStack({"operation": "insert", "resource": resource})
+    status = database.insert_resource(resource)
+    database._add_to_stack({"operation": "insert", "resource": resource})
     return status
 
 
 @app.route("/undo", methods=["POST"])
 def undo():
+    """
+    Undoes last operation performed on the session. 
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose last operation
+    is to be undone.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
+
+    The Client API is used to undo the last operation performed on the session by calling `undo_operation()` on the 
+    session where the operation is accomplished by the concrete client class.
+
+    The result of the `undo_operation` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the `undo_operation` operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.undoOperation()
+    return database.undo_operation()
 
 
 @app.route("/redo", methods=["POST"])
 def redo():
+    """
+    Redoes last operation performed on the session.
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose last operation
+    is to be redone.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is returned.
+
+    The Client API is used to redo the last operation performed on the session by calling `redo_operation()` on the 
+    session where the operation is accomplished by the concrete client class.
+
+    The result of the `redo_operation` operation is returned as a JSON response.
+
+    :return: A JSON response containing the result of the `redo_operation` operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.redoOperation()
+    return database.redo_operation()
 
 
 @app.route("/getRevisionStatus", methods=["POST"])
 def get_revision_status():
+    """
+    Gets the status of revision operations.
+
+    This route expects a POST request with a JSON payload containing the alias of the session whose revision operations 
+    statuses is being requested.
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
+
+    The Client API is used to get the status of the revision operations by calling `get_revision_status()` on the 
+    session where the operation is accomplished by the concrete client class.
+
+    The result of the `get_revision_status` is returned as a JSON response. 
+
+    :return: A JSON response contain the result of the `get_revision_status` operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
@@ -555,15 +690,111 @@ def get_revision_status():
     return database.get_revision_status()
 
 
+def fernet_instance_generation(password):
+    """
+    Generates Fernet instance for use in Saving and Loading Session. 
+
+    Utilizes Scrypt Key Derivation Function with `SECRET_KEY` as salt value and recommended
+    values for `length`, `n`, `r`, and `p` parameters. Derives key using `password`. Derived
+    key is then used to initialize Fernet instance.
+
+    :param password: User provided password
+    :return: Fernet instance 
+    """
+    return Fernet(
+        base64.urlsafe_b64encode(
+            Scrypt(
+                salt=app.secret_key,
+                length=32,
+                n=2**16,
+                r=8,
+                p=1).derive(password.encode())
+        )
+    )
+
+
 @app.route("/saveSession", methods=["POST"])
 def save_session():
+    """
+    Generates ciphertext of session that is to be saved.
+
+    This route expects a POST request with a JSON payload containing the alias of the session that is to be 
+    saved and a password to be used in encrypting the session data. 
+
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
+    
+    The `save_session()` method is called to get the necessary session data from the corresponding `Client` 
+    as a dictionary.
+
+    A Fernet instance, using the user provided password, is instantiated. The session data is encrypted using this
+    instance. If an Exception is raised, an error response is returned. 
+
+    The result of the save_session operation is returned as a JSON response. The ciphertext is returned or an error
+    message if an error occurred. 
+
+    :return: A JSON response containing the result of the save_session operation.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
-    database = databases[alias]
-    session = database.save_session()
-    session["alias"] = alias
-    return session
+    session = databases[alias].save_session()
+    try:
+        fernet_instance = fernet_instance_generation(request.json["password"])
+        ciphertext = fernet_instance.encrypt(json.dumps(session).encode())
+    except (TypeError, ValueError):
+        return {"error": "Failed to Encrypt Session!"}, 400
+    return {"ciphertext": ciphertext.decode()}, 200
+
+
+@app.route("/loadSession", methods=["POST"])
+def load_session():
+    """
+    Loads session from data specified in user request. 
+
+    This route expects a POST request with a JSON payload containing the encrypted ciphertext containing the session 
+    data, the alias of the session that is to be restored, and the password associated with it. 
+
+    A Fernet instance, using the user provided password, is instantiated. The session data is decrypted using this
+    instance. If an Exception is raised, an error response is returned.
+
+    The `Client` type is retrieved from the session data and a redirect to the appropriate login with the stored 
+    parameters from the session data is applied. 
+
+    The result of the load_session operation is returned either as a JSON response containing the error message 
+    or a redirect.
+
+    :return: A JSON response containing the error of the load_session operation or a redirect.
+    """
+    alias = request.json["alias"]
+    session = request.json["session"]
+    try:
+        fernet_instance = fernet_instance_generation(request.json["password"])
+        session_data = json.loads(fernet_instance.decrypt(session))
+    except (InvalidSignature, InvalidToken):
+        return {"error": "Incorrect Password! Please Try Again!"}, 400
+    client_type = session_data["client"]
+    if client_type == CLIENT_TYPES[0]:
+        try:
+            databases[alias] = MongoDBClient(
+                mongo_uri=session_data["uri"],
+                database_name=session_data["database"],
+                collection_name=session_data["collection"],
+            )
+        except Exception as e:
+            return {"error": str(e)}, 400
+
+        return redirect(
+            url_for("editor", type=CLIENT_TYPES[0], alias=alias),
+            302,
+        )
+    elif client_type == CLIENT_TYPES[1]:
+        return redirect(
+            url_for("existing_json", filename=session_data["filename"]),
+            302,
+        )
+    else:
+        return {"error": "Invalid Client Type!"}, 409
 
 
 @app.errorhandler(404)
@@ -585,33 +816,42 @@ def checkExists():
     """
     Checks if a resource exists based on the provided data.
 
-    This route expects a POST request with a JSON payload containing the data for checking the existence of the resource.
-    The route determines the appropriate method for checking the existence based on the value of the `isMongo` flag.
+    This route expects a POST request with a JSON payload containing the alias of the session in which it is to be 
+    determined whether a given resource exists and the necessary data for checking the existence of the resource. 
 
-    If `isMongo` is True, the MongoDB API is used to check the existence of the resource by calling
-    `mongo_db_api.checkResourceExists()` with the database configuration from the Flask application's configuration.
+    The alias is used in retrieving the session from `databases`. If the session is not found, an error is 
+    returned.
 
-    If `isMongo` is False, the JSON API is used to check the existence of the resource by calling
-    `json_api.checkResourceExists()` with the `resources` variable.
+    The Client API is used to check the existence of the resource by calling `check_resource_exists()` on the 
+    session where the operation is accomplished by the concrete client class.
 
-    The result of the existence check is returned as a JSON response.
+    The result of the `check_resource_exists` is returned as a JSON response. 
 
-    :return: A JSON response containing the result of the existence check.
+    :return: A JSON response contain the result of the `check_resource_exists` operation.
     """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     database = databases[alias]
-    return database.checkResourceExists(request.json)
+    return database.check_resource_exists(request.json)
 
 
 @app.route("/logout", methods=["POST"])
 def logout():
+    """
+    Logs the user out of the application.
+    
+    Deletes the alias from the `databases` dictionary.
+
+    :param alias: The alias of the database to logout from.
+
+    :return: A redirect to the index page.
+    """
     alias = request.json["alias"]
     if alias not in databases:
         return {"error": "database not found"}, 400
     databases.pop(alias)
-    return(redirect(url_for("index")),302)
+    return(redirect(url_for("index")), 302)
 
 
 if __name__ == "__main__":

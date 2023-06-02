@@ -55,6 +55,7 @@
         "gem5_versions": [
             "23.0"
         ]
+
     },
     {
         "category": "bootloader",

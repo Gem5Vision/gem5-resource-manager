@@ -316,7 +316,6 @@ function find(e) {
           .then((res) => res.json())
           .then((data) => {
             console.log(data)
-            // delete data._id;
             data["id"] = document.getElementById("id").value;
             data["category"] = document.getElementById("category").value;
             originalModel.setValue(JSON.stringify(data, null, 4));
@@ -328,9 +327,7 @@ function find(e) {
             document.getElementById("update").disabled = true;
           });
       } else {
-        // data = data[0];
         console.log(data);
-        // delete data._id;
         originalModel.setValue(JSON.stringify(data, null, 4));
         modifiedModel.setValue(JSON.stringify(data, null, 4));
 
@@ -382,6 +379,8 @@ window.onload = () => {
         document.getElementById("add_new_resource").disabled = false;
       });
     });
+
+  checkExistingSavedSession();
 };
 
 const myModal = new bootstrap.Modal("#ConfirmModal", {
@@ -442,29 +441,69 @@ function closeSchema() {
   }
 }
 
+const saveSessionBtn = document.getElementById("saveSession");
+saveSessionBtn.disabled = true;
+
+let password = document.getElementById("session-password");
+password.addEventListener("input", () => {
+  saveSessionBtn.disabled = password.value === "";
+});
+
+function showSaveSessionModal() {
+  const saveSessionModal = new bootstrap.Modal(document.getElementById('saveSessionModal'), { 
+    focus: true, keyboard: false 
+  });
+  saveSessionModal.show();
+}
+
 function saveSession() {
+  alias = document.getElementById("alias").innerText;
+  
+  bootstrap.Modal.getInstance(document.getElementById("saveSessionModal")).hide();
+  
+  let preserveDisabled = [];
+  document.querySelectorAll(".editorButtonGroup button, .revisionButtonGroup button")
+  .forEach(btn => {
+    btn.disabled === true ? preserveDisabled.push(btn.id) : null;
+  });
+  
+  toggleInteractables(true);
+
   fetch("/saveSession", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      alias: document.getElementById("alias").innerText,
+      alias: alias,
+      password: document.getElementById("session-password").value
     }),
   })
-  .then((res) => res.json())
-  .then((data) => {
-    sessionStorage.setItem("savedSession", JSON.stringify(data));
-    const saveSessionBtn = document.getElementById("save-session");
-  
-    saveSessionBtn.innerText = "Session Saved";
-    saveSessionBtn.disabled = true;
+  .then((res) => {
+    document.getElementById("saveSessionForm").reset();
+    
+    toggleInteractables(false, preserveDisabled);
+    
+    res.json()
+    .then((data) => {
+      if (res.status === 400) {
+        appendAlert('Error!', 'saveSessionError', `${data["error"]}`, 'danger');
+        return;
+      } 
+      
+      let sessions = JSON.parse(localStorage.getItem("sessions")) || {};
+      sessions[alias] = data["ciphertext"];
+      localStorage.setItem("sessions", JSON.stringify(sessions));
+      
+      document.getElementById("showSaveSessionModal").innerText = "Session Saved";
+      checkExistingSavedSession();
+    })
   })
 }
 
 function executeRevision(event, operation) {
   if (!["undo", "redo"].includes(operation)) {
-    alert("INVALID OPERATION!");
+    alert("FATAL: INVALID OPERATION!");
     return;
   }
 
@@ -502,7 +541,6 @@ function updateRevisionBtnsDisabledAttr() {
   })
   .then((res) => res.json())
   .then((data) => {
-    console.log(`REVISION BUTTON DISABLED STATUS:\n UNDO: ${!!data.undo}, REDO: ${!!data.redo}`);
     revisionButtons[0].disabled = data.undo;
     revisionButtons[1].disabled = data.redo;
   })
@@ -534,3 +572,15 @@ function logout() {
     window.location = res.url;
   })
 }
+
+function checkExistingSavedSession() {
+  document.getElementById("existing-session-warning").style.display = 
+    document.getElementById("alias").innerText in JSON.parse(localStorage.getItem("sessions") || "{}") 
+      ? "flex" 
+      : "none"; 
+}
+
+document.getElementById("close-save-session-modal").addEventListener("click", () => {
+  document.getElementById("saveSessionModal").querySelector("form").reset();
+  saveSessionBtn.disabled = password.value === "";
+});
