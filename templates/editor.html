@@ -17,7 +17,7 @@
           <label for="id" class="main-text-regular">Resource ID</label>
           <div class="d-flex flex-row align-items-center gap-1">
             <input class="form-control input-shadow" type="text" id="id" placeholder="Enter ID..." />
-            <select id="version-dropdown" class="form-select main-text-regular input-shadow" aria-label="Default select example" style="width: auto;"></select>
+            <select id="version-dropdown" class="form-select main-text-regular input-shadow w-auto" aria-label="Default select example"></select>
           </div>
           <label for="category" class="main-text-regular mt-3">Category</label>
           <select id="category" class="form-select mt-1 input-shadow" aria-label="Default select example"></select>
@@ -25,12 +25,12 @@
         </form>
         <div class="d-flex flex-column align-items-start mt-3 mb-3 gap-3">
           <h5 class="secondary-text-bold mb-0" style="color: #0095AF;">Revision Actions</h5>
-          <div class="d-flex flex-column justify-content-center gap-3 revisionButtonGroup">
+          <div class="d-flex flex-column justify-content-center gap-3 main-text-regular revisionButtonGroup">
             <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editor-tooltips" data-bs-title="Undoes Last Edit to Database">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="undo-operation" onclick="executeRevision(event, 'undo')">Undo</button>
+              <button type="button" class="btn btn-outline-primary btn-box-shadow" id="undo-operation" onclick="executeRevision(event, 'undo')">Undo</button>
             </span>
             <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-custom-class="editor-tooltips" data-bs-title="Restores Last Undone Change to Database">
-              <button type="button" class="btn btn-outline-primary main-text-regular btn-box-shadow" id="redo-operation" onclick="executeRevision(event, 'redo')">Redo</button>
+              <button type="button" class="btn btn-outline-primary btn-box-shadow" id="redo-operation" onclick="executeRevision(event, 'redo')">Redo</button>
             </span>
           </div>
         </div>
@@ -74,17 +74,16 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" aria-hidden="true">
+  <div class="modal fade" id="ConfirmModal" tabindex="-1" aria-labelledby="ConfirmModalLabel" data-bs-backdrop="static" aria-hidden="true" >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header secondary-text-semi">
           <h5 class="modal-title" id="ConfirmModalLabel">Confirm Changes</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">These changes can not be undone. Are you sure you want to continue?</div>
+        <div class="modal-body main-text-semi mt-3 mb-3" style="text-align: center;">These changes may not be able to be undone. Are you sure you want to continue?</div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button id="confirm" type="button" class="btn btn-primary">Save changes</button>
+          <button id="confirm" type="button" class="btn btn-outline-primary">Save Changes</button>
         </div>
       </div>
     </div>
