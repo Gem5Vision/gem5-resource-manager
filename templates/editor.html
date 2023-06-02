@@ -20,12 +20,12 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="saveSessionModal" tabindex="-1" aria-labelledby="saveSessionModal" aria-hidden="true">
+  <div class="modal fade" id="saveSessionModal" tabindex="-1" aria-labelledby="saveSessionModal" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header secondary-text-semi">
           <h5 class="modal-title" id="saveSessionLabel">Save Session</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" id="close-save-session-modal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="container-fluid">
@@ -101,7 +101,7 @@
         <div id="schema-editor"></div>
         <div id="editing-actions" class="d-flex flex-wrap editorButtonGroup justify-content-end pt-2 pb-2 gap-2 main-text-regular">
           <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Add a New Resource to Database">
-            <button type="button" class="btn btn-primary btn-box-shadow" id="add_new_resource" onclick="showModal(event, addNewResource)" disabled >Add New Resource</button>
+            <button type="button" class="btn btn-primary btn-box-shadow" id="add_new_resource" onclick="showModal(event, addNewResource)" disabled>Add New Resource</button>
           </span>
           <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="editor-tooltips" data-bs-title="Create a New Version of Resource">
             <button type="button" class="btn btn-primary btn-box-shadow" id="add_version" onclick="showModal(event, addVersion)" disabled>Add New Version</button>

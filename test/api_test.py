@@ -5,16 +5,15 @@ from server import app
 import server
 import json
 from bson import json_util
-import copy
 from unittest.mock import patch
 import mongomock
 from api.mongo_client import MongoDBClient
+
 
 @contextlib.contextmanager
 def captured_templates(app):
     """This is a context manager that allows you to capture the templates that are rendered during a test."""
     recorded = []
-
     def record(sender, template, context, **extra):
         recorded.append((template, context))
 
@@ -89,7 +88,16 @@ class TestAPI(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertTrue(templates[0][0].name == "login/login_json.html")
 
-    def test_get_editorpage_withoutparameters(self):
+    def test_get_editorpage(self):
+        """This method tests the call to the editor page.
+        It checks if the call is GET, status code is 200 and if the template rendered is editor.html.
+        """
+        with captured_templates(self.app) as templates:
+            response = self.test_client.get("/editor?alias=test" )
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(templates[0][0].name == "editor.html")
+
+    def test_get_editorpage_invalid(self):
         """This method tests the call to the editor page without required query parameters.
         It checks if the call is GET, status code is 404 and if the template rendered is 404.html.
         """
@@ -97,6 +105,16 @@ class TestAPI(unittest.TestCase):
             response = self.test_client.get("/editor")
             self.assertEqual(response.status_code, 404)
             self.assertTrue(templates[0][0].name == "404.html")
+            response = self.test_client.get("/editor?alias=invalid")
+            self.assertEqual(response.status_code, 404)
+            self.assertTrue(templates[0][0].name == "404.html")
+
+    def test_default_call(self):
+        """This method tests the default call to the API."""
+        with captured_templates(self.app) as templates:
+            response = self.test_client.get("/")
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(templates[0][0].name == "index.html")
 
     def test_default_call_is_not_post(self):
         """This method tests that the default call is not a POST."""
@@ -352,9 +370,7 @@ class TestAPI(unittest.TestCase):
         resource = self.collection.find({"id": test_id}, {"_id": 0})
         json_resource = json.loads(json_util.dumps(resource))
         self.assertTrue(json_resource == [test_resource])
-        self.collection.delete_one(
-            {"id": test_id, "resource_version": "1.0.0"}
-        )
+
 
     def test_keys_1(self):
         """This method tests the keys method of the API."""
@@ -397,3 +413,177 @@ class TestAPI(unittest.TestCase):
         }
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.data), test_response)
+    
+    def test_undo(self):
+        """This method tests the undo method of the API."""
+        test_id = "test-resource"
+        test_resource = {
+            "category": "disk-image",
+            "id": "test-resource",
+            "author": [],
+            "description": "",
+            "license": "",
+            "source_url": "",
+            "tags": [],
+            "example_usage": "",
+            "gem5_versions": [],
+            "resource_version": "1.0.0",
+        }
+        original_resource = test_resource.copy()
+        # insert resource
+        response = self.test_client.post("/insert", json={"resource": test_resource, "alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Inserted"})
+        # update resource
+        test_resource["description"] = "test-description2"
+        test_resource["example_usage"] = "test-usage2"
+        response = self.test_client.post(
+            "/update", json={"original_resource": original_resource, "resource": test_resource, "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Updated"})
+        #check if resource is updated
+        resource = self.collection.find({"id": test_id}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [test_resource])
+        #undo update
+        response = self.test_client.post("/undo", json={"alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Undone"})
+        #check if resource is back to original
+        resource = self.collection.find({"id": test_id}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [original_resource])
+    
+    def test_redo(self):
+        """This method tests the undo method of the API."""
+        test_id = "test-resource"
+        test_resource = {
+            "category": "disk-image",
+            "id": "test-resource",
+            "author": [],
+            "description": "",
+            "license": "",
+            "source_url": "",
+            "tags": [],
+            "example_usage": "",
+            "gem5_versions": [],
+            "resource_version": "1.0.0",
+        }
+        original_resource = test_resource.copy()
+        # insert resource
+        response = self.test_client.post("/insert", json={"resource": test_resource, "alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Inserted"})
+        # update resource
+        test_resource["description"] = "test-description2"
+        test_resource["example_usage"] = "test-usage2"
+        response = self.test_client.post(
+            "/update", json={"original_resource": original_resource, "resource": test_resource, "alias": self.alias}
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Updated"})
+        #check if resource is updated
+        resource = self.collection.find({"id": test_id}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [test_resource])
+        #undo update
+        response = self.test_client.post("/undo", json={"alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Undone"})
+        #check if resource is back to original
+        resource = self.collection.find({"id": test_id}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [original_resource])
+        #redo update
+        response = self.test_client.post("/redo", json={"alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {"status": "Redone"})
+        #check if resource is updated again
+        resource = self.collection.find({"id": test_id}, {"_id": 0})
+        json_resource = json.loads(json_util.dumps(resource))
+        self.assertTrue(json_resource == [test_resource])
+    
+    def test_invalid_alias(self):
+        test_id = "test-resource"
+        test_resource = {
+            "category": "diskimage",
+            "id": "test-resource",
+            "author": ["test-author"],
+            "description": "test-description",
+            "license": "test-license",
+            "source_url": "https://github.com/gem5/gem5-resources/tree/develop/src/x86-ubuntu",
+            "tags": ["test-tag", "test-tag2"],
+            "example_usage": " test-usage",
+            "gem5_versions": [
+                "22.1",
+            ],
+            "resource_version": "1.0.0",
+        }
+        alias = "invalid"
+        response = self.test_client.post("/insert", json={"resource": test_resource, "alias": alias})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post(
+            "/find", json={"id": test_id, "resource_version": "", "alias": alias}
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post(
+            "/delete", json={"resource": test_resource, "alias": alias}
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post(
+            "/checkExists", json={"id": test_id, "resource_version": "", "alias": alias}
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post("/versions", json={"id": test_id, "alias": alias})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post(
+            "/update", json={"original_resource": test_resource, "resource": test_resource, "alias": alias}
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post("/undo", json={"alias": alias})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post("/redo", json={"alias": alias})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response = self.test_client.post("/getRevisionStatus", json={"alias": alias})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+        response= self.test_client.post("/saveSession", json={"alias": alias})
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json,  {"error": "database not found"})
+
+    def test_get_revision_status_valid(self):
+        response = self.test_client.post("/getRevisionStatus", json={"alias": self.alias})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json, {
+            "undo":1,
+            "redo": 1    
+        })
+
+    @patch.object(
+        MongoDBClient,
+        "_MongoDBClient__get_database",
+        return_value=mongomock.MongoClient().db.collection,
+    )
+    def test_save_session_load_session(self, mock_get_database):
+        password = "test"
+        expected_session = server.databases["test"].save_session()
+        response = self.test_client.post("/saveSession", json={"alias": self.alias, "password": password})
+        self.assertEqual(response.status_code, 200)
+        
+        response = self.test_client.post("/loadSession", json={"alias": self.alias, "session": response.json["ciphertext"], "password": password})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(expected_session, server.databases[self.alias].save_session())
+
+    def test_logout(self):
+        response = self.test_client.post("/logout", json={"alias": self.alias})
+        self.assertEqual(response.status_code, 302)
+        self.assertNotIn(self.alias, server.databases)

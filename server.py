@@ -17,12 +17,7 @@ from api.mongo_client import MongoDBClient
 databases = {}
 
 response = requests.get("https://resources.gem5.org/gem5-resources-schema.json")
-if not response:
-    schema = {}
-    with open("schema/schema.json", "r") as f:
-        schema = json.load(f)
-else:
-    schema = json.loads(response.content)
+schema = json.loads(response.content)
 
 
 UPLOAD_FOLDER = Path("database/")
@@ -52,6 +47,12 @@ app.json.sort_keys = False
 
 
 def startup_config_validation():
+    """
+    Validates the startup configuration.
+
+    Raises:
+        ValueError: If the 'SECRET_KEY' is not set or is not of type 'bytes'.
+    """
     if not app.secret_key:
         raise ValueError("SECRET_KEY not set")
     if not isinstance(app.secret_key, bytes):
@@ -59,6 +60,11 @@ def startup_config_validation():
 
 
 def startup_dir_file_validation():
+    """
+    Validates the startup directory and file configuration.
+
+    Creates the required directories if they do not exist.
+    """
     for dir in [UPLOAD_FOLDER, TEMP_UPLOAD_FOLDER]:
         if not dir.is_dir():
             dir.mkdir()
@@ -104,11 +110,13 @@ def validate_mongodb():
     """
     Validates the MongoDB connection parameters and redirects to the editor route if successful.
 
-    This route expects the following query parameters:
+    This route expects a POST request with a JSON payload containing an alias for the session and the listed parameters in order to validate the MongoDB instance.
+
+    This route expects the following JSON payload parameters:
     - uri: The MongoDB connection URI.
     - collection: The name of the collection in the MongoDB database.
     - database: The name of the MongoDB database.
-    - alias: An optional alias for the MongoDB configuration.
+    - alias: The value by which the session will be keyed in `databases`.
 
     If the 'uri' parameter is empty, a JSON response with an error message and status code 400 (Bad Request) is returned.
     If the connection parameters are valid, the route redirects to the 'editor' route with the appropriate query parameters.
@@ -177,6 +185,24 @@ def validate_json_get():
 
 @app.route("/validateJSON", methods=["POST"])
 def validate_json_post():
+    """
+    Validates and processes the uploaded JSON file.
+
+    This route expects a file with the key 'file' in the request files.
+    If the file is not present, a JSON response with an error message 
+    and status code 400 (Bad Request) is returned.
+    If the file already exists in the server, a JSON response with a 
+    conflict error message and status code 409 (Conflict) is returned.
+    If the file's filename conflicts with an existing alias, a JSON 
+    response with an error message and status code 409 (Conflict) is returned.
+    If there is an error while processing the JSON file, a JSON response 
+    with the error message and status code 400 (Bad Request) is returned.
+    If the file is successfully processed, a redirect response to the 
+    'editor' route with the appropriate query parameters is returned.
+
+    :return: A JSON response with an error message and 
+    status code 400 or 409, or a redirect response to the 'editor' route.
+    """
     temp_path = None
     if "file" not in request.files:
         return {"error": "empty"}, 400
@@ -204,6 +230,23 @@ def validate_json_post():
 
 @app.route("/existingJSON", methods=["GET"])
 def existing_json():
+    """
+    Handles the request for an existing JSON file.
+
+    This route expects a query parameter 'filename' 
+    specifying the name of the JSON file.
+    If the file is not present in the 'databases', 
+    it tries to create a 'JSONClient' instance for the file.
+    If there is an error while creating the 'JSONClient' 
+    instance, a JSON response with the error message 
+    and status code 400 (Bad Request) is returned.
+    If the file is present in the 'databases', a redirect 
+    response to the 'editor' route with the appropriate 
+    query parameters is returned.
+
+    :return: A JSON response with an error message 
+    and status code 400, or a redirect response to the 'editor' route.
+    """
     filename = request.args.get("filename")
     global databases
     if filename not in databases:
@@ -234,7 +277,24 @@ def get_existing_files():
 
 @app.route("/resolveConflict", methods=["GET"])
 def resolve_conflict():
-    filename = request.args.get("filename")
+    """
+    Resolves file conflict with JSON files.
+
+    This route expects the following query parameters:
+    - filename: The name of the file that is conflicting or an updated name for it to resolve the name conflict 
+    - resolution: A resolution option, defined as follows:
+        - clearInput: Deletes the conflicting file and does not proceed with login 
+        - openExisting: Opens the existing file in `UPLOAD_FOLDER`  
+        - overwrite: Overwrites the existing file with the conflicting file 
+        - newFilename: Renames conflicting file, moving it to `UPLOAD_FOLDER`
+
+    If the resolution parameter is not from the list given, an error is returned. 
+
+    The conflicting file in `TEMP_UPLOAD_FOLDER` is deleted. 
+
+    :return: A JSON response containing an error, or a success response, or a redirect to the editor.   
+    """
+    filename = secure_filename(request.args.get("filename"))
     resolution = request.args.get("resolution")
     resolution_options = ["clearInput",
                           "openExisting", "overwrite", "newFilename"]
@@ -247,7 +307,6 @@ def resolve_conflict():
         temp_path.unlink()
         return {"success": "input cleared"}, 204
     if resolution in resolution_options[-2:]:
-        filename = secure_filename(request.args.get("filename"))
         next(TEMP_UPLOAD_FOLDER.glob("*")).replace(UPLOAD_FOLDER / filename)
     if temp_path.is_file():
         temp_path.unlink()

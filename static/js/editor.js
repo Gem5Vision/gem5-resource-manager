@@ -579,3 +579,8 @@ function checkExistingSavedSession() {
       ? "flex" 
       : "none"; 
 }
+
+document.getElementById("close-save-session-modal").addEventListener("click", () => {
+  document.getElementById("saveSessionModal").querySelector("form").reset();
+  saveSessionBtn.disabled = password.value === "";
+});
