@@ -316,7 +316,6 @@ function find(e) {
           .then((res) => res.json())
           .then((data) => {
             console.log(data)
-            // delete data._id;
             data["id"] = document.getElementById("id").value;
             data["category"] = document.getElementById("category").value;
             originalModel.setValue(JSON.stringify(data, null, 4));
@@ -328,9 +327,7 @@ function find(e) {
             document.getElementById("update").disabled = true;
           });
       } else {
-        // data = data[0];
         console.log(data);
-        // delete data._id;
         originalModel.setValue(JSON.stringify(data, null, 4));
         modifiedModel.setValue(JSON.stringify(data, null, 4));
 
@@ -506,7 +503,7 @@ function saveSession() {
 
 function executeRevision(event, operation) {
   if (!["undo", "redo"].includes(operation)) {
-    alert("INVALID OPERATION!");
+    alert("FATAL: INVALID OPERATION!");
     return;
   }
 
@@ -544,7 +541,6 @@ function updateRevisionBtnsDisabledAttr() {
   })
   .then((res) => res.json())
   .then((data) => {
-    console.log(`REVISION BUTTON DISABLED STATUS:\n UNDO: ${!!data.undo}, REDO: ${!!data.redo}`);
     revisionButtons[0].disabled = data.undo;
     revisionButtons[1].disabled = data.redo;
   })

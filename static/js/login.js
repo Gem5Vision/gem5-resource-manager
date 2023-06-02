@@ -84,7 +84,6 @@ function handleMongoURLFetch(uri, collection, database, alias) {
       })
     })
     .then((res) => {
-      console.log("URI Validation Response Status: " + res.status);
       toggleInteractables(false);
 
       if (!res.ok) {
@@ -117,7 +116,6 @@ function handleJSONLogin(event) {
           }
         })
         .then((res) => {
-          console.log("Existing JSON Response Status: " + res.status);
           toggleInteractables(false);
 
           if (res.status !== 200) {
@@ -163,7 +161,6 @@ function handleRemoteJSON() {
     method: 'GET',
   })
     .then((res) => {
-      console.log("JSON Remote Response Status: " + res.status);
       toggleInteractables(false);
 
       if (res.status === 400) {
@@ -205,7 +202,6 @@ function handleUploadJSON() {
     body: form
   })
     .then((res) => {
-      console.log("JSON Upload Response Status: " + res.status);
       toggleInteractables(false);
 
       if (res.status === 400) {
@@ -295,7 +291,6 @@ function handleConflictResolution(resolution, filename) {
     }
   })
     .then((res) => {
-      console.log("JSON Upload Response Status: " + res.status);
       toggleInteractables(false);
 
       if (res.status === 204) {
