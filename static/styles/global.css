@@ -140,6 +140,10 @@ html, body {
   text-shadow: none;
 }
 
+.navbar-nav > .nav-link:hover {
+  text-decoration: underline;
+}
+
 .reset-nav-link:hover,
 .login-nav-link:hover {
   background-color: #0095AF;
