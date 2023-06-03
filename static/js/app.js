@@ -92,6 +92,9 @@ function resetSavedSessions() {
   if (activeTab === "delete-one-tab") {
     const deleteOneConfirmation = document.getElementById("delete-one-confirmation").value; 
     if (deleteOneConfirmation !== document.getElementById("delete-session-dropdown").value) {
+      document.getElementById("resetSavedSessionsModal").querySelectorAll("form").forEach(form => {
+        form.reset();
+      })
       appendAlert('Error!', 'noSavedSessions', `Invalid Confirmation Entry!`, 'danger');
       return;
     }
@@ -104,6 +107,9 @@ function resetSavedSessions() {
     } else {
     const deleteAllConfirmation = document.getElementById("delete-all-confirmation").value; 
     if (deleteAllConfirmation !== "Delete All") {
+      document.getElementById("resetSavedSessionsModal").querySelectorAll("form").forEach(form => {
+        form.reset();
+      })
       appendAlert('Error!', 'noSavedSessions', `Invalid Confirmation Entry!`, 'danger');
       return;
     }
